@@ -1,0 +1,10 @@
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/3.7/phpunit.xsd"
+>
+    <testsuites>
+        <testsuite name="texthtml/maybe">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

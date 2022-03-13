@@ -1,0 +1,12 @@
+parameters:
+	level: 9
+	paths:
+		- src
+		- tests
+	ignoreErrors:
+		-
+			message: '#Call to .+ will always evaluate to .+#'
+			path: tests/
+		-
+			message: '#Generator expects value type array{.*}, array{.*} given.#'
+			path: tests/

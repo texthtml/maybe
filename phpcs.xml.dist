@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<ruleset name="TH/Maybe">
+    <arg name="basepath" value="."/>
+    <arg name="colors"/>
+
+    <file>src</file>
+    <file>tests</file>
+
+    <rule ref="PSR12">
+        <exclude name="PSR12.Files.FileHeader" />
+        <exclude name="PSR12.Files.OpenTag" />
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration" />
+        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace" />
+    </rule>
+
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
+        <exclude name="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion" />
+        <exclude name="SlevomatCodingStandard.Commenting.RequireOneLineDocComment" />
+        <exclude name="SlevomatCodingStandard.Commenting.RequireOneLinePropertyDocComment" />
+        <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses" />
+        <exclude name="SlevomatCodingStandard.Files.TypeNameMatchesFileName" />
+        <exclude name="SlevomatCodingStandard.Functions.DisallowArrowFunction" />
+        <exclude name="SlevomatCodingStandard.Functions.DisallowEmptyFunction" />
+        <exclude name="SlevomatCodingStandard.Functions.DisallowNamedArguments" />
+        <exclude name="SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall" />
+        <exclude name="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration" />
+        <exclude name="SlevomatCodingStandard.Functions.UnusedParameter" />
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation" />
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants" />
+        <exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces" />
+        <exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators" />
+        <exclude name="SlevomatCodingStandard.PHP.DisallowReference" />
+        <exclude name="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint" />
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+        <properties>
+            <property name="declareOnFirstLine" value="true" />
+            <property name="spacesCountAroundEqualsSign" value="0" />
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces">
+        <properties>
+            <property name="linesCountAfterOpeningBrace" value="0" />
+            <property name="linesCountBeforeClosingBrace" value="0" />
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing">
+        <properties>
+            <property name="linesCountBeforeFirstUseWhenFirstInClass" value="0" />
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
+        <properties>
+            <property name="allowFullyQualifiedGlobalClasses" value="true" />
+            <property name="allowFullyQualifiedGlobalFunctions" value="true" />
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Classes.ClassStructure">
+        <properties>
+            <property name="groups" type="array">
+                <element value="uses"/>
+
+                <element value="public constants"/>
+                <element value="protected constants"/>
+                <element value="private constants"/>
+
+                <element value="public static properties"/>
+                <element value="protected static properties"/>
+                <element value="private static properties"/>
+
+                <element value="public properties"/>
+                <element value="protected properties"/>
+                <element value="private properties"/>
+
+                <element value="constructor"/>
+                <element value="public static methods"/>
+                <element value="all public methods"/>
+                <element value="methods"/>
+                <element value="magic methods"/>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Functions.FunctionLength">
+        <exclude-pattern>/src/Option.php</exclude-pattern>
+        <exclude-pattern>/tests/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Files.FunctionLength.FunctionLength">
+        <exclude-pattern>/src/Option.php</exclude-pattern>
+        <exclude-pattern>/tests/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint">
+        <exclude-pattern>/tests/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces">
+        <exclude-pattern>/tests/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace">
+        <exclude-pattern>/tests/</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing">
+        <exclude-pattern>/tests/</exclude-pattern>
+    </rule>
+</ruleset>
