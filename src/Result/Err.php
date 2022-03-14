@@ -2,6 +2,7 @@
 
 namespace TH\Maybe\Result;
 
+use TH\Maybe\Option;
 use TH\Maybe\Result;
 
 /**
@@ -112,4 +113,14 @@ interface Err
      * @return U
      */
     public function mapOrElse(callable $callback, callable $default): mixed;
+
+    /**
+     * @return Option<T> & Option\None<T>
+     */
+    public function extractOk(): Option;
+
+    /**
+     * @return Option<E> & Option\Some<E>
+     */
+    public function extractErr(): Option;
 }

@@ -299,13 +299,33 @@ abstract class Result implements \IteratorAggregate
     public static function flatten(Result $result): Result
     {
         if ($result instanceof Result\Err) {
-            /** @var Result<U, F> $err */
-            $err = $result;
-
-            return $err;
+            /** @var Result<U, F> */
+            return $result;
         }
 
         return $result->unwrap();
+    }
+
+    /**
+     * Transposes a `Result` of an `Option` into an `Option` of a `Result`.
+     *
+     * `Ok(None)` will be mapped to `None`.
+     * `Ok(Some(_))` and `Err(_)` will be mapped to `Some(Ok(_))` and `Some(Err(_))`.
+     *
+     * @template U
+     * @template F
+     * @param Result<Option<U>, F> $result
+     * @return Option<Result<U, F>>
+     */
+    public static function transpose(Result $result): Option
+    {
+        if ($result instanceof Result\Err) {
+            /** @var Option<Result<U, F>> */
+            return Option::some($result);
+        }
+
+        /** @var Option<Result<U, F>> */
+        return $result->unwrap()->map(Result::ok(...));
     }
 
     /**
@@ -470,6 +490,34 @@ abstract class Result implements \IteratorAggregate
     public function mapOr(callable $callback, mixed $default): mixed
     {
         return $default;
+    }
+
+    /**
+     * Converts from `Result<T, E>` to `Option<T>`, discarding the error, if any.
+     *
+     * @return Option<T>
+     */
+    public function extractOk(): Option
+    {
+        /** @var Option<T> */
+        return $this->mapOrElse(
+            Option::some(...),
+            Option::none(...),
+        );
+    }
+
+    /**
+     * Converts from `Result<T, E>` to `Option<E>`, discarding the success value, if any.
+     *
+     * @return Option<E>
+     */
+    public function extractErr(): Option
+    {
+        /** @var Option<E> */
+        return $this->mapOrElse(
+            Option::none(...),
+            Option::some(...),
+        );
     }
 
     /**

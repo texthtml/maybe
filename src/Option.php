@@ -204,6 +204,26 @@ abstract class Option implements \IteratorAggregate
                 );
             }
 
+            /**
+             * @template E
+             * @param E $err
+             * @return Result<U, E> & Result\Ok<U, E>
+             */
+            public function okOr(mixed $err): Result
+            {
+                return Result::ok($this->value);
+            }
+
+            /**
+             * @template E
+             * @param callable():E $err
+             * @return Result<U, E> & Result\Ok<U, E>
+             */
+            public function okOrElse(callable $err): Result
+            {
+                return Result::ok($this->value);
+            }
+
             public function getIterator(): \Traversable
             {
                 yield $this->value;
@@ -244,11 +264,9 @@ abstract class Option implements \IteratorAggregate
      */
     public static function flatten(Option $option): Option
     {
-        /** @var Option<U> $none */
-        $none = Option::none();
-
+        /** @var Option<U> */
         return $option instanceof Option\None
-            ? $none
+            ? Option::none()
             : $option->unwrap();
     }
 
@@ -265,15 +283,34 @@ abstract class Option implements \IteratorAggregate
     public static function unzip(Option $option): array
     {
         if ($option instanceof Option\None) {
-            /** @var array{Option<U>, Option<V>} $noneNone */
-            $noneNone = [Option::none(), Option::none()];
-
-            return $noneNone;
+            /** @var array{Option<U>, Option<V>} */
+            return [Option::none(), Option::none()];
         }
 
         [$left, $right] = $option->unwrap();
 
         return [Option::some($left), Option::some($right)];
+    }
+
+    /**
+     * Transposes an `Option` of a `Result` into a `Result` of an `Option`.
+     *
+     * `None` will be mapped to `Ok(None)`.
+     * `Some(Ok(_))` and `Some(Err(_))` will be mapped to `Ok(Some(_))` and `Err(_)`.
+     *
+     * @template U
+     * @template E
+     * @param Option<Result<U, E>> $option
+     * @return Result<Option<U>, E>
+     */
+    public static function transpose(Option $option): Result
+    {
+        if ($option instanceof Option\None) {
+            /** @var Result<Option<U>, E> */
+            return Result::ok(Option::none());
+        }
+
+        return $option->unwrap()->map(Option::some(...));
     }
 
     /**
@@ -458,6 +495,30 @@ abstract class Option implements \IteratorAggregate
     public function zip(Option $option): Option
     {
         return $this;
+    }
+
+    /**
+     * Transforms the `Option<T>` into a `Result<T, E>`, mapping `Some(v)` to `Ok(v)` and `None` to `Err(err)`.
+     *
+     * @template E
+     * @param E $err
+     * @return Result<T, E>
+     */
+    public function okOr(mixed $err): Result
+    {
+        return Result::err($err);
+    }
+
+    /**
+     * Transforms the `Option<T>` into a `Result<T, E>`, mapping `Some(v)` to `Ok(v)` and `None` to `Err(err())`.
+     *
+     * @template E
+     * @param callable():E $err
+     * @return Result<T, E>
+     */
+    public function okOrElse(callable $err): Result
+    {
+        return Result::err($err());
     }
 
     public function getIterator(): \Traversable

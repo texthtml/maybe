@@ -3,6 +3,7 @@
 namespace TH\Maybe\Option;
 
 use TH\Maybe\Option;
+use TH\Maybe\Result;
 
 /**
  * @template T
@@ -104,4 +105,18 @@ interface Some
      * @return Option<array{T, U}>
      */
     public function zip(Option $option): Option;
+
+    /**
+     * @template E
+     * @param E $err
+     * @return Result<T, E> & Result\Ok<T, E>
+     */
+    public function okOr(mixed $err): Result;
+
+    /**
+     * @template E
+     * @param callable():E $err
+     * @return Result<T, E> & Result\Ok<T, E>
+     */
+    public function okOrElse(callable $err): Result;
 }
