@@ -31,13 +31,14 @@ interface Some
     public function unwrapOrElse(callable $default): mixed;
 
     /**
-     * @return self<T>
+     * @return $this
      */
     public function inspect(callable $callback): self;
 
     /**
-     * @param Option<T> $right
-     * @return Option<T>
+     * @template U
+     * @param Option<U> $right
+     * @return Option<U>
      */
     public function and(Option $right): Option;
 
@@ -65,16 +66,6 @@ interface Some
      * @return Option<T>
      */
     public function xor(Option $right): Option;
-
-    /**
-     * @return true
-     */
-    public function isSome(): bool;
-
-    /**
-     * @return false
-     */
-    public function isNone(): bool;
 
     public function contains(mixed $value, bool $strict = true): bool;
 

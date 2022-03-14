@@ -37,8 +37,9 @@ interface None
     public function inspect(callable $callback): Option;
 
     /**
-     * @param Option<T> $right
-     * @return Option<T> & None<T>
+     * @template U
+     * @param Option<U> $right
+     * @return Option<U> & None<U>
      */
     public function and(Option $right): Option;
 
@@ -66,16 +67,6 @@ interface None
      * @return Option<T>
      */
     public function xor(Option $right): Option;
-
-    /**
-     * @return false
-     */
-    public function isSome(): bool;
-
-    /**
-     * @return true
-     */
-    public function isNone(): bool;
 
     /**
      * @return false

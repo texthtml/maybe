@@ -82,6 +82,9 @@ abstract class Option implements \IteratorAggregate
                 return $this->value;
             }
 
+            /**
+             * @return $this
+             */
             public function inspect(callable $callback): self
             {
                 $callback($this->value);
@@ -106,7 +109,7 @@ abstract class Option implements \IteratorAggregate
 
             /**
              * @param Option<U> $right
-             * @return Option<U> & $this
+             * @return $this
              */
             public function or(Option $right): Option
             {
@@ -115,7 +118,7 @@ abstract class Option implements \IteratorAggregate
 
             /**
              * @param callable():Option<U> $right
-             * @return Option<U> & $this
+             * @return $this
              */
             public function orElse(callable $right): Option
             {
@@ -128,25 +131,9 @@ abstract class Option implements \IteratorAggregate
              */
             public function xor(Option $right): Option
             {
-                return $right->isNone()
+                return $right instanceof Option\None
                     ? $this
                     : Option::none();
-            }
-
-            /**
-             * @return true
-             */
-            public function isSome(): bool
-            {
-                return true;
-            }
-
-            /**
-             * @return false
-             */
-            public function isNone(): bool
-            {
-                return false;
             }
 
             public function contains(mixed $value, bool $strict = true): bool
@@ -260,7 +247,7 @@ abstract class Option implements \IteratorAggregate
         /** @var Option<U> $none */
         $none = Option::none();
 
-        return $option->isNone()
+        return $option instanceof Option\None
             ? $none
             : $option->unwrap();
     }
@@ -334,7 +321,7 @@ abstract class Option implements \IteratorAggregate
      * Calls the provided closure with a reference to the contained value (if `Some`).
      *
      * @param callable(T):mixed $callback
-     * @return self<T>
+     * @return $this
      */
     public function inspect(callable $callback): self
     {
@@ -344,8 +331,9 @@ abstract class Option implements \IteratorAggregate
     /**
      * Returns `None` if the option is `None`, otherwise returns `$right`.
      *
-     * @param Option<T> $right
-     * @return Option<T>
+     * @template U
+     * @param Option<U> $right
+     * @return Option<U>
      */
     public function and(Option $right): self
     {
@@ -395,22 +383,6 @@ abstract class Option implements \IteratorAggregate
     public function xor(Option $right): self
     {
         return $right;
-    }
-
-    /**
-     * Returns `true` if the option is a `Some` value.
-     */
-    public function isSome(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Returns `true` if the option is a `None` value.
-     */
-    public function isNone(): bool
-    {
-        return true;
     }
 
     /**
