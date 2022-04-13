@@ -15,7 +15,7 @@ class FlattenTest extends TestCase
      */
     public function testFlatten(Option $expected, Option $option): void
     {
-        Assert::assertSame($expected, Option::flatten($option));
+        Assert::assertEquals($expected, Option\flatten($option));
     }
 
     /**
@@ -24,14 +24,14 @@ class FlattenTest extends TestCase
     public function flattenMatrix(): iterable
     {
         /** @var Option<mixed> $none */
-        $none = Option::none();
+        $none = Option\none();
 
         yield "none" => [$none, $none];
 
-        yield "some(none)" => [$none, Option::some($none)];
+        yield "some(none)" => [$none, Option\some($none)];
 
-        $leaf = Option::some(null);
+        $leaf = Option\some(null);
 
-        yield "some(some(…))" => [$leaf, Option::some($leaf)];
+        yield "some(some(…))" => [$leaf, Option\some($leaf)];
     }
 }

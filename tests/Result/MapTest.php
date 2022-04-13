@@ -44,16 +44,16 @@ class MapTest extends TestCase
     public function mapMatrix(): iterable
     {
         yield "err" => [
-            Result::err(null),
+            Result\err(null),
             "fish",
-            Result::err(null),
+            Result\err(null),
             [],
         ];
 
         yield "ok" => [
-            Result::ok(42),
+            Result\ok(42),
             "fish",
-            Result::ok("fish"),
+            Result\ok("fish"),
             [42],
         ];
     }
@@ -94,16 +94,16 @@ class MapTest extends TestCase
     public function mapErrMatrix(): iterable
     {
         yield "ok" => [
-            Result::ok(null),
+            Result\ok(null),
             "fish",
-            Result::ok(null),
+            Result\ok(null),
             [],
         ];
 
         yield "err" => [
-            Result::err(42),
+            Result\err(42),
             "fish",
-            Result::err("fish"),
+            Result\err("fish"),
             [42],
         ];
     }
@@ -151,7 +151,7 @@ class MapTest extends TestCase
     public function mapOrMatrix(): iterable
     {
         yield "err" => [
-            Result::err(null),
+            Result\err(null),
             "fish",
             "fishes",
             "fishes",
@@ -159,7 +159,7 @@ class MapTest extends TestCase
         ];
 
         yield "ok" => [
-            Result::ok(42),
+            Result\ok(42),
             "fish",
             "fishes",
             "fish",

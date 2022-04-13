@@ -10,10 +10,10 @@ class IterateTest extends TestCase
 {
     public function testIterateResults(): void
     {
-        Assert::assertIsIterable(Result::err(null));
-        Assert::assertSame([], \iterator_to_array(Result::err(null)));
+        Assert::assertIsIterable(Result\err(null));
+        Assert::assertSame([], \iterator_to_array(Result\err(null)));
 
-        Assert::assertIsIterable(Result::ok(42));
-        Assert::assertSame([42], \iterator_to_array(Result::ok(42)));
+        Assert::assertIsIterable(Result\ok(42));
+        Assert::assertSame([42], \iterator_to_array(Result\ok(42)));
     }
 }

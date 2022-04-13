@@ -5,17 +5,18 @@ namespace TH\Maybe\Tests\Result;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Provider;
 
 class InspectTest extends TestCase
 {
-    use ValuesProvider;
+    use Provider\Values;
 
     /**
      * @dataProvider values
      */
     public function testInspectOk(mixed $value): void
     {
-        $result = Result::ok($value);
+        $result = Result\ok($value);
 
         ["result" => $result, "calls" => $calls] = $this->inspect($result);
 
@@ -25,7 +26,7 @@ class InspectTest extends TestCase
 
     public function testInspectNone(): void
     {
-        $result = Result::err(null);
+        $result = Result\err(null);
 
         ["result" => $result, "calls" => $calls] = $this->inspect($result);
 
@@ -35,8 +36,8 @@ class InspectTest extends TestCase
 
     /**
      * @template T
-     * @param Result<T, null> $result
-     * @return array{result:Result<T, null>, calls: array<T>}
+     * @param Result<T, mixed> $result
+     * @return array{result:Result<T, mixed>, calls: array<T>}
      */
     private function inspect(Result $result): array
     {

@@ -5,16 +5,17 @@ namespace TH\Maybe\Tests\Option;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
+use TH\Maybe\Tests\Provider;
 
 class UnwrapTest extends TestCase
 {
-    use ValuesProvider;
+    use Provider\Values;
 
     public function testExpectNone(): void
     {
         $this->expectExceptionObject(new \RuntimeException("This should fail"));
 
-        Option::none()->expect("This should fail");
+        Option\none()->expect("This should fail");
     }
 
     /**
@@ -22,14 +23,14 @@ class UnwrapTest extends TestCase
      */
     public function testExpectSome(mixed $value): void
     {
-        Assert::assertSame($value, Option::some($value)->expect("This should succeed"));
+        Assert::assertSame($value, Option\some($value)->expect("This should succeed"));
     }
 
     public function testUnwrapNone(): void
     {
         $this->expectExceptionObject(new \RuntimeException("Unwrapping a `None` value"));
 
-        Option::none()->unwrap();
+        Option\none()->unwrap();
     }
 
     /**
@@ -37,7 +38,7 @@ class UnwrapTest extends TestCase
      */
     public function testUnwrapSome(mixed $value): void
     {
-        Assert::assertSame($value, Option::some($value)->unwrap());
+        Assert::assertSame($value, Option\some($value)->unwrap());
     }
 
     /**
@@ -45,7 +46,7 @@ class UnwrapTest extends TestCase
      */
     public function testUnwrapOrNone(mixed $value): void
     {
-        Assert::assertSame($value, Option::none()->unwrapOr($value));
+        Assert::assertSame($value, Option\none()->unwrapOr($value));
     }
 
     /**
@@ -53,7 +54,7 @@ class UnwrapTest extends TestCase
      */
     public function testUnwrapOrSome(mixed $value): void
     {
-        Assert::assertSame($value, Option::some($value)->unwrapOr(false));
+        Assert::assertSame($value, Option\some($value)->unwrapOr(false));
     }
 
     /**
@@ -61,7 +62,7 @@ class UnwrapTest extends TestCase
      */
     public function testUnwrapOrElseNone(mixed $value): void
     {
-        Assert::assertSame($value, Option::none()->unwrapOrElse(static fn () => $value));
+        Assert::assertSame($value, Option\none()->unwrapOrElse(static fn () => $value));
     }
 
     /**
@@ -69,6 +70,6 @@ class UnwrapTest extends TestCase
      */
     public function testUnwrapOrElseSome(mixed $value): void
     {
-        Assert::assertSame($value, Option::some($value)->unwrapOrElse(static fn () => false));
+        Assert::assertSame($value, Option\some($value)->unwrapOrElse(static fn () => false));
     }
 }

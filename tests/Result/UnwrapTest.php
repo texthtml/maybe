@@ -5,16 +5,17 @@ namespace TH\Maybe\Tests\Result;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Provider;
 
 class UnwrapTest extends TestCase
 {
-    use ValuesProvider;
+    use Provider\Values;
 
     public function testExpectErr(): void
     {
         $this->expectExceptionObject(new \RuntimeException("This should fail"));
 
-        Result::err(null)->expect("This should fail");
+        Result\err(null)->expect("This should fail");
     }
 
     /**
@@ -22,14 +23,14 @@ class UnwrapTest extends TestCase
      */
     public function testExpectOk(mixed $value): void
     {
-        Assert::assertSame($value, Result::ok($value)->expect("This should succeed"));
+        Assert::assertSame($value, Result\ok($value)->expect("This should succeed"));
     }
 
     public function testUnwrapErr(): void
     {
         $this->expectExceptionObject(new \RuntimeException("Unwrapping `Err`: N;"));
 
-        Result::err(null)->unwrap();
+        Result\err(null)->unwrap();
     }
 
     public function testUnwrapErrException(): void
@@ -38,7 +39,7 @@ class UnwrapTest extends TestCase
 
         $this->expectExceptionObject($ex);
 
-        Result::err($ex)->unwrap();
+        Result\err($ex)->unwrap();
     }
 
     /**
@@ -46,7 +47,7 @@ class UnwrapTest extends TestCase
      */
     public function testUnwrapOk(mixed $value): void
     {
-        Assert::assertSame($value, Result::ok($value)->unwrap());
+        Assert::assertSame($value, Result\ok($value)->unwrap());
     }
 
     /**
@@ -54,7 +55,7 @@ class UnwrapTest extends TestCase
      */
     public function testUnwrapOrErr(mixed $value): void
     {
-        Assert::assertSame($value, Result::err(null)->unwrapOr($value));
+        Assert::assertSame($value, Result\err(null)->unwrapOr($value));
     }
 
     /**
@@ -62,7 +63,7 @@ class UnwrapTest extends TestCase
      */
     public function testUnwrapOrOk(mixed $value): void
     {
-        Assert::assertSame($value, Result::ok($value)->unwrapOr(false));
+        Assert::assertSame($value, Result\ok($value)->unwrapOr(false));
     }
 
     /**
@@ -70,7 +71,7 @@ class UnwrapTest extends TestCase
      */
     public function testUnwrapOrElseErr(mixed $value): void
     {
-        Assert::assertSame($value, Result::err(null)->unwrapOrElse(static fn () => $value));
+        Assert::assertSame($value, Result\err(null)->unwrapOrElse(static fn () => $value));
     }
 
     /**
@@ -78,6 +79,6 @@ class UnwrapTest extends TestCase
      */
     public function testUnwrapOrElseOk(mixed $value): void
     {
-        Assert::assertSame($value, Result::ok($value)->unwrapOrElse(static fn () => false));
+        Assert::assertSame($value, Result\ok($value)->unwrapOrElse(static fn () => false));
     }
 }

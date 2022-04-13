@@ -6,61 +6,61 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
-use TH\Maybe\Tests\TransposeProvider;
+use TH\Maybe\Tests\Provider;
 
 class ConvertToOptionTest extends TestCase
 {
-    use TransposeProvider;
+    use Provider\Transpose;
 
     /**
-     * @dataProvider extractOkMatrix
+     * @dataProvider OkMatrix
      * @param Result<mixed, mixed> $result
      * @param Option<mixed> $expected
      */
-    public function testExtractOk(Result $result, Option $expected): void
+    public function testOk(Result $result, Option $expected): void
     {
-        Assert::assertEquals($expected, $result->extractOk());
+        Assert::assertEquals($expected, $result->ok());
     }
 
     /**
      * @return iterable<array{Option<mixed>, mixed, Result<mixed, mixed>, int}>
      */
-    public function extractOkMatrix(): iterable
+    public function okMatrix(): iterable
     {
         yield "err" => [
-            Result::err("Don't panic !"),
-            Option::none(),
+            Result\err("Don't panic !"),
+            Option\none(),
         ];
 
         yield "ok" => [
-            Result::ok(42),
-            Option::some(42),
+            Result\ok(42),
+            Option\some(42),
         ];
     }
 
     /**
-     * @dataProvider extractErrMatrix
+     * @dataProvider ErrMatrix
      * @param Result<mixed, mixed> $result
      * @param Option<mixed> $expected
      */
-    public function testExtractErr(Result $result, Option $expected): void
+    public function testErr(Result $result, Option $expected): void
     {
-        Assert::assertEquals($expected, $result->extractErr());
+        Assert::assertEquals($expected, $result->err());
     }
 
     /**
      * @return iterable<array{Option<mixed>, mixed, Result<mixed, mixed>, int}>
      */
-    public function extractErrMatrix(): iterable
+    public function errMatrix(): iterable
     {
         yield "err" => [
-            Result::err("Don't panic !"),
-            Option::some("Don't panic !"),
+            Result\err("Don't panic !"),
+            Option\some("Don't panic !"),
         ];
 
         yield "ok" => [
-            Result::ok(42),
-            Option::none(),
+            Result\ok(42),
+            Option\none(),
         ];
     }
 
@@ -71,6 +71,6 @@ class ConvertToOptionTest extends TestCase
      */
     public function testTranspose(Option $option, Result $result): void
     {
-        Assert::assertEquals($option, Result::transpose($result));
+        Assert::assertEquals($option, Result\transpose($result));
     }
 }

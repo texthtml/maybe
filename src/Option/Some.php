@@ -7,116 +7,153 @@ use TH\Maybe\Result;
 
 /**
  * @template T
+ * @implements Option<T>
+ * @immutable
  */
-interface Some
+final class Some implements Option
 {
-    /**
-     * @return T
-     */
-    public function expect(string $message): mixed;
+    /** @param T $value */
+    public function __construct(private mixed $value) {}
 
-    /**
-     * @return T
-     */
-    public function unwrap(): mixed;
+    public function expect(string $message): mixed
+    {
+        return $this->value;
+    }
 
-    /**
-     * @param T $default
-     * @return T
-     */
-    public function unwrapOr(mixed $default): mixed;
+    public function unwrap(): mixed
+    {
+        return $this->value;
+    }
 
-    /**
-     * @return T
-     */
-    public function unwrapOrElse(callable $default): mixed;
+    public function unwrapOr(mixed $default): mixed
+    {
+        return $this->value;
+    }
+
+    public function unwrapOrElse(callable $default): mixed
+    {
+        return $this->value;
+    }
 
     /**
      * @return $this
      */
-    public function inspect(callable $callback): self;
+    public function inspect(callable $callback): self
+    {
+        $callback($this->value);
+
+        return $this;
+    }
+
+    public function and(Option $right): Option
+    {
+        return $right;
+    }
+
+    public function andThen(callable $right): Option
+    {
+        return $right($this->value);
+    }
 
     /**
-     * @template U
-     * @param Option<U> $right
-     * @return Option<U>
+     * @return $this
      */
-    public function and(Option $right): Option;
+    public function or(Option $right): Option
+    {
+        return $this;
+    }
 
     /**
-     * @template U
-     * @param callable(T):Option<U> $right
-     * @return Option<U>
+     * @return $this
      */
-    public function andThen(callable $right): Option;
+    public function orElse(callable $right): Option
+    {
+        return $this;
+    }
 
-    /**
-     * @param Option<T> $right
-     * @return Option<T> & $this
-     */
-    public function or(Option $right): Option;
+    public function xor(Option $right): Option
+    {
+        /** @var Option<T> */
+        return $right instanceof Option\None
+            ? $this
+            : Option\none();
+    }
 
-    /**
-     * @param callable():Option<T> $right
-     * @return Option<T> & $this
-     */
-    public function orElse(callable $right): Option;
+    public function contains(mixed $value, bool $strict = true): bool
+    {
+        return $strict
+            ? ($this->value === $value)
+            // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
+            : ($this->value == $value);
+    }
 
-    /**
-     * @param Option<T> $right
-     * @return Option<T>
-     */
-    public function xor(Option $right): Option;
+    public function filter(callable $predicate): Option
+    {
+        /** @var Option<T> */
+        return $predicate($this->value)
+            ? $this
+            : Option\none();
+    }
 
-    public function contains(mixed $value, bool $strict = true): bool;
+    public function map(callable $callback): Option
+    {
+        return Option\some($callback($this->value));
+    }
 
-    /**
-     * @param callable(T):bool $predicate
-     * @return Option<T>
-     */
-    public function filter(callable $predicate): Option;
+    public function mapOr(callable $callback, mixed $default): mixed
+    {
+        return $callback($this->value);
+    }
 
-    /**
-     * @template U
-     * @param callable(T):U $callback
-     * @return Option<U> & Option\Some<U>
-     */
-    public function map(callable $callback): Option;
-
-    /**
-     * @template U
-     * @param callable(T):U $callback
-     * @param U $default
-     * @return U
-     */
-    public function mapOr(callable $callback, mixed $default): mixed;
-
-    /**
-     * @template U
-     * @param callable(T):U $callback
-     * @param callable():U $default
-     * @return U
-     */
-    public function mapOrElse(callable $callback, callable $default): mixed;
+    public function mapOrElse(callable $callback, callable $default): mixed
+    {
+        return $callback($this->value);
+    }
 
     /**
      * @template U
      * @param Option<U> $option
      * @return Option<array{T, U}>
      */
-    public function zip(Option $option): Option;
+    public function zip(Option $option): Option
+    {
+        return $option->map($this->zipMap(...));
+    }
 
     /**
      * @template E
      * @param E $err
-     * @return Result<T, E> & Result\Ok<T, E>
+     * @return Result\Ok<T, E>
      */
-    public function okOr(mixed $err): Result;
+    public function okOr(mixed $err): Result\Ok
+    {
+        /** @var Result\Ok<T, E> */
+        return Result\ok($this->value);
+    }
 
     /**
      * @template E
      * @param callable():E $err
-     * @return Result<T, E> & Result\Ok<T, E>
+     * @return Result\Ok<T, E>
      */
-    public function okOrElse(callable $err): Result;
+    public function okOrElse(callable $err): Result\Ok
+    {
+        /** @var Result\Ok<T, E> */
+        return Result\ok($this->value);
+    }
+
+    public function getIterator(): \Traversable
+    {
+        yield $this->value;
+    }
+
+    /**
+     * @template U
+     * @param U $value
+     * @return array{T, U}
+     */
+    private function zipMap(mixed $value): array
+    {
+        return [$this->value, $value];
+    }
 }

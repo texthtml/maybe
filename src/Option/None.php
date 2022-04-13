@@ -7,120 +7,144 @@ use TH\Maybe\Result;
 
 /**
  * @template T
+ * @implements Option<T>
+ * @immutable
  */
-interface None
+enum None implements Option
 {
-    /**
-     * @throw \RuntimeException
-     */
-    public function expect(string $message): never;
+    case instance;
 
     /**
-     * @throw \RuntimeException
+     * @throws \RuntimeException
      */
-    public function unwrap(): never;
+    public function expect(string $message): never
+    {
+        throw new \RuntimeException($message);
+    }
 
     /**
-     * @param T $default
-     * @return T
+     * @throws \RuntimeException
      */
-    public function unwrapOr(mixed $default): mixed;
+    public function unwrap(): never
+    {
+        $this->expect("Unwrapping a `None` value");
+    }
+
+    public function unwrapOr(mixed $default): mixed
+    {
+        return $default;
+    }
+
+    public function unwrapOrElse(callable $default): mixed
+    {
+        return $default();
+    }
 
     /**
-     * @param callable():T $default
-     * @return T
+     * @return $this
      */
-    public function unwrapOrElse(callable $default): mixed;
+    public function inspect(callable $callback): self
+    {
+        return $this;
+    }
 
     /**
-     * @return Option<T> & $this
+     * @return $this
      */
-    public function inspect(callable $callback): Option;
+    public function and(Option $right): Option
+    {
+        return $this;
+    }
 
     /**
-     * @template U
-     * @param Option<U> $right
-     * @return Option<U> & None<U>
+     * @return $this
      */
-    public function and(Option $right): Option;
+    public function andThen(callable $right): Option
+    {
+        return $this;
+    }
 
-    /**
-     * @template U
-     * @param callable(T):Option<U> $right
-     * @return Option<U> & $this
-     */
-    public function andThen(callable $right): Option;
+    public function or(Option $right): Option
+    {
+        return $right;
+    }
 
-    /**
-     * @param Option<T> $right
-     * @return Option<T>
-     */
-    public function or(Option $right): Option;
+    public function orElse(callable $right): Option
+    {
+        return $right();
+    }
 
-    /**
-     * @param callable():Option<T> $right
-     * @return Option<T>
-     */
-    public function orElse(callable $right): Option;
-
-    /**
-     * @param Option<T> $right
-     * @return Option<T>
-     */
-    public function xor(Option $right): Option;
+    public function xor(Option $right): Option
+    {
+        return $right;
+    }
 
     /**
      * @return false
      */
-    public function contains(mixed $value, bool $strict = true): bool;
+    public function contains(mixed $value, bool $strict = true): bool
+    {
+        return false;
+    }
 
     /**
-     * @param callable(T):bool $predicate
-     * @return Option<T> & $this
+     * @return $this
      */
-    public function filter(callable $predicate): Option;
+    public function filter(callable $predicate): Option
+    {
+        return $this;
+    }
 
     /**
-     * @template U
-     * @param callable(T):U $callback
-     * @return Option<U> & $this
+     * @return $this
      */
-    public function map(callable $callback): Option;
+    public function map(callable $callback): Option
+    {
+        return $this;
+    }
+
+    public function mapOr(callable $callback, mixed $default): mixed
+    {
+        return $default;
+    }
+
+    public function mapOrElse(callable $callback, callable $default): mixed
+    {
+        return $default();
+    }
 
     /**
-     * @template U
-     * @param callable(T):U $callback
-     * @param U $default
-     * @return U
+     * @return $this
      */
-    public function mapOr(callable $callback, mixed $default): mixed;
-
-    /**
-     * @template U
-     * @param callable(T):U $callback
-     * @param callable():U $default
-     * @return U
-     */
-    public function mapOrElse(callable $callback, callable $default): mixed;
-
-    /**
-     * @template U
-     * @param Option<U> $option
-     * @return Option<array{T, U}> & None<array{T, U}>
-     */
-    public function zip(Option $option): Option;
+    public function zip(Option $option): Option
+    {
+        return $this;
+    }
 
     /**
      * @template E
      * @param E $err
-     * @return Result<T, E> & Result\Err<T, E>
+     * @return Result\Err<T, E>
      */
-    public function okOr(mixed $err): Result;
+    public function okOr(mixed $err): Result\Err
+    {
+        /** @var Result\Err<T, E> */
+        return Result\err($err);
+    }
 
     /**
      * @template E
      * @param callable():E $err
-     * @return Result<T, E> & Result\Err<T, E>
+     * @return Result\Err<T, E>
      */
-    public function okOrElse(callable $err): Result;
+    public function okOrElse(callable $err): Result\Err
+    {
+        /** @var Result\Err<T, E> */
+        return Result\err($err());
+    }
+
+    public function getIterator(): \Traversable
+    {
+        return new \EmptyIterator();
+    }
 }

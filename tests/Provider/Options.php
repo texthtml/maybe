@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TH\Maybe\Tests\Option;
+namespace TH\Maybe\Tests\Provider;
 
 use TH\Maybe\Option;
 
-trait OptionsProvider
+trait Options
 {
     /**
      * @return iterable<string, array{
@@ -16,9 +16,9 @@ trait OptionsProvider
     public function andMatrix(): iterable
     {
         /** @var Option<string> $none */
-        $none = Option::none();
-        $left = Option::some("left");
-        $right = Option::some("right");
+        $none = Option\none();
+        $left = Option\some("left");
+        $right = Option\some("right");
 
         yield "none-none" => [
             "left"     => $none,
@@ -55,9 +55,9 @@ trait OptionsProvider
     public function orMatrix(): iterable
     {
         /** @var Option<string> $none */
-        $none = Option::none();
-        $left = Option::some("left");
-        $right = Option::some("right");
+        $none = Option\none();
+        $left = Option\some("left");
+        $right = Option\some("right");
 
         yield "none-none" => [
             "left"     => $none,
@@ -94,9 +94,9 @@ trait OptionsProvider
     public function xorMatrix(): iterable
     {
         /** @var Option<string> $none */
-        $none = Option::none();
-        $left = Option::some("left");
-        $right = Option::some("right");
+        $none = Option\none();
+        $left = Option\some("left");
+        $right = Option\some("right");
 
         yield "none-none" => [
             "left"     => $none,

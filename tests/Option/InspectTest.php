@@ -5,17 +5,18 @@ namespace TH\Maybe\Tests\Option;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
+use TH\Maybe\Tests\Provider;
 
 class InspectTest extends TestCase
 {
-    use ValuesProvider;
+    use Provider\Values;
 
     /**
      * @dataProvider values
      */
     public function testInspectSome(mixed $value): void
     {
-        $option = Option::some($value);
+        $option = Option\some($value);
 
         ["result" => $result, "calls" => $calls] = $this->inspect($option);
 
@@ -25,7 +26,7 @@ class InspectTest extends TestCase
 
     public function testInspectNone(): void
     {
-        $option = Option::none();
+        $option = Option\none();
 
         ["result" => $result, "calls" => $calls] = $this->inspect($option);
 

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace TH\Maybe\Tests\Result;
+namespace TH\Maybe\Tests\Provider;
 
-trait ValuesProvider
+trait Values
 {
     /**
      * @return iterable<string, array{mixed}>

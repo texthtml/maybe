@@ -31,27 +31,27 @@ class ZipTest extends TestCase
     public function zipMatrix(): iterable
     {
         yield "none-none" => [
-            Option::none(),
-            Option::none(),
-            Option::none(),
+            Option\none(),
+            Option\none(),
+            Option\none(),
         ];
 
         yield "none-some" => [
-            Option::none(),
-            Option::some(42),
-            Option::none(),
+            Option\none(),
+            Option\some(42),
+            Option\none(),
         ];
 
         yield "some-none" => [
-            Option::some(42),
-            Option::none(),
-            Option::none(),
+            Option\some(42),
+            Option\none(),
+            Option\none(),
         ];
 
         yield "some-some" => [
-            Option::some(42),
-            Option::some("fishes"),
-            Option::some([42, "fishes"]),
+            Option\some(42),
+            Option\some("fishes"),
+            Option\some([42, "fishes"]),
         ];
     }
 
@@ -65,7 +65,7 @@ class ZipTest extends TestCase
      */
     public function testUnzip(Option $zipped, Option $left, Option $right): void
     {
-        Assert::assertEquals([$left, $right], Option::unzip($zipped));
+        Assert::assertEquals([$left, $right], Option\unzip($zipped));
     }
 
     /**
@@ -78,15 +78,15 @@ class ZipTest extends TestCase
     public function unzipMatrix(): iterable
     {
         yield "none" => [
-            Option::none(),
-            Option::none(),
-            Option::none(),
+            Option\none(),
+            Option\none(),
+            Option\none(),
         ];
 
         yield "some" => [
-            Option::some([42, "fishes"]),
-            Option::some(42),
-            Option::some("fishes"),
+            Option\some([42, "fishes"]),
+            Option\some(42),
+            Option\some("fishes"),
         ];
     }
 }

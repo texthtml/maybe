@@ -6,11 +6,11 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
-use TH\Maybe\Tests\TransposeProvider;
+use TH\Maybe\Tests\Provider;
 
 class ConvertToResultTest extends TestCase
 {
-    use TransposeProvider;
+    use Provider\Transpose;
 
     /**
      * @dataProvider okOrMatrix
@@ -46,16 +46,16 @@ class ConvertToResultTest extends TestCase
     public function okOrMatrix(): iterable
     {
         yield "none" => [
-            Option::none(),
+            Option\none(),
             "Don't panic !",
-            Result::err("Don't panic !"),
+            Result\err("Don't panic !"),
             1,
         ];
 
         yield "some" => [
-            Option::some(42),
+            Option\some(42),
             "Don't panic !",
-            Result::ok(42),
+            Result\ok(42),
             0,
         ];
     }
@@ -67,6 +67,6 @@ class ConvertToResultTest extends TestCase
      */
     public function testTranspose(Option $option, Result $result): void
     {
-        Assert::assertEquals($result, Option::transpose($option));
+        Assert::assertEquals($result, Option\transpose($option));
     }
 }

@@ -8,119 +8,173 @@ use TH\Maybe\Result;
 /**
  * @template T
  * @template E
+ * @implements Result<T, E>
  */
-interface Err
+final class Err implements Result
 {
     /**
-     * @throw \RuntimeException
+     * @param E $value
      */
-    public function expect(string $message): never;
+    public function __construct(private mixed $value) {}
 
     /**
-     * @throw \Throwable
+     * @throws \RuntimeException
      */
-    public function unwrap(): never;
+    public function expect(string $message): never
+    {
+        if ($this->value instanceof \Throwable) {
+            throw new \RuntimeException($message, previous: $this->value);
+        }
+
+        throw new \RuntimeException(\sprintf($message, \serialize($this->value)));
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function unwrap(): never
+    {
+        if ($this->value instanceof \Throwable) {
+            throw $this->value;
+        }
+
+        $this->expect("Unwrapping `Err`: %s");
+    }
 
     /**
      * @return E
      */
-    public function unwrapErr(): mixed;
+    public function unwrapErr(): mixed
+    {
+        return $this->value;
+    }
 
     /**
+     * Extract the contained value in an `Result<T, E>` when it is the `Ok` variant.
+     * Or `$default` if the `Result` is `Err`.
+     *
      * @param T $default
      * @return T
      */
-    public function unwrapOr(mixed $default): mixed;
+    public function unwrapOr(mixed $default): mixed
+    {
+        return $default;
+    }
+
+    public function unwrapOrElse(callable $default): mixed
+    {
+        return $default($this->value);
+    }
 
     /**
-     * @param callable(E):T $default
-     * @return T
+     * @return $this
      */
-    public function unwrapOrElse(callable $default): mixed;
+    public function inspect(callable $callback): self
+    {
+        return $this;
+    }
 
     /**
-     * @return Result<T, E> & $this
+     * @return $this
      */
-    public function inspect(callable $callback): Result;
+    public function inspectErr(callable $callback): self
+    {
+        $callback($this->value);
+
+        return $this;
+    }
 
     /**
-     * @return Result<T, E> & $this
+     * @return $this
      */
-    public function inspectErr(callable $callback): Result;
+    public function and(Result $right): self
+    {
+        return $this;
+    }
 
     /**
-     * @template U
-     * @param Result<U, E> $right
-     * @return Result<U, E> & Err<U, E>
+     * @return $this
      */
-    public function and(Result $right): Result;
+    public function andThen(callable $right): Result
+    {
+        return $this;
+    }
 
-    /**
-     * @template U
-     * @template F
-     * @param callable(T):Result<U, F> $right
-     * @return Result<U, E|F> & $this
-     */
-    public function andThen(callable $right): Result;
+    public function or(Result $right): Result
+    {
+        return $right;
+    }
 
-    /**
-     * @template F
-     * @param Result<T, F> $right
-     * @return Result<T, F>
-     */
-    public function or(Result $right): Result;
-
-    /**
-     * @template F
-     * @param callable(E):Result<T, F> $right
-     * @return Result<T, F>
-     */
-    public function orElse(callable $right): Result;
+    public function orElse(callable $right): Result
+    {
+        return $right($this->value);
+    }
 
     /**
      * @return false
      */
-    public function contains(mixed $value, bool $strict = true): bool;
+    public function contains(mixed $value, bool $strict = true): bool
+    {
+        return false;
+    }
 
-    public function containsErr(mixed $value, bool $strict = true): bool;
+    public function containsErr(mixed $value, bool $strict = true): bool
+    {
+        return $strict
+            ? ($this->value === $value)
+            // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
+            : ($this->value == $value);
+    }
 
     /**
-     * @template U
-     * @param callable(T):U $callback
-     * @return Result<U, E> & $this
+     * @return $this
      */
-    public function map(callable $callback): Result;
+    public function map(callable $callback): Result
+    {
+        return $this;
+    }
 
     /**
      * @template F
      * @param callable(E):F $callback
-     * @return Result<T, F>
+     * @return Result\Err<T, F>
      */
-    public function mapErr(callable $callback): Result;
+    public function mapErr(callable $callback): Result
+    {
+        /** @var Result\Err<T, F> */
+        return Result\err($callback($this->value));
+    }
 
-    /**
-     * @template U
-     * @param callable(T):U $callback
-     * @param U $default
-     * @return U
-     */
-    public function mapOr(callable $callback, mixed $default): mixed;
+    public function mapOr(callable $callback, mixed $default): mixed
+    {
+        return $default;
+    }
 
-    /**
-     * @template U
-     * @param callable(T):U $callback
-     * @param callable(E):U $default
-     * @return U
-     */
-    public function mapOrElse(callable $callback, callable $default): mixed;
+    public function ok(): Option
+    {
+        /** @var Option<T> */
+        return $this->mapOrElse(
+            Option\some(...),
+            Option\none(...),
+        );
+    }
 
-    /**
-     * @return Option<T> & Option\None<T>
-     */
-    public function extractOk(): Option;
+    public function err(): Option
+    {
+        /** @var Option<E> */
+        return $this->mapOrElse(
+            Option\none(...),
+            Option\some(...),
+        );
+    }
 
-    /**
-     * @return Option<E> & Option\Some<E>
-     */
-    public function extractErr(): Option;
+    public function mapOrElse(callable $callback, callable $default): mixed
+    {
+        return $default($this->value);
+    }
+
+    public function getIterator(): \Traversable
+    {
+        return new \EmptyIterator();
+    }
 }

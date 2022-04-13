@@ -8,118 +8,156 @@ use TH\Maybe\Result;
 /**
  * @template T
  * @template E
+ * @implements Result<T, E>
  */
-interface Ok
+final class Ok implements Result
 {
-    /**
-     * @return T
-     */
-    public function expect(string $message): mixed;
+    /** @param T $value */
+    public function __construct(private mixed $value) {}
 
     /**
      * @return T
      */
-    public function unwrap(): mixed;
-
-    /**
-     * @throw \RuntimeException
-     */
-    public function unwrapErr(): never;
-
-    /**
-     * @param T $default
-     * @return T
-     */
-    public function unwrapOr(mixed $default): mixed;
+    public function expect(string $message): mixed
+    {
+        return $this->value;
+    }
 
     /**
      * @return T
      */
-    public function unwrapOrElse(callable $default): mixed;
+    public function unwrap(): mixed
+    {
+        return $this->value;
+    }
 
     /**
-     * @return Result<T, E> & $this
+     * @throws \RuntimeException
      */
-    public function inspect(callable $callback): Result;
+    public function unwrapErr(): never
+    {
+        throw new \RuntimeException(\sprintf("Unwrapping err on `Ok`: %s", \serialize($this->value)));
+    }
+
+    public function unwrapOr(mixed $default): mixed
+    {
+        return $this->value;
+    }
+
+    public function unwrapOrElse(callable $default): mixed
+    {
+        return $this->value;
+    }
 
     /**
-     * @return Result<T, E> & $this
+     * @return $this
      */
-    public function inspectErr(callable $callback): Result;
+    public function inspect(callable $callback): Result
+    {
+        $callback($this->value);
+
+        return $this;
+    }
 
     /**
-     * @template U
-     * @param Result<U, E> $right
-     * @return Result<U, E>
+     * @return $this
      */
-    public function and(Result $right): Result;
+    public function inspectErr(callable $callback): Result
+    {
+        return $this;
+    }
+
+    public function and(Result $right): Result
+    {
+        return $right;
+    }
+
+    public function andThen(callable $right): Result
+    {
+        return $right($this->value);
+    }
 
     /**
-     * @template U
-     * @template F
-     * @param callable(T):Result<U, F> $right
-     * @return Result<U, E|F>
+     * @return $this
      */
-    public function andThen(callable $right): Result;
+    public function or(Result $right): Result
+    {
+        return $this;
+    }
 
     /**
-     * @template F
-     * @param Result<T, F> $right
-     * @return Result<T, F> & $this
+     * @return $this
      */
-    public function or(Result $right): Result;
+    public function orElse(callable $right): Result
+    {
+        return $this;
+    }
 
-    /**
-     * @template F
-     * @param callable(E):Result<T, F> $right
-     * @return Result<T, F> & $this
-     */
-    public function orElse(callable $right): Result;
-
-    public function contains(mixed $value, bool $strict = true): bool;
+    public function contains(mixed $value, bool $strict = true): bool
+    {
+        return $strict
+            ? ($this->value === $value)
+            // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
+            : ($this->value == $value);
+    }
 
     /**
      * @return false
      */
-    public function containsErr(mixed $value, bool $strict = true): bool;
+    public function containsErr(mixed $value, bool $strict = true): bool
+    {
+        return false;
+    }
 
     /**
      * @template U
      * @param callable(T):U $callback
-     * @return Result<U, E> & Result\Ok<U, E>
+     * @return Result<U, E>
      */
-    public function map(callable $callback): Result;
+    public function map(callable $callback): Result
+    {
+        /** @var Result\Ok<U, E> */
+        return Result\ok($callback($this->value));
+    }
 
     /**
-     * @template F
-     * @param callable(E):F $callback
-     * @return Result<T, F> & Result\Ok<T, F>
+     * @return $this
      */
-    public function mapErr(callable $callback): Result;
+    public function mapErr(callable $callback): Result
+    {
+        return $this;
+    }
+
+    public function mapOr(callable $callback, mixed $default): mixed
+    {
+        return $callback($this->value);
+    }
+
+    public function mapOrElse(callable $callback, callable $default): mixed
+    {
+        return $callback($this->value);
+    }
 
     /**
-     * @template U
-     * @param callable(T):U $callback
-     * @param U $default
-     * @return U
+     * @return Option\Some<T>
      */
-    public function mapOr(callable $callback, mixed $default): mixed;
+    public function ok(): Option
+    {
+        /** @var Option\Some<T> */
+        return Option\some($this->value);
+    }
 
     /**
-     * @template U
-     * @param callable(T):U $callback
-     * @param callable(E):U $default
-     * @return U
+     * @return Option\None<E>
      */
-    public function mapOrElse(callable $callback, callable $default): mixed;
+    public function err(): Option
+    {
+        /** @var Option\None<E> */
+        return Option\none();
+    }
 
-    /**
-     * @return Option<T> & Option\Some<T>
-     */
-    public function extractOk(): Option;
-
-    /**
-     * @return Option<E> & Option\None<E>
-     */
-    public function extractErr(): Option;
+    public function getIterator(): \Traversable
+    {
+        yield $this->value;
+    }
 }

@@ -11,7 +11,8 @@
     "autoload-dev": {
         "psr-4": {
             "TH\\Maybe\\Tests\\": "tests/"
-        }
+        },
+        "files": ["src/functions/option.php", "src/functions/result.php"]
     },
     "authors": [
         {
@@ -27,7 +28,8 @@
         "phpstan/phpstan": "^1.4",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-strict-rules": "^1.1",
-        "phpstan/phpstan-phpunit": "^1.0"
+        "phpstan/phpstan-phpunit": "^1.0",
+        "vimeo/psalm": "^4.22"
     },
     "config": {
         "allow-plugins": {

@@ -5,10 +5,11 @@ namespace TH\Maybe\Tests\Option;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
+use TH\Maybe\Tests\Provider;
 
 class ContainsTest extends TestCase
 {
-    use ValuesProvider;
+    use Provider\Values;
 
     /**
      * @dataProvider containsMatrix
@@ -26,28 +27,28 @@ class ContainsTest extends TestCase
     {
         $o = (object)[];
 
-        yield [Option::none(),     null, false];
-        yield [Option::some(null), null, true];
+        yield [Option\none(),     null, false];
+        yield [Option\some(null), null, true];
 
-        yield [Option::none(),  0, false];
-        yield [Option::some(0), 0, true];
-        yield [Option::some(0), 1, false];
+        yield [Option\none(),  0, false];
+        yield [Option\some(0), 0, true];
+        yield [Option\some(0), 1, false];
 
-        yield [Option::none(),    [], false];
-        yield [Option::some([1]), [1], true];
-        yield [Option::some([1]), [2], false];
+        yield [Option\none(),    [], false];
+        yield [Option\some([1]), [1], true];
+        yield [Option\some([1]), [2], false];
 
-        yield [Option::none(),   $o, false];
-        yield [Option::some($o), $o, true];
-        yield [Option::some($o), (object)[], false];
-        yield [Option::some($o), (object)[], true, false];
+        yield [Option\none(),   $o, false];
+        yield [Option\some($o), $o, true];
+        yield [Option\some($o), (object)[], false];
+        yield [Option\some($o), (object)[], true, false];
     }
 
     public function testContainsDefaultsToStrict(): void
     {
         $o = (object)[];
 
-        Assert::assertFalse(Option::some($o)->contains((object)[]));
-        Assert::assertTrue(Option::some($o)->contains((object)[], strict: false));
+        Assert::assertFalse(Option\some($o)->contains((object)[]));
+        Assert::assertTrue(Option\some($o)->contains((object)[], strict: false));
     }
 }

@@ -5,10 +5,11 @@ namespace TH\Maybe\Tests\Result;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Provider;
 
 class ContainsTest extends TestCase
 {
-    use ValuesProvider;
+    use Provider\Values;
 
     /**
      * @dataProvider containsMatrix
@@ -26,29 +27,29 @@ class ContainsTest extends TestCase
     {
         $o = (object)[];
 
-        yield [Result::err(null), null, false];
-        yield [Result::ok(null) , null, true];
+        yield [Result\err(null), null, false];
+        yield [Result\ok(null) , null, true];
 
-        yield [Result::err(null), 0, false];
-        yield [Result::ok(0)    , 0, true];
-        yield [Result::ok(0)    , 1, false];
+        yield [Result\err(null), 0, false];
+        yield [Result\ok(0)    , 0, true];
+        yield [Result\ok(0)    , 1, false];
 
-        yield [Result::err(null), [], false];
-        yield [Result::ok([1])  , [1], true];
-        yield [Result::ok([1])  , [2], false];
+        yield [Result\err(null), [], false];
+        yield [Result\ok([1])  , [1], true];
+        yield [Result\ok([1])  , [2], false];
 
-        yield [Result::err(null), $o, false];
-        yield [Result::ok($o)   , $o, true];
-        yield [Result::ok($o)   , (object)[], false];
-        yield [Result::ok($o)   , (object)[], true, false];
+        yield [Result\err(null), $o, false];
+        yield [Result\ok($o)   , $o, true];
+        yield [Result\ok($o)   , (object)[], false];
+        yield [Result\ok($o)   , (object)[], true, false];
     }
 
     public function testContainsDefaultsToStrict(): void
     {
         $o = (object)[];
 
-        Assert::assertFalse(Result::ok($o)->contains((object)[]));
-        Assert::assertTrue(Result::ok($o)->contains((object)[], strict: false));
+        Assert::assertFalse(Result\ok($o)->contains((object)[]));
+        Assert::assertTrue(Result\ok($o)->contains((object)[], strict: false));
     }
 
     /**
@@ -67,28 +68,28 @@ class ContainsTest extends TestCase
     {
         $o = (object)[];
 
-        yield [Result::ok(null) , null, false];
-        yield [Result::err(null), null, true];
+        yield [Result\ok(null) , null, false];
+        yield [Result\err(null), null, true];
 
-        yield [Result::ok(null), 0, false];
-        yield [Result::err(0)  , 0, true];
-        yield [Result::err(0)  , 1, false];
+        yield [Result\ok(null), 0, false];
+        yield [Result\err(0)  , 0, true];
+        yield [Result\err(0)  , 1, false];
 
-        yield [Result::ok(null), [], false];
-        yield [Result::err([1]), [1], true];
-        yield [Result::err([1]), [2], false];
+        yield [Result\ok(null), [], false];
+        yield [Result\err([1]), [1], true];
+        yield [Result\err([1]), [2], false];
 
-        yield [Result::ok(null), $o, false];
-        yield [Result::err($o) , $o, true];
-        yield [Result::err($o) , (object)[], false];
-        yield [Result::err($o) , (object)[], true, false];
+        yield [Result\ok(null), $o, false];
+        yield [Result\err($o) , $o, true];
+        yield [Result\err($o) , (object)[], false];
+        yield [Result\err($o) , (object)[], true, false];
     }
 
     public function testContainsErrDefaultsToStrict(): void
     {
         $o = (object)[];
 
-        Assert::assertFalse(Result::err($o)->containsErr((object)[]));
-        Assert::assertTrue(Result::err($o)->containsErr((object)[], strict: false));
+        Assert::assertFalse(Result\err($o)->containsErr((object)[]));
+        Assert::assertTrue(Result\err($o)->containsErr((object)[], strict: false));
     }
 }

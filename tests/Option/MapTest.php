@@ -44,16 +44,16 @@ class MapTest extends TestCase
     public function mapMatrix(): iterable
     {
         yield "none" => [
-            Option::none(),
+            Option\none(),
             "fish",
-            Option::none(),
+            Option\none(),
             [],
         ];
 
         yield "some" => [
-            Option::some(42),
+            Option\some(42),
             "fish",
-            Option::some("fish"),
+            Option\some("fish"),
             [42],
         ];
     }
@@ -101,7 +101,7 @@ class MapTest extends TestCase
     public function mapOrMatrix(): iterable
     {
         yield "none" => [
-            Option::none(),
+            Option\none(),
             "fish",
             "fishes",
             "fishes",
@@ -109,7 +109,7 @@ class MapTest extends TestCase
         ];
 
         yield "some" => [
-            Option::some(42),
+            Option\some(42),
             "fish",
             "fishes",
             "fish",

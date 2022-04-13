@@ -7,329 +7,28 @@ namespace TH\Maybe;
  * and contains a value, or `None`, and does not.
  *
  * @template T
+ * @extends \IteratorAggregate<T>
  * @immutable
- * @implements \IteratorAggregate<T>
  */
-abstract class Option implements \IteratorAggregate
+interface Option extends \IteratorAggregate
 {
-    final private function __construct() {}
-
-    /**
-     * Return a `None` option
-     *
-     * @return Option<never> & Option\None<never>
-     */
-    public static function none(): Option & Option\None
-    {
-        static $none;
-
-        /**
-         * @extends Option<never>
-         * @implements Option\None
-         */
-        $none ??= new class () extends Option implements Option\None
-        {
-            public function expect(string $message): never
-            {
-                throw new \RuntimeException($message);
-            }
-
-            public function unwrap(): never
-            {
-                $this->expect("Unwrapping a `None` value");
-            }
-        };
-
-        return $none;
-    }
-
-    /**
-     * Return a `Some` option containing `$value`
-     *
-     * @template U
-     * @param U $value
-     * @return Option<U> & Option\Some<U>
-     */
-    public static function some(mixed $value): Option & Option\Some
-    {
-        /**
-         * @extends Option<U>
-         * @implements Option\Some<U>
-         */
-        $some = new class () extends Option implements Option\Some {
-            /**
-             * @var U
-             */
-            protected mixed $value;
-
-            public function expect(string $message): mixed
-            {
-                return $this->value;
-            }
-
-            public function unwrap(): mixed
-            {
-                return $this->value;
-            }
-
-            public function unwrapOr(mixed $default): mixed
-            {
-                return $this->value;
-            }
-
-            public function unwrapOrElse(callable $default): mixed
-            {
-                return $this->value;
-            }
-
-            /**
-             * @return $this
-             */
-            public function inspect(callable $callback): self
-            {
-                $callback($this->value);
-
-                return $this;
-            }
-
-            public function and(Option $right): Option
-            {
-                return $right;
-            }
-
-            /**
-             * @template V
-             * @param callable(U):Option<V> $right
-             * @return Option<V>
-             */
-            public function andThen(callable $right): Option
-            {
-                return $right($this->value);
-            }
-
-            /**
-             * @param Option<U> $right
-             * @return $this
-             */
-            public function or(Option $right): Option
-            {
-                return $this;
-            }
-
-            /**
-             * @param callable():Option<U> $right
-             * @return $this
-             */
-            public function orElse(callable $right): Option
-            {
-                return $this;
-            }
-
-            /**
-             * @param Option<U> $right
-             * @return Option<U>
-             */
-            public function xor(Option $right): Option
-            {
-                return $right instanceof Option\None
-                    ? $this
-                    : Option::none();
-            }
-
-            public function contains(mixed $value, bool $strict = true): bool
-            {
-                return $strict
-                    ? ($this->value === $value)
-                    // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-                    : ($this->value == $value);
-            }
-
-            /**
-             * @param callable(U):bool $predicate
-             * @return Option<U>
-             */
-            public function filter(callable $predicate): Option
-            {
-                return $predicate($this->value)
-                    ? $this
-                    : Option::none();
-            }
-
-            /**
-             * @template V
-             * @param callable(U):V $callback
-             * @return Option<V> & Option\Some<V>
-             */
-            public function map(callable $callback): Option
-            {
-                return Option::some($callback($this->value));
-            }
-
-            /**
-             * @template V
-             * @param callable(U):V $callback
-             * @param V $default
-             * @return V
-             */
-            public function mapOr(callable $callback, mixed $default): mixed
-            {
-                return $callback($this->value);
-            }
-
-            /**
-             * @template V
-             * @param callable(U):V $callback
-             * @param V $default
-             * @return V
-             */
-            public function mapOrElse(callable $callback, mixed $default): mixed
-            {
-                return $callback($this->value);
-            }
-
-            /**
-             * @template V
-             * @param Option<V> $option
-             * @return Option<array{U, V}>
-             */
-            public function zip(Option $option): Option
-            {
-                // @phpstan-ignore-next-line zip() should return Option<array{U, V}> but returns Option<array{U, mixed}>
-                return $option->map(
-                    /**
-                     * @param V $value
-                     * @return array{U, V}
-                     */
-                    fn (mixed $value): array => [$this->value, $value],
-                );
-            }
-
-            /**
-             * @template E
-             * @param E $err
-             * @return Result<U, E> & Result\Ok<U, E>
-             */
-            public function okOr(mixed $err): Result
-            {
-                return Result::ok($this->value);
-            }
-
-            /**
-             * @template E
-             * @param callable():E $err
-             * @return Result<U, E> & Result\Ok<U, E>
-             */
-            public function okOrElse(callable $err): Result
-            {
-                return Result::ok($this->value);
-            }
-
-            public function getIterator(): \Traversable
-            {
-                yield $this->value;
-            }
-        };
-
-        $some->value = $value;
-
-        return $some;
-    }
-
-    /**
-     * Transform a value into an Option.
-     * It will be a Some option containing $value if $value is different from $noneValue (default `null`)
-     *
-     * @template U
-     * @param U $value
-     * @return Option<U>
-     */
-    public static function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): Option
-    {
-        $same = $strict
-            ? ($value === $noneValue)
-            // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-            : ($value == $noneValue);
-
-        return $same
-            ? Option::none()
-            : Option::some($value);
-    }
-
-    /**
-     * Converts from `Option<Option<T>>` to `Option<T>`.
-     *
-     * @template U
-     * @param Option<Option<U>> $option
-     * @return Option<U>
-     */
-    public static function flatten(Option $option): Option
-    {
-        /** @var Option<U> */
-        return $option instanceof Option\None
-            ? Option::none()
-            : $option->unwrap();
-    }
-
-    /**
-     * Unzips an option containing a tuple of two options.
-     *
-     * If `self` is `Some([a, b])` this method returns `[Some(a), Some(b)]`. Otherwise, `[None, None]` is returned.
-     *
-     * @template U
-     * @template V
-     * @param Option<array{U, V}> $option
-     * @return array{Option<U>, Option<V>}
-     */
-    public static function unzip(Option $option): array
-    {
-        if ($option instanceof Option\None) {
-            /** @var array{Option<U>, Option<V>} */
-            return [Option::none(), Option::none()];
-        }
-
-        [$left, $right] = $option->unwrap();
-
-        return [Option::some($left), Option::some($right)];
-    }
-
-    /**
-     * Transposes an `Option` of a `Result` into a `Result` of an `Option`.
-     *
-     * `None` will be mapped to `Ok(None)`.
-     * `Some(Ok(_))` and `Some(Err(_))` will be mapped to `Ok(Some(_))` and `Err(_)`.
-     *
-     * @template U
-     * @template E
-     * @param Option<Result<U, E>> $option
-     * @return Result<Option<U>, E>
-     */
-    public static function transpose(Option $option): Result
-    {
-        if ($option instanceof Option\None) {
-            /** @var Result<Option<U>, E> */
-            return Result::ok(Option::none());
-        }
-
-        return $option->unwrap()->map(Option::some(...));
-    }
-
     /**
      * Extract the contained value in an `Option<T>` when it is the `Some` variant.
      * Throw a `RuntimeException` with a custum provided message if the `Option` is `None`.
      *
      * @return T
-     * @throw \RuntimeException
+     * @throws \RuntimeException
      */
-    abstract public function expect(string $message): mixed;
+    public function expect(string $message): mixed;
 
     /**
      * Extract the contained value in an `Option<T>` when it is the `Some` variant.
      * Throw a `RuntimeException` with a generic message if the `Option` is `None`.
      *
      * @return T
-     * @throw \RuntimeException
+     * @throws \RuntimeException
      */
-    abstract public function unwrap(): mixed;
+    public function unwrap(): mixed;
 
     /**
      * Extract the contained value in an `Option<T>` when it is the `Some` variant.
@@ -338,10 +37,7 @@ abstract class Option implements \IteratorAggregate
      * @param T $default
      * @return T
      */
-    public function unwrapOr(mixed $default): mixed
-    {
-        return $default;
-    }
+    public function unwrapOr(mixed $default): mixed;
 
     /**
      * Returns the contained `Some` value or computes it from a closure.
@@ -349,10 +45,7 @@ abstract class Option implements \IteratorAggregate
      * @param callable():T $default
      * @return T
      */
-    public function unwrapOrElse(callable $default): mixed
-    {
-        return $default();
-    }
+    public function unwrapOrElse(callable $default): mixed;
 
     /**
      * Calls the provided closure with a reference to the contained value (if `Some`).
@@ -360,10 +53,7 @@ abstract class Option implements \IteratorAggregate
      * @param callable(T):mixed $callback
      * @return $this
      */
-    public function inspect(callable $callback): self
-    {
-        return $this;
-    }
+    public function inspect(callable $callback): self;
 
     /**
      * Returns `None` if the option is `None`, otherwise returns `$right`.
@@ -372,10 +62,7 @@ abstract class Option implements \IteratorAggregate
      * @param Option<U> $right
      * @return Option<U>
      */
-    public function and(Option $right): self
-    {
-        return $this;
-    }
+    public function and(Option $right): Option;
 
     /**
      * Returns `None` if the option is `None`, otherwise calls `$right` with the wrapped value and returns the result.
@@ -384,10 +71,7 @@ abstract class Option implements \IteratorAggregate
      * @param callable(T):Option<U> $right
      * @return Option<U>
      */
-    public function andThen(callable $right): Option
-    {
-        return $this;
-    }
+    public function andThen(callable $right): Option;
 
     /**
      * Returns the option if it contains a value, otherwise returns `$right`.
@@ -395,10 +79,7 @@ abstract class Option implements \IteratorAggregate
      * @param Option<T> $right
      * @return Option<T>
      */
-    public function or(Option $right): self
-    {
-        return $right;
-    }
+    public function or(Option $right): Option;
 
     /**
      * Returns the option if it contains a value, otherwise calls `$right` and returns the result.
@@ -406,10 +87,7 @@ abstract class Option implements \IteratorAggregate
      * @param callable():Option<T> $right
      * @return Option<T>
      */
-    public function orElse(callable $right): Option
-    {
-        return $right();
-    }
+    public function orElse(callable $right): Option;
 
     /**
      * Returns the option if it is `Some`, otherwise returns `$right`.
@@ -417,18 +95,12 @@ abstract class Option implements \IteratorAggregate
      * @param Option<T> $right
      * @return Option<T>
      */
-    public function xor(Option $right): self
-    {
-        return $right;
-    }
+    public function xor(Option $right): Option;
 
     /**
      * Returns true if the option is a `Some` value containing the given value.
      */
-    public function contains(mixed $value, bool $strict = true): bool
-    {
-        return false;
-    }
+    public function contains(mixed $value, bool $strict = true): bool;
 
     /**
      * Returns `None` if the option is `None`, otherwise calls `$predicate` with the wrapped value and returns:
@@ -438,10 +110,7 @@ abstract class Option implements \IteratorAggregate
      * @param callable(T):bool $predicate
      * @return Option<T>
      */
-    public function filter(callable $predicate): Option
-    {
-        return $this;
-    }
+    public function filter(callable $predicate): Option;
 
     /**
      * Maps an `Option<T>` to `Option<U>` by applying a function to a contained value.
@@ -450,10 +119,7 @@ abstract class Option implements \IteratorAggregate
      * @param callable(T):U $callback
      * @return Option<U>
      */
-    public function map(callable $callback): Option
-    {
-        return $this;
-    }
+    public function map(callable $callback): Option;
 
     /**
      * Returns the provided default result (if `None`), or applies a function to
@@ -464,10 +130,7 @@ abstract class Option implements \IteratorAggregate
      * @param U $default
      * @return U
      */
-    public function mapOr(callable $callback, mixed $default): mixed
-    {
-        return $default;
-    }
+    public function mapOr(callable $callback, mixed $default): mixed;
 
     /**
      * Computes a default function result (if `None`), or applies a different
@@ -478,24 +141,19 @@ abstract class Option implements \IteratorAggregate
      * @param callable():U $default
      * @return U
      */
-    public function mapOrElse(callable $callback, callable $default): mixed
-    {
-        return $default();
-    }
+    public function mapOrElse(callable $callback, callable $default): mixed;
 
     /**
-     * Zips `self` with another `Option`.
+     * Zips `$this` with another `Option`.
      *
-     * If `self` is `Some(s)` and other is `Some(o)`, this method returns `Some([s, o])`. Otherwise, `None` is returned.
+     * If `$this` is `Some(s)` and other is `Some(o)`, this method returns `Some([s, o])`.
+     * Otherwise, `None` is returned.
      *
      * @template U
      * @param Option<U> $option
      * @return Option<array{T, U}>
      */
-    public function zip(Option $option): Option
-    {
-        return $this;
-    }
+    public function zip(Option $option): Option;
 
     /**
      * Transforms the `Option<T>` into a `Result<T, E>`, mapping `Some(v)` to `Ok(v)` and `None` to `Err(err)`.
@@ -504,10 +162,7 @@ abstract class Option implements \IteratorAggregate
      * @param E $err
      * @return Result<T, E>
      */
-    public function okOr(mixed $err): Result
-    {
-        return Result::err($err);
-    }
+    public function okOr(mixed $err): Result;
 
     /**
      * Transforms the `Option<T>` into a `Result<T, E>`, mapping `Some(v)` to `Ok(v)` and `None` to `Err(err())`.
@@ -516,13 +171,5 @@ abstract class Option implements \IteratorAggregate
      * @param callable():E $err
      * @return Result<T, E>
      */
-    public function okOrElse(callable $err): Result
-    {
-        return Result::err($err());
-    }
-
-    public function getIterator(): \Traversable
-    {
-        return new \EmptyIterator();
-    }
+    public function okOrElse(callable $err): Result;
 }

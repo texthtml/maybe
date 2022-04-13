@@ -18,8 +18,8 @@ class FilterTest extends TestCase
     {
         $calls = [];
 
-        Assert::assertSame(
-            $expectNone ? Option::none() : $option,
+        Assert::assertEquals(
+            $expectNone ? Option\none() : $option,
             $option->filter(static function(mixed $value) use ($filterResult, &$calls): bool {
                 $calls[] = $value;
 
@@ -41,28 +41,28 @@ class FilterTest extends TestCase
     public function filterMatrix(): iterable
     {
         yield "none-true" => [
-            Option::none(),
+            Option\none(),
             true,
             true,
             [],
         ];
 
         yield "none-false" => [
-            Option::none(),
+            Option\none(),
             false,
             true,
             [],
         ];
 
         yield "some-true" => [
-            Option::some(5),
+            Option\some(5),
             true,
             false,
             [5],
         ];
 
         yield "some-false" => [
-            Option::some(42),
+            Option\some(42),
             false,
             true,
             [42],

@@ -5,10 +5,11 @@ namespace TH\Maybe\Tests\Result;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Provider;
 
 class BooleanTest extends TestCase
 {
-    use ResultsProvider;
+    use Provider\Results;
 
     /**
      * @dataProvider andMatrix

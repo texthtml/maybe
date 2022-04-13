@@ -15,7 +15,7 @@ class FlattenTest extends TestCase
      */
     public function testFlatten(Result $expected, Result $result): void
     {
-        Assert::assertSame($expected, Result::flatten($result));
+        Assert::assertSame($expected, Result\flatten($result));
     }
 
     /**
@@ -23,14 +23,14 @@ class FlattenTest extends TestCase
      */
     public function flattenMatrix(): iterable
     {
-        $err = Result::err(null);
+        $err = Result\err(null);
 
         yield "err" => [$err, $err];
 
-        yield "ok(err)" => [$err, Result::ok($err)];
+        yield "ok(err)" => [$err, Result\ok($err)];
 
-        $leaf = Result::ok(null);
+        $leaf = Result\ok(null);
 
-        yield "ok(ok(…))" => [$leaf, Result::ok($leaf)];
+        yield "ok(ok(…))" => [$leaf, Result\ok($leaf)];
     }
 }

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace TH\Maybe\Tests\Result;
+namespace TH\Maybe\Tests\Provider;
 
 use TH\Maybe\Result;
 
-trait ResultsProvider
+trait Results
 {
     /**
      * @return iterable<string, array{
@@ -15,10 +15,10 @@ trait ResultsProvider
      */
     public function andMatrix(): iterable
     {
-        $errLeft = Result::err("left");
-        $errRight = Result::err("right");
-        $okLeft = Result::ok("left");
-        $okRight = Result::ok("right");
+        $errLeft = Result\err("left");
+        $errRight = Result\err("right");
+        $okLeft = Result\ok("left");
+        $okRight = Result\ok("right");
 
         yield "err-err" => [
             "left"     => $errLeft,
@@ -54,10 +54,10 @@ trait ResultsProvider
      */
     public function orMatrix(): iterable
     {
-        $errLeft = Result::err("left");
-        $errRight = Result::err("right");
-        $okLeft = Result::ok("left");
-        $okRight = Result::ok("right");
+        $errLeft = Result\err("left");
+        $errRight = Result\err("right");
+        $okLeft = Result\ok("left");
+        $okRight = Result\ok("right");
 
         yield "err-err" => [
             "left"     => $errLeft,

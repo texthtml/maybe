@@ -5,10 +5,11 @@ namespace TH\Maybe\Tests\Option;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
+use TH\Maybe\Tests\Provider;
 
 class BooleanTest extends TestCase
 {
-    use OptionsProvider;
+    use Provider\Options;
 
     /**
      * @dataProvider andMatrix
@@ -89,6 +90,6 @@ class BooleanTest extends TestCase
      */
     public function testXor(Option $left, Option $right, Option $expected): void
     {
-        Assert::assertSame($expected, $left->xor($right));
+        Assert::assertEquals($expected, $left->xor($right));
     }
 }
