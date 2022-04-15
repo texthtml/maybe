@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Provider;
 
-class UnwrapTest extends TestCase
+final class UnwrapTest extends TestCase
 {
     use Provider\Values;
 

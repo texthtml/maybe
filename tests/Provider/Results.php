@@ -15,33 +15,28 @@ trait Results
      */
     public function andMatrix(): iterable
     {
-        $errLeft = Result\err("left");
-        $errRight = Result\err("right");
-        $okLeft = Result\ok("left");
-        $okRight = Result\ok("right");
-
         yield "err-err" => [
-            "left"     => $errLeft,
-            "right"    => $errLeft,
-            "expected" => $errLeft,
+            "left"     => Result\err("left"),
+            "right"    => Result\err("left"),
+            "expected" => Result\err("left"),
         ];
 
         yield "err-ok" => [
-            "left"     => $errLeft,
-            "right"    => $okRight,
-            "expected" => $errLeft,
+            "left"     => Result\err("left"),
+            "right"    => Result\ok("right"),
+            "expected" => Result\err("left"),
         ];
 
         yield "ok-ok" => [
-            "left"     => $okLeft,
-            "right"    => $okRight,
-            "expected" => $okRight,
+            "left"     => Result\ok("left"),
+            "right"    => Result\ok("right"),
+            "expected" => Result\ok("right"),
         ];
 
         yield "ok-err" => [
-            "left"     => $okLeft,
-            "right"    => $errRight,
-            "expected" => $errRight,
+            "left"     => Result\ok("left"),
+            "right"    => Result\err("right"),
+            "expected" => Result\err("right"),
         ];
     }
 
@@ -54,33 +49,28 @@ trait Results
      */
     public function orMatrix(): iterable
     {
-        $errLeft = Result\err("left");
-        $errRight = Result\err("right");
-        $okLeft = Result\ok("left");
-        $okRight = Result\ok("right");
-
         yield "err-err" => [
-            "left"     => $errLeft,
-            "right"    => $errRight,
-            "expected" => $errRight,
+            "left"     => Result\err("left"),
+            "right"    => Result\err("right"),
+            "expected" => Result\err("right"),
         ];
 
         yield "err-ok" => [
-            "left"     => $errLeft,
-            "right"    => $okRight,
-            "expected" => $okRight,
+            "left"     => Result\err("left"),
+            "right"    => Result\ok("right"),
+            "expected" => Result\ok("right"),
         ];
 
         yield "ok-ok" => [
-            "left"     => $okLeft,
-            "right"    => $okRight,
-            "expected" => $okLeft,
+            "left"     => Result\ok("left"),
+            "right"    => Result\ok("right"),
+            "expected" => Result\ok("left"),
         ];
 
         yield "ok-err" => [
-            "left"     => $okLeft,
-            "right"    => $errRight,
-            "expected" => $okLeft,
+            "left"     => Result\ok("left"),
+            "right"    => Result\err("right"),
+            "expected" => Result\ok("left"),
         ];
     }
 }

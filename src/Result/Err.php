@@ -12,16 +12,22 @@ use TH\Maybe\Result;
  */
 final class Err implements Result
 {
+    use MustBeUsed;
+
     /**
      * @param E $value
      */
-    public function __construct(private mixed $value) {}
+    public function __construct(private mixed $value) {
+        $this->mustBeUsed();
+    }
 
     /**
      * @throws \RuntimeException
      */
     public function expect(string $message): never
     {
+        $this->used();
+
         if ($this->value instanceof \Throwable) {
             throw new \RuntimeException($message, previous: $this->value);
         }
@@ -34,6 +40,8 @@ final class Err implements Result
      */
     public function unwrap(): never
     {
+        $this->used();
+
         if ($this->value instanceof \Throwable) {
             throw $this->value;
         }
@@ -46,6 +54,8 @@ final class Err implements Result
      */
     public function unwrapErr(): mixed
     {
+        $this->used();
+
         return $this->value;
     }
 
@@ -58,20 +68,26 @@ final class Err implements Result
      */
     public function unwrapOr(mixed $default): mixed
     {
+        $this->used();
+
         return $default;
     }
 
     public function unwrapOrElse(callable $default): mixed
     {
+        $this->used();
+
         return $default($this->value);
     }
 
     /**
-     * @return $this
+     * @return self<T,E>
      */
     public function inspect(callable $callback): self
     {
-        return $this;
+        $this->used();
+
+        return clone $this;
     }
 
     /**
@@ -85,28 +101,38 @@ final class Err implements Result
     }
 
     /**
-     * @return $this
+     * @return self<T,E>
      */
     public function and(Result $right): self
     {
-        return $this;
+        $this->used();
+        $right->ok(); // use this result
+
+        return clone $this;
     }
 
     /**
-     * @return $this
+     * @return self<T,E>
      */
     public function andThen(callable $right): Result
     {
-        return $this;
+        $this->used();
+
+        return clone $this;
     }
 
     public function or(Result $right): Result
     {
-        return $right;
+        $this->used();
+        $right->ok(); // use this result
+
+        return clone $right;
     }
 
     public function orElse(callable $right): Result
     {
+        $this->used();
+
         return $right($this->value);
     }
 
@@ -115,11 +141,15 @@ final class Err implements Result
      */
     public function contains(mixed $value, bool $strict = true): bool
     {
+        $this->used();
+
         return false;
     }
 
     public function containsErr(mixed $value, bool $strict = true): bool
     {
+        $this->used();
+
         return $strict
             ? ($this->value === $value)
             // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
@@ -127,11 +157,13 @@ final class Err implements Result
     }
 
     /**
-     * @return $this
+     * @return self<T,E>
      */
     public function map(callable $callback): Result
     {
-        return $this;
+        $this->used();
+
+        return clone $this;
     }
 
     /**
@@ -141,12 +173,16 @@ final class Err implements Result
      */
     public function mapErr(callable $callback): Result
     {
+        $this->used();
+
         /** @var Result\Err<T, F> */
         return Result\err($callback($this->value));
     }
 
     public function mapOr(callable $callback, mixed $default): mixed
     {
+        $this->used();
+
         return $default;
     }
 
@@ -170,11 +206,15 @@ final class Err implements Result
 
     public function mapOrElse(callable $callback, callable $default): mixed
     {
+        $this->used();
+
         return $default($this->value);
     }
 
     public function getIterator(): \Traversable
     {
+        $this->used();
+
         return new \EmptyIterator();
     }
 }

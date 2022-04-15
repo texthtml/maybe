@@ -2,27 +2,36 @@
 
 namespace TH\Maybe\Tests\Result;
 
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Assert;
 
-class InterfaceTest extends TestCase
+final class InterfaceTest extends TestCase
 {
     public function testInstanceOfResult(): void
     {
-        Assert::assertInstanceOf(Result::class, Result\err(null));
-        Assert::assertInstanceOf(Result::class, Result\ok(null));
+        Assert::assertInstanceOf(Result::class, $result = Result\err(null));
+        Assert::assertResultNotUsed($result);
+
+        Assert::assertInstanceOf(Result::class, $result = Result\ok(null));
+        Assert::assertResultNotUsed($result);
     }
 
     public function testInstanceOfErr(): void
     {
-        Assert::assertInstanceOf(Result\Err::class, Result\err(null));
-        Assert::assertNotInstanceOf(Result\Err::class, Result\ok(null));
+        Assert::assertInstanceOf(Result\Err::class, $result = Result\err(null));
+        Assert::assertResultNotUsed($result);
+
+        Assert::assertNotInstanceOf(Result\Err::class, $result = Result\ok(null));
+        Assert::assertResultNotUsed($result);
     }
 
     public function testInstanceOfOk(): void
     {
-        Assert::assertNotInstanceOf(Result\Ok::class, Result\err(null));
-        Assert::assertInstanceOf(Result\Ok::class, Result\ok(null));
+        Assert::assertNotInstanceOf(Result\Ok::class, $result = Result\err(null));
+        Assert::assertResultNotUsed($result);
+
+        Assert::assertInstanceOf(Result\Ok::class, $result = Result\ok(null));
+        Assert::assertResultNotUsed($result);
     }
 }

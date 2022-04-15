@@ -2,12 +2,12 @@
 
 namespace TH\Maybe\Tests\Result;
 
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Assert;
 use TH\Maybe\Tests\Provider;
 
-class InspectTest extends TestCase
+final class InspectTest extends TestCase
 {
     use Provider\Values;
 
@@ -22,6 +22,8 @@ class InspectTest extends TestCase
 
         Assert::assertSame($result, $result);
         Assert::assertSame([$value], $calls);
+
+        Assert::assertResultNotUsed($result);
     }
 
     public function testInspectNone(): void
@@ -32,6 +34,8 @@ class InspectTest extends TestCase
 
         Assert::assertSame($result, $result);
         Assert::assertSame([], $calls);
+
+        Assert::assertResultNotUsed($result);
     }
 
     /**

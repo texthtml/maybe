@@ -2,13 +2,13 @@
 
 namespace TH\Maybe\Tests\Option;
 
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Assert;
 use TH\Maybe\Tests\Provider;
 
-class ConvertToResultTest extends TestCase
+final class ConvertToResultTest extends TestCase
 {
     use Provider\Transpose;
 
@@ -19,7 +19,10 @@ class ConvertToResultTest extends TestCase
      */
     public function testOkOr(Option $option, mixed $err, Result $expected): void
     {
-        Assert::assertEquals($expected, $option->okOr($err));
+        Assert::assertEquals($expected, $result = $option->okOr($err));
+
+        Assert::assertResultNotUsed($expected);
+        Assert::assertResultNotUsed($result);
     }
 
     /**
@@ -31,11 +34,14 @@ class ConvertToResultTest extends TestCase
     {
         $calls = 0;
 
-        Assert::assertEquals($expected, $option->okOrElse(static function() use ($err, &$calls): mixed {
+        Assert::assertEquals($expected, $result = $option->okOrElse(static function() use ($err, &$calls): mixed {
             $calls++;
 
             return $err;
         }));
+
+        Assert::assertResultNotUsed($expected);
+        Assert::assertResultNotUsed($result);
 
         Assert::assertSame($expectedCalls, $calls);
     }
@@ -63,10 +69,13 @@ class ConvertToResultTest extends TestCase
     /**
      * @dataProvider transposeMatrix
      * @param Option<Result<mixed, mixed>> $option
-     * @param Result<mixed, mixed> $result
+     * @param Result<mixed, mixed> $expected
      */
-    public function testTranspose(Option $option, Result $result): void
+    public function testTranspose(Option $option, Result $expected): void
     {
-        Assert::assertEquals($result, Option\transpose($option));
+        Assert::assertEquals($expected, $result = Option\transpose($option));
+
+        Assert::assertResultNotUsed($expected);
+        Assert::assertResultNotUsed($result);
     }
 }

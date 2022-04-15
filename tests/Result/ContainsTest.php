@@ -2,12 +2,12 @@
 
 namespace TH\Maybe\Tests\Result;
 
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Assert;
 use TH\Maybe\Tests\Provider;
 
-class ContainsTest extends TestCase
+final class ContainsTest extends TestCase
 {
     use Provider\Values;
 
@@ -18,6 +18,8 @@ class ContainsTest extends TestCase
     public function testContains(Result $result, mixed $value, bool $expect, bool $strict = true): void
     {
         Assert::assertSame($expect, $result->contains($value, strict: $strict));
+
+        Assert::assertResultUsed($result);
     }
 
     /**

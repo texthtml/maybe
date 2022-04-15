@@ -2,18 +2,23 @@
 
 namespace TH\Maybe\Tests\Result;
 
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Assert;
 
-class IterateTest extends TestCase
+final class IterateTest extends TestCase
 {
     public function testIterateResults(): void
     {
-        Assert::assertIsIterable(Result\err(null));
-        Assert::assertSame([], \iterator_to_array(Result\err(null)));
+        Assert::assertIsIterable($result = Result\err(null));
+        Assert::assertResultNotUsed($result);
 
-        Assert::assertIsIterable(Result\ok(42));
-        Assert::assertSame([42], \iterator_to_array(Result\ok(42)));
+        Assert::assertSame([], \iterator_to_array($result = Result\err(null)));
+        Assert::assertResultUsed($result);
+
+        Assert::assertIsIterable($result = Result\ok(42));
+        Assert::assertResultNotUsed($result);
+        Assert::assertSame([42], \iterator_to_array($result = Result\ok(42)));
+        Assert::assertResultUsed($result);
     }
 }

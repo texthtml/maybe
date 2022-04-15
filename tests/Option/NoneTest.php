@@ -6,7 +6,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 
-class NoneTest extends TestCase
+final class NoneTest extends TestCase
 {
     public function testNoneIsASingleton(): void
     {

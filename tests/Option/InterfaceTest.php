@@ -6,7 +6,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 
-class InterfaceTest extends TestCase
+final class InterfaceTest extends TestCase
 {
     public function testInstanceOfOption(): void
     {

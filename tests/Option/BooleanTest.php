@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Provider;
 
-class BooleanTest extends TestCase
+final class BooleanTest extends TestCase
 {
     use Provider\Options;
 

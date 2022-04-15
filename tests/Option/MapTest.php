@@ -6,7 +6,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 
-class MapTest extends TestCase
+final class MapTest extends TestCase
 {
     /**
      * @dataProvider mapMatrix

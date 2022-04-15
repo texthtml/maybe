@@ -5,7 +5,7 @@ namespace TH\Maybe\Tests\Option;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 
-class FinalTest extends TestCase
+final class FinalTest extends TestCase
 {
     // @phpstan-ignore
     public function testCannotInstanciateThirdPartyNone(): void
@@ -17,8 +17,8 @@ class FinalTest extends TestCase
             "Class TH\Maybe\Option\None@anonymous cannot extend final class TH\Maybe\Option\None",
         );
 
-        // @phpstan-ignore-next-line
-        new class () extends Option\None {};
+        new class () extends Option\None {
+        };
     }
 
     public function testCannotInstanciateThirdPartySome(): void
@@ -30,8 +30,8 @@ class FinalTest extends TestCase
             "Class TH\Maybe\Option\Some@anonymous cannot extend final class TH\Maybe\Option\Some",
         );
 
-        // @phpstan-ignore-next-line
-        new class () extends Option\Some {};
+        new class () extends Option\Some {
+        };
     }
 
     public function testCannotInstanciateThirdPartyOption(): void
@@ -43,7 +43,6 @@ class FinalTest extends TestCase
             "Call to private TH\Maybe\Option::__construct() from scope TH\Maybe\Tests\Option\FinalTest",
         );
 
-        // @phpstan-ignore-next-line
         new class () implements Option {
             public function expect(string $message): mixed
             {

@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Provider;
 
-class InspectTest extends TestCase
+final class InspectTest extends TestCase
 {
     use Provider\Values;
 

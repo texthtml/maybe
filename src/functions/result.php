@@ -39,7 +39,7 @@ function ok(mixed $value): Result\Ok
  */
 function flatten(Result $result): Result
 {
-    return $result->unwrapOr($result);
+    return $result->unwrapOrElse(static fn (): Result => clone $result);
 }
 
 /**
@@ -57,6 +57,6 @@ function transpose(Result $result): Option
 {
     return $result->mapOrElse(
         static fn (Option $option) => $option->map(Result\ok(...)),
-        static fn () => Option\some($result),
+        static fn () => Option\some(clone $result),
     );
 }

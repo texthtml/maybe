@@ -6,7 +6,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 
-class FlattenTest extends TestCase
+final class FlattenTest extends TestCase
 {
     /**
      * @dataProvider flattenMatrix

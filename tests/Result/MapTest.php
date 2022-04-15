@@ -2,11 +2,11 @@
 
 namespace TH\Maybe\Tests\Result;
 
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Assert;
 
-class MapTest extends TestCase
+final class MapTest extends TestCase
 {
     /**
      * @dataProvider mapMatrix
@@ -23,12 +23,16 @@ class MapTest extends TestCase
 
         Assert::assertEquals(
             $expected,
-            $result->map(static function(mixed $value) use ($mapResult, &$calls): mixed {
+            $result2 = $result->map(static function(mixed $value) use ($mapResult, &$calls): mixed {
                 $calls[] = $value;
 
                 return $mapResult;
             }),
         );
+
+        Assert::assertResultNotUsed($expected);
+        Assert::assertResultUsed($result);
+        Assert::assertResultNotUsed($result2);
 
         Assert::assertSame($expectedCalls, $calls);
     }
@@ -73,12 +77,16 @@ class MapTest extends TestCase
 
         Assert::assertEquals(
             $expected,
-            $result->mapErr(static function(mixed $value) use ($mapResult, &$calls): mixed {
+            $result2 = $result->mapErr(static function(mixed $value) use ($mapResult, &$calls): mixed {
                 $calls[] = $value;
 
                 return $mapResult;
             }),
         );
+
+        Assert::assertResultNotUsed($expected);
+        Assert::assertResultUsed($result);
+        Assert::assertResultNotUsed($result2);
 
         Assert::assertSame($expectedCalls, $calls);
     }
@@ -135,6 +143,8 @@ class MapTest extends TestCase
                 return $mapResult;
             }, $default),
         );
+
+        Assert::assertResultUsed($result);
 
         Assert::assertSame($expectedCalls, $calls);
     }

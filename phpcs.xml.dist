@@ -82,6 +82,7 @@
                 <element value="all public methods"/>
                 <element value="methods"/>
                 <element value="magic methods"/>
+                <element value="destructor"/>
             </property>
         </properties>
     </rule>

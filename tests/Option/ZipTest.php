@@ -6,7 +6,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 
-class ZipTest extends TestCase
+final class ZipTest extends TestCase
 {
     /**
      * @dataProvider zipMatrix

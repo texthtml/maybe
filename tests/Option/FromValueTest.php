@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Provider;
 
-class FromValueTest extends TestCase
+final class FromValueTest extends TestCase
 {
     use Provider\Values;
 

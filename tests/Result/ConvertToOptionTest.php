@@ -2,13 +2,13 @@
 
 namespace TH\Maybe\Tests\Result;
 
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Assert;
 use TH\Maybe\Tests\Provider;
 
-class ConvertToOptionTest extends TestCase
+final class ConvertToOptionTest extends TestCase
 {
     use Provider\Transpose;
 
@@ -71,6 +71,10 @@ class ConvertToOptionTest extends TestCase
      */
     public function testTranspose(Option $option, Result $result): void
     {
-        Assert::assertEquals($option, Result\transpose($result));
+        Assert::assertEquals($option, $option2 = Result\transpose($result));
+
+        Assert::assertResultUsed($result);
+        $option->map(Assert::assertResultNotUsed(...));
+        $option2->map(Assert::assertResultNotUsed(...));
     }
 }

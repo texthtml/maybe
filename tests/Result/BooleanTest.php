@@ -2,12 +2,12 @@
 
 namespace TH\Maybe\Tests\Result;
 
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Assert;
 use TH\Maybe\Tests\Provider;
 
-class BooleanTest extends TestCase
+final class BooleanTest extends TestCase
 {
     use Provider\Results;
 
@@ -20,7 +20,12 @@ class BooleanTest extends TestCase
      */
     public function testAnd(Result $left, Result $right, Result $expected): void
     {
-        Assert::assertSame($expected, $left->and($right));
+        Assert::assertEquals($expected, $result = $left->and($right));
+
+        Assert::assertResultUsed($left);
+        Assert::assertResultUsed($right);
+        Assert::assertResultNotUsed($result);
+        Assert::assertResultNotUsed($expected);
     }
 
     /**
@@ -37,11 +42,23 @@ class BooleanTest extends TestCase
             ? []
             : [$left->unwrap()];
 
-        Assert::assertSame($expected, $left->andThen(static function (mixed $value) use ($right, &$calls): mixed {
-            $calls[] = $value;
+        Assert::assertEquals($expected, $result = $left->andThen(
+            static function (mixed $value) use ($right, &$calls): mixed {
+                $calls[] = $value;
 
-            return $right;
-        }));
+                return $right;
+            },
+        ));
+
+        if (!$left instanceof Result\Err) {
+            Assert::assertSame($result, $right);
+        } else {
+            Assert::assertResultNotUsed($right);
+        }
+
+        Assert::assertResultUsed($left);
+        Assert::assertResultNotUsed($result);
+        Assert::assertResultNotUsed($expected);
 
         Assert::assertSame($expectedCalls, $calls);
     }
@@ -60,11 +77,21 @@ class BooleanTest extends TestCase
             ? 1
             : 0;
 
-        Assert::assertSame($expected, $left->orElse(static function () use ($right, &$calls): mixed {
+        Assert::assertEquals($expected, $result = $left->orElse(static function () use ($right, &$calls): mixed {
             $calls++;
 
             return $right;
         }));
+
+        if ($left instanceof Result\Err) {
+            Assert::assertSame($result, $right);
+        } else {
+            Assert::assertResultNotUsed($right);
+        }
+
+        Assert::assertResultUsed($left);
+        Assert::assertResultNotUsed($result);
+        Assert::assertResultNotUsed($expected);
 
         Assert::assertSame($expectedCalls, $calls);
     }
@@ -78,6 +105,11 @@ class BooleanTest extends TestCase
      */
     public function testOr(Result $left, Result $right, Result $expected): void
     {
-        Assert::assertSame($expected, $left->or($right));
+        Assert::assertEquals($expected, $result = $left->or($right));
+
+        Assert::assertResultUsed($left);
+        Assert::assertResultUsed($right);
+        Assert::assertResultNotUsed($expected);
+        Assert::assertResultNotUsed($result);
     }
 }

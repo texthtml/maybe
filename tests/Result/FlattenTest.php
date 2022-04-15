@@ -2,11 +2,11 @@
 
 namespace TH\Maybe\Tests\Result;
 
-use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Assert;
 
-class FlattenTest extends TestCase
+final class FlattenTest extends TestCase
 {
     /**
      * @dataProvider flattenMatrix
@@ -15,7 +15,11 @@ class FlattenTest extends TestCase
      */
     public function testFlatten(Result $expected, Result $result): void
     {
-        Assert::assertSame($expected, Result\flatten($result));
+        Assert::assertEquals($expected, $result2 = Result\flatten($result));
+
+        Assert::assertResultNotUsed($expected);
+        Assert::assertResultNotUsed($result2);
+        Assert::assertResultUsed($result);
     }
 
     /**
@@ -23,14 +27,10 @@ class FlattenTest extends TestCase
      */
     public function flattenMatrix(): iterable
     {
-        $err = Result\err(null);
+        yield "err" => [Result\err(null), Result\err(null)];
 
-        yield "err" => [$err, $err];
+        yield "ok(err)" => [Result\err(null), Result\ok(Result\err(null))];
 
-        yield "ok(err)" => [$err, Result\ok($err)];
-
-        $leaf = Result\ok(null);
-
-        yield "ok(ok(…))" => [$leaf, Result\ok($leaf)];
+        yield "ok(ok(…))" => [Result\ok(null), Result\ok(Result\ok(null))];
     }
 }

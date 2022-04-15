@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Provider;
 
-class SerializationTest extends TestCase
+final class SerializationTest extends TestCase
 {
     use Provider\Serializable;
 
