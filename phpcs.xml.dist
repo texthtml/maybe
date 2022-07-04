@@ -15,6 +15,8 @@
 
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
         <exclude name="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion" />
+        <exclude name="SlevomatCodingStandard.Commenting.DisallowCommentAfterCode" />
+        <exclude name="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment" />
         <exclude name="SlevomatCodingStandard.Commenting.RequireOneLineDocComment" />
         <exclude name="SlevomatCodingStandard.Commenting.RequireOneLinePropertyDocComment" />
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses" />
@@ -31,6 +33,12 @@
         <exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators" />
         <exclude name="SlevomatCodingStandard.PHP.DisallowReference" />
         <exclude name="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint" />
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+        <properties>
+            <property name="searchAnnotations" value="true" />
+        </properties>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
