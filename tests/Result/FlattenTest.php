@@ -15,6 +15,8 @@ final class FlattenTest extends TestCase
      */
     public function testFlatten(Result $expected, Result $result): void
     {
+        Assert::assertResultNotUsed($result);
+
         Assert::assertEquals($expected, $result2 = Result\flatten($result));
 
         Assert::assertResultNotUsed($expected);

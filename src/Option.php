@@ -11,21 +11,22 @@ namespace TH\Maybe;
  * ```
  * use TH\Maybe\Option;
  *
- * fn divide(float $numerator, float $denominator) -> Option<float> {
- *   if denominator === 0.0 {
+ * // @return Option<float>
+ * function divide(float $numerator, float $denominator): Option {
+ *   if ($denominator === 0.0) {
  *     return Option\none();
  *   }
  *
- *   return Option\some(numerator / denominator);
+ *   return Option\some($numerator / $denominator);
  * }
  *
  * // The return value of the function is an option
  * $result = divide(2.0, 3.0);
  *
  * // Use instanceof to differentiate between Some & None
- * if ($result instanceof Option\Some {
+ * if ($result instanceof Option\Some) {
  *   // The division was valid
- *   echo "Result: {$result->unwrap()}");
+ *   echo "Result: {$result->unwrap()}";
  * } else {
  *   echo "Cannot divide by 0";
  * }
@@ -35,6 +36,7 @@ namespace TH\Maybe;
  * @extends \IteratorAggregate<T>
  * @immutable
  */
+#[\TH\Maybe\Tests\Attributes\ExamplesSetup(\TH\Maybe\Tests\Helpers\IgnoreUnusedResults::class)]
 interface Option extends \IteratorAggregate
 {
     /**
@@ -44,14 +46,24 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $x = Option\some("value");
-     * assert!($x->expect("fruits are healthy") === "value");
+     * assert($x->expect("fruits are healthy") === "value");
      * ```
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * // @var Option<string> $x
      * $x = Option\none();
-     * $x->expect("fruits are healthy"); // throws a \RuntimeException with `fruits are healthy`
+     *
+     * try {
+     *   $x->expect("fruits are healthy");
+     *   assert(false);
+     * } catch (\RuntimeException $e) {
+     *   assert($e->getMessage() === "fruits are healthy");
+     * }
      * ```
      *
      * @return T
@@ -66,14 +78,22 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $x = Option\some("value");
-     * assert!($x->unwrap() === "value");
+     * assert($x->unwrap() === "value");
      * ```
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * // @var Option<string> $x
      * $x = Option\none();
-     * $x->unwrap(); // throws a \RuntimeException
+     *
+     * try {
+     *   $x->unwrap();
+     *   assert(false);
+     * } catch (\RuntimeException) {}
      * ```
      *
      * @return T
@@ -88,6 +108,8 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * assert(Option\some("car")->unwrapOr("bike") === "car");
      * assert(Option\none()->unwrapOr("bike") === "bike");
      * ```
@@ -103,9 +125,11 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $k = 10;
      * assert(Option\some(4)->unwrapOrElse(fn () => 2 * $k) === 4);
-     * assert(Option\none->unwrapOrElse(fn () => 2 * $k) === 20);
+     * assert(Option\none()->unwrapOrElse(fn () => 2 * $k) === 20);
      * ```
      *
      * @param callable():T $default
@@ -120,11 +144,13 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $option = Option\some(4);
-     * assert($option->inspect(printf("got: %i", ...)) === $option); // prints "got: 4"
+     * assert($option->inspect(fn (int $n) => printf("got: %d", $n)) === $option); // prints "got: 4"
      * // @var Option<int> $option
      * $option = Option\none();
-     * assert($option->inspect(printf("%i", ...)) === $option); // prints nothing
+     * assert($option->inspect(fn (int $n) => printf("%d", $n)) === $option); // prints nothing
      * ```
      *
      * @param callable(T):mixed $callback
@@ -138,16 +164,18 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $x = Option\some(2);
      * // @var Option<string> $y
      * $y = Option\none();
      * assert($x->and($y) === Option\none());
      * // @var Option<string> $x
      * $x = Option\none();
-     * $y = Some("foo");
+     * $y = Option\some("foo");
      * assert($x->and($y) === Option\none());
-     * $x = Some(2);
-     * $y = Some("foo");
+     * $x = Option\some(2);
+     * $y = Option\some("foo");
      * assert($x->and($y) == Option\some("foo"));
      * // @var Option<string> $x
      * $x = Option\none();
@@ -168,14 +196,17 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
-     * function to_exact_int(float $f) -> Option<int> {
+     * use TH\Maybe\Option;
+     *
+     * // @return Option<int>
+     * function to_exact_int(float $f): Option {
      *   $i = (int) $f;
      *   return ((float) $i) === $f ? Option\some($i) : Option\none();
      * }
      *
-     * assert(Option\some(2.0).and_then(to_exact_int) == Option\some(2));
-     * assert(Option\some(1.2).and_then(to_exact_int) === Option\none());
-     * assert(Option\none().and_then(to_exact_int) === Option\none());
+     * assert(Option\some(2.0)->andThen(to_exact_int(...)) == Option\some(2));
+     * assert(Option\some(1.2)->andThen(to_exact_int(...)) === Option\none());
+     * assert(Option\none()->andThen(to_exact_int(...)) === Option\none());
      * ```
      *
      * @template U
@@ -190,6 +221,8 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $x = Option\some(2);
      * // @var Option<int> $y
      * $y = Option\none();
@@ -222,6 +255,8 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * // @return Option<string>
      * function nobody(): Option {
      *   return Option\none();
@@ -232,9 +267,9 @@ interface Option extends \IteratorAggregate
      *   return Option\some("vikings");
      * }
      *
-     * assert(Option\some("barbarians")->orElse($vikings) == Option\some("barbarians"));
-     * assert(Option\none()->orElse($vikings) == Option\some("vikings"));
-     * assert(Option\none()->orElse($nobody) === Option\none());
+     * assert(Option\some("barbarians")->orElse(vikings(...)) == Option\some("barbarians"));
+     * assert(Option\none()->orElse(vikings(...)) == Option\some("vikings"));
+     * assert(Option\none()->orElse(nobody(...)) === Option\none());
      * ```
      *
      * @param callable():Option<T> $right
@@ -248,6 +283,8 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $x = Option\some(2);
      * // @var Option<int> $y
      * $y = Option\none();
@@ -277,6 +314,8 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $x = Option\some(2);
      * assert($x->contains(2) === true);
      * $x = Option\some(3);
@@ -296,6 +335,8 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $isEven = fn(int $n) => $n % 2 === 0;
      *
      * assert(Option\none()->filter($isEven) === Option\none());
@@ -314,9 +355,11 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $maybeSomeString = Option\some("Hello, World!");
-     * $maybeSomeLen = $maybeSomeString.map(strlen(...));
-     * assert($maybeSomeLen == Some(13));
+     * $maybeSomeLen = $maybeSomeString->map(strlen(...));
+     * assert($maybeSomeLen == Option\some(13));
      * ```
      *
      * @template U
@@ -332,11 +375,13 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
-     * $x = Some("foo");
+     * use TH\Maybe\Option;
+     *
+     * $x = Option\some("foo");
      * assert($x->mapOr(strlen(...), 42) === 3);
      * // @var Option<string> $x
-     * $x = None;
-     * assert($x->mapOr(strlen(...), 42), ===42);
+     * $x = Option\none();
+     * assert($x->mapOr(strlen(...), 42) ===42);
      * ```
      *
      * @template U
@@ -353,11 +398,13 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $k = 21;
      * $x = Option\some("foo");
      * assert($x->mapOrElse(strlen(...), fn () => 2 * $k) === 3);
      * // @var Option<string> $x
-     * $x: Option\none();
+     * $x = Option\none();
      * assert($x->mapOrElse(strlen(...), fn () => 2 * $k) === 42);
      * ```
      *
@@ -377,6 +424,8 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * use TH\Maybe\Option;
+     *
      * $x = Option\some(1);
      * $y = Option\some("hi");
      * // @var Option<int> $z
@@ -397,11 +446,17 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
-     * $x = Option\some("foo");
-     * assert($x->okOr(0) == Result\ok("foo"));
+     * use TH\Maybe\{Option, Result};
+     *
+     * $x = Option\some("foo")->okOr(0);
+     * assert($x == $r = Result\ok("foo"));
+     * $x->ok();
+     * $r->ok();
      * // @var Option<string> $x
-     * $x: Option\none();
-     * assert($x->okOr(0) == Result\err(0));
+     * $x = Option\none()->okOr(0);
+     * assert($x == $r = Result\err(0));
+     * $x->err();
+     * $r->err();
      * ```
      *
      * @template E
@@ -416,11 +471,17 @@ interface Option extends \IteratorAggregate
      * # Examples
      *
      * ```
-     * $x = Option\some("foo");
-     * assert($x->okOrElse(fn () => 0), Result\ok("foo"));
+     * use TH\Maybe\{Option, Result};
+     *
+     * $x = Option\some("foo")->okOrElse(fn () => 0);
+     * assert($x == $r = Result\ok("foo"));
+     * $x->ok();
+     * $r->ok();
      * // @var Option<string> $x
-     * $x: Option\none();
-     * assert($x->okOrElse(fn () => 0), Result\err(0));
+     * $x = Option\none()->okOrElse(fn () => 0);
+     * assert($x == $r = Result\err(0));
+     * $x->err();
+     * $r->err();
      * ```
      *
      * @template E

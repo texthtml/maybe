@@ -6,15 +6,15 @@ use TH\Maybe\Result;
 
 trait MustBeUsed
 {
-    /** @var \WeakMap<Result<mixed,mixed>,\Exception> */
-    private static \WeakMap $toBeUsed;
+    /** @var \ArrayAccess<Result<mixed,mixed>,\Exception> */
+    private static \ArrayAccess $toBeUsed;
 
     /**
-     * @return \WeakMap<Result<mixed,mixed>,\Exception>
+     * @return \ArrayAccess<Result<mixed,mixed>,\Exception>
      */
-    private static function toBeUsedMap(): \WeakMap
+    private static function toBeUsedMap(): \ArrayAccess
     {
-        /** @var \WeakMap<Result<mixed,mixed>,\Exception> */
+        /** @var \ArrayAccess<Result<mixed,mixed>,\Exception> */
         return self::$toBeUsed ??= new \WeakMap();
     }
 

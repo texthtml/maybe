@@ -32,11 +32,26 @@ function ok(mixed $value): Result\Ok
 /**
  * Converts from `Result<Result<T, E>, E>` to `Result<T, E>`.
  *
+ * # Examples
+ *
+ * ```
+ * use TH\Maybe\Result;
+ *
+ * $x = Result\ok(3);
+ * assert(Result\flatten(Result\ok($x)) === $x);
+ *
+ * $x = Result\err("deity");
+ * assert(Result\flatten($y = Result\ok($x)) === $x);
+ *
+ * assert(Result\flatten($x) == Result\err("deity"));
+ * ```
+ *
  * @template U
  * @template F
  * @param Result<Result<U, F>, F> $result
  * @return Result<U, F>
  */
+#[\TH\Maybe\Tests\Attributes\ExamplesSetup(\TH\Maybe\Tests\Helpers\IgnoreUnusedResults::class)]
 function flatten(Result $result): Result
 {
     return $result->unwrapOrElse(static fn (): Result => clone $result);
@@ -48,11 +63,24 @@ function flatten(Result $result): Result
  * `Ok(None)` will be mapped to `None`.
  * `Ok(Some(_))` and `Err(_)` will be mapped to `Some(Ok(_))` and `Some(Err(_))`.
  *
+ * ```
+ * use TH\Maybe\{Result, Option};
+ *
+ * assert(Result\transpose(Result\ok(Option\none())) === Option\none());
+ *
+ * $x = Result\ok(Option\some(4));
+ * assert(Result\transpose($x) == Option\some(Result\ok(4)));
+ *
+ * $x = Result\err("meat");
+ * assert(Result\transpose($x) == Option\some($x));
+ * ```
+ *
  * @template U
  * @template F
  * @param Result<Option<U>, F> $result
  * @return Option<Result<U, F>>
  */
+#[\TH\Maybe\Tests\Attributes\ExamplesSetup(\TH\Maybe\Tests\Helpers\IgnoreUnusedResults::class)]
 function transpose(Result $result): Option
 {
     return $result->mapOrElse(

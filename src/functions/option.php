@@ -27,6 +27,15 @@ function none(): Option\None
  * Transform a value into an Option.
  * It will be a Some option containing $value if $value is different from $noneValue (default `null`)
  *
+ * # Examples
+ *
+ * ```
+ * use TH\Maybe\Option;
+ *
+ * assert(Option\fromValue("fruits") == Option\some("fruits"));
+ * assert(Option\fromValue(null) == Option\none());
+ * ```
+ *
  * @template U
  * @param U $value
  * @return Option<U>
@@ -47,6 +56,17 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
 /**
  * Converts from `Option<Option<T>>` to `Option<T>`.
  *
+ * # Examples
+ *
+ * ```
+ * use TH\Maybe\Option;
+ *
+ * $x = Option\Some("vegetables");
+ * assert(Option\flatten(Option\some($x)) === $x);
+ * assert(Option\flatten(Option\some(Option\none())) === Option\none());
+ * assert(Option\flatten(Option\none()) === Option\none());
+ * ```
+ *
  * @template U
  * @param Option<Option<U>> $option
  * @return Option<U>
@@ -63,6 +83,14 @@ function flatten(Option $option): Option
  * Unzips an option containing a tuple of two options.
  *
  * If `self` is `Some([a, b])` this method returns `[Some(a), Some(b)]`. Otherwise, `[None, None]` is returned.
+ *
+ * ```
+ * use TH\Maybe\Option;
+ *
+ * $x = Option\Some("vegetables");
+ * assert(Option\unzip(Option\some(["a", 2])) == [Option\some("a"), Option\some(2)]);
+ * assert(Option\unzip(Option\none()) === [Option\none(), Option\none()]);
+ * ```
  *
  * @template U
  * @template V
@@ -83,11 +111,20 @@ function unzip(Option $option): array
  * `None` will be mapped to `Ok(None)`.
  * `Some(Ok(_))` and `Some(Err(_))` will be mapped to `Ok(Some(_))` and `Err(_)`.
  *
+ * ```
+ * use TH\Maybe\{Option, Result};
+ *
+ * assert(Result\ok(Option\some(4)) == Option\transpose(Option\some(Result\ok(4))));
+ * assert(Result\err("meat") == Option\transpose(Option\some(Result\err("meat"))));
+ * assert(Option\transpose(Option\none()) == Result\ok(Option\none()));
+ * ```
+ *
  * @template U
  * @template E
  * @param Option<Result<U, E>> $option
  * @return Result<Option<U>, E>
  */
+#[\TH\Maybe\Tests\Attributes\ExamplesSetup(\TH\Maybe\Tests\Helpers\IgnoreUnusedResults::class)]
 function transpose(Option $option): Result
 {
     return $option->mapOrElse(
