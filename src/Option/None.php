@@ -114,10 +114,13 @@ enum None implements Option
     }
 
     /**
-     * @return $this
+     * @template U
+     * @param Option<U> $option
+     * @return Option\None<array{T, U}>
      */
     public function zip(Option $option): Option
     {
+        /** @var Option\None<array{T, U}> */
         return $this;
     }
 

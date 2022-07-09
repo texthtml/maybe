@@ -5,6 +5,14 @@ namespace TH\Maybe;
 /**
  * `Result` is a type that represents either success (`Ok`) or failure (`Err`).
  *
+ * A `Result` must be used
+ *
+ * ```
+ * use TH\Maybe\Result;
+ *
+ * Result\ok(42); // @throws TH\Maybe\Result\UnusedResultException Unused Result dropped
+ * ```
+ *
  * @template T
  * @template E
  * @immutable

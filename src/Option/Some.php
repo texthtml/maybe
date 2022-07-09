@@ -15,11 +15,17 @@ final class Some implements Option
     /** @param T $value */
     public function __construct(private mixed $value) {}
 
+    /**
+     * @throws void
+     */
     public function expect(string $message): mixed
     {
         return $this->value;
     }
 
+    /**
+     * @throws void
+     */
     public function unwrap(): mixed
     {
         return $this->value;
@@ -117,6 +123,7 @@ final class Some implements Option
      */
     public function zip(Option $option): Option
     {
+        /** @var Option<array{T, U}> */
         return $option->map($this->zipMap(...));
     }
 

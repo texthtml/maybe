@@ -2,8 +2,10 @@
 
 namespace TH\Maybe\Option;
 
+use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
  * @template T
@@ -16,7 +18,7 @@ function some(mixed $value): Option\Some
 }
 
 /**
- * @return Option\None<mixed>
+ * @return Option\None<never>
  */
 function none(): Option\None
 {
@@ -32,8 +34,8 @@ function none(): Option\None
  * ```
  * use TH\Maybe\Option;
  *
- * assert(Option\fromValue("fruits") == Option\some("fruits"));
- * assert(Option\fromValue(null) == Option\none());
+ * self::assertEq(Option\fromValue("fruits"), Option\some("fruits"));
+ * self::assertEq(Option\fromValue(null), Option\none());
  * ```
  *
  * @template U
@@ -62,9 +64,9 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
  * use TH\Maybe\Option;
  *
  * $x = Option\Some("vegetables");
- * assert(Option\flatten(Option\some($x)) === $x);
- * assert(Option\flatten(Option\some(Option\none())) === Option\none());
- * assert(Option\flatten(Option\none()) === Option\none());
+ * self::assertSame(Option\flatten(Option\some($x)), $x);
+ * self::assertSame(Option\flatten(Option\some(Option\none())), Option\none());
+ * self::assertSame(Option\flatten(Option\none()), Option\none());
  * ```
  *
  * @template U
@@ -74,9 +76,9 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
 function flatten(Option $option): Option
 {
     /** @var Option<U> */
-    return $option instanceof Option\None
-        ? Option\none()
-        : $option->unwrap();
+    return $option instanceof Option\Some
+        ? $option->unwrap()
+        : Option\none();
 }
 
 /**
@@ -88,8 +90,8 @@ function flatten(Option $option): Option
  * use TH\Maybe\Option;
  *
  * $x = Option\Some("vegetables");
- * assert(Option\unzip(Option\some(["a", 2])) == [Option\some("a"), Option\some(2)]);
- * assert(Option\unzip(Option\none()) === [Option\none(), Option\none()]);
+ * self::assertEq(Option\unzip(Option\some(["a", 2])), [Option\some("a"), Option\some(2)]);
+ * self::assertSame(Option\unzip(Option\none()), [Option\none(), Option\none()]);
  * ```
  *
  * @template U
@@ -99,6 +101,7 @@ function flatten(Option $option): Option
  */
 function unzip(Option $option): array
 {
+    /** @var array{Option<U>, Option<V>} */
     return $option->mapOrElse(
         static fn (array $a): array => [Option\some($a[0]), Option\some($a[1])],
         static fn (): array => [Option\none(), Option\none()],
@@ -114,9 +117,9 @@ function unzip(Option $option): array
  * ```
  * use TH\Maybe\{Option, Result};
  *
- * assert(Result\ok(Option\some(4)) == Option\transpose(Option\some(Result\ok(4))));
- * assert(Result\err("meat") == Option\transpose(Option\some(Result\err("meat"))));
- * assert(Option\transpose(Option\none()) == Result\ok(Option\none()));
+ * self::assertEq(Result\ok(Option\some(4)), Option\transpose(Option\some(Result\ok(4))));
+ * self::assertEq(Result\err("meat"), Option\transpose(Option\some(Result\err("meat"))));
+ * self::assertEq(Option\transpose(Option\none()), Result\ok(Option\none()));
  * ```
  *
  * @template U
@@ -124,10 +127,12 @@ function unzip(Option $option): array
  * @param Option<Result<U, E>> $option
  * @return Result<Option<U>, E>
  */
-#[\TH\Maybe\Tests\Attributes\ExamplesSetup(\TH\Maybe\Tests\Helpers\IgnoreUnusedResults::class)]
+#[ExamplesSetup(IgnoreUnusedResults::class)]
 function transpose(Option $option): Result
 {
+    /** @var Result<Option<U>, E> */
     return $option->mapOrElse(
+        // @phpstan-ignore-next-line
         static fn (Result $result) => $result->map(Option\some(...)),
         static fn () => Result\ok(Option\none()),
     );

@@ -6,6 +6,8 @@
     <file>src</file>
     <file>tests</file>
 
+    <exclude-pattern>tests/examples.php</exclude-pattern>
+
     <rule ref="PSR12">
         <exclude name="PSR12.Files.FileHeader" />
         <exclude name="PSR12.Files.OpenTag" />
@@ -15,6 +17,8 @@
 
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
         <exclude name="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion" />
+        <exclude name="SlevomatCodingStandard.Classes.RequireSingleLineMethodSignature" />
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming" />
         <exclude name="SlevomatCodingStandard.Commenting.DisallowCommentAfterCode" />
         <exclude name="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment" />
         <exclude name="SlevomatCodingStandard.Commenting.RequireOneLineDocComment" />
@@ -28,6 +32,7 @@
         <exclude name="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration" />
         <exclude name="SlevomatCodingStandard.Functions.UnusedParameter" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation" />
+        <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalConstants" />
         <exclude name="SlevomatCodingStandard.Namespaces.UseOnlyWhitelistedNamespaces" />
         <exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators" />
@@ -129,5 +134,25 @@
 
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing">
         <exclude-pattern>/tests/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing">
+        <exclude-pattern>/tests/type-hinting/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Files.LineLength">
+        <exclude-pattern>/tests/type-hinting/</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>/tests/type-hinting/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Exceptions.DisallowNonCapturingCatch">
+        <exclude-pattern>/tests/type-hinting/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
+        <exclude-pattern>/tests/type-hinting/</exclude-pattern>
     </rule>
 </ruleset>

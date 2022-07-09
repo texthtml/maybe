@@ -3,10 +3,31 @@ parameters:
 	paths:
 		- src
 		- tests
+	exceptions:
+		check:
+			missingCheckedExceptionInThrows: true
+			tooWideThrowType: true
 	ignoreErrors:
 		-
+			message: '#Unreachable statement - code above always terminates.#'
+			path: tests/Unit/
+		-
 			message: '#Call to .+ will always evaluate to .+#'
-			path: tests/
+			path: tests/Unit/
 		-
 			message: '#Generator expects value type array{.*}, array{.*} given.#'
-			path: tests/
+			path: tests/Unit/
+		-
+			message: "#Method .*::.*\\(\\) throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.#"
+			path: tests/Unit/
+		-
+			message: '#Enum TH\\Maybe\\Option\\None has PHPDoc @template tag but enums cannot be generic.#'
+			path: src/Option/None.php
+		-
+			message: '#Return type \(iterable<array{T, U}>&TH\\Maybe\\Option\\None\) of method TH\\Maybe\\Option\\None::zip\(\) should be compatible with return type \(TH\\Maybe\\Option<array{mixed, mixed}>\) of method TH\\Maybe\\Option<T>::zip\(\)#'
+			path: src/Option/None.php
+		-
+			message: '#Parameter \#1 \$callback of method TH\\Maybe\\Option<U>::map\(\) expects callable\(U\): array{T, U}, Closure\(U\): array{T, U} given.#'
+			path: src/Option/Some.php
+	excludePaths:
+		- tests/examples.php

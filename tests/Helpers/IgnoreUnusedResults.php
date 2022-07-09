@@ -10,7 +10,7 @@ use TH\Maybe\Result\Ok;
  */
 final class IgnoreUnusedResults
 {
-    /** @var \SplObjectStorage<\ReflectionProperty, \ArrayAccess|null> */
+    /** @var \SplObjectStorage<\ReflectionProperty, \ArrayAccess<mixed,mixed>|null> */
     private \SplObjectStorage $unusedResults;
 
     /**
@@ -53,6 +53,7 @@ final class IgnoreUnusedResults
     private function properties(): iterable
     {
         foreach ([Ok::class, Err::class] as $className) {
+            /** @throws void */
             yield (new \ReflectionClass($className))->getProperty("toBeUsed");
         }
     }

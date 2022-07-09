@@ -89,6 +89,12 @@ final class Ok implements Result
         return clone $right;
     }
 
+    /**
+     * @template U
+     * @template F
+     * @param callable(T):Result<U, F> $right
+     * @return Result<U, F>
+     */
     public function andThen(callable $right): Result
     {
         $this->used();

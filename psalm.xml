@@ -11,15 +11,64 @@
     ensureArrayIntOffsetsExist="true"
     sealAllMethods="true"
     sealAllProperties="true"
-    runTaintAnalysis="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
         <directory name="src" />
+        <directory name="tests" />
         <ignoreFiles>
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+
+    <issueHandlers>
+        <MissingThrowsDocblock>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </MissingThrowsDocblock>
+        <MissingClosureReturnType>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </MissingClosureReturnType>
+        <RedundantCondition>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </RedundantCondition>
+        <RedundantConditionGivenDocblockType>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </RedundantConditionGivenDocblockType>
+        <TypeDoesNotContainType>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </TypeDoesNotContainType>
+        <InvalidReturnType>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+                <directory name="tests/Provider" />
+            </errorLevel>
+        </InvalidReturnType>
+        <LessSpecificReturnStatement>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </LessSpecificReturnStatement>
+        <MoreSpecificReturnType>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </MoreSpecificReturnType>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+    </issueHandlers>
 </psalm>

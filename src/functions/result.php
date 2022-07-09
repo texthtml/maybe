@@ -2,8 +2,10 @@
 
 namespace TH\Maybe\Result;
 
+use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
+use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
  * Return a `Err` result
@@ -38,23 +40,24 @@ function ok(mixed $value): Result\Ok
  * use TH\Maybe\Result;
  *
  * $x = Result\ok(3);
- * assert(Result\flatten(Result\ok($x)) === $x);
+ * self::assertSame(Result\flatten(Result\ok($x)), $x);
  *
  * $x = Result\err("deity");
- * assert(Result\flatten($y = Result\ok($x)) === $x);
+ * self::assertSame(Result\flatten($y = Result\ok($x)), $x);
  *
- * assert(Result\flatten($x) == Result\err("deity"));
+ * self::assertEq(Result\flatten($x), Result\err("deity"));
  * ```
  *
  * @template U
  * @template F
- * @param Result<Result<U, F>, F> $result
- * @return Result<U, F>
+ * @template R of Result<U, F>
+ * @param Result<R, F> $result
+ * @return R
  */
-#[\TH\Maybe\Tests\Attributes\ExamplesSetup(\TH\Maybe\Tests\Helpers\IgnoreUnusedResults::class)]
+#[ExamplesSetup(IgnoreUnusedResults::class)]
 function flatten(Result $result): Result
 {
-    return $result->unwrapOrElse(static fn (): Result => clone $result);
+    return $result->unwrapOrElse(static fn () => clone $result); // @phpstan-ignore-line
 }
 
 /**
@@ -66,13 +69,13 @@ function flatten(Result $result): Result
  * ```
  * use TH\Maybe\{Result, Option};
  *
- * assert(Result\transpose(Result\ok(Option\none())) === Option\none());
+ * self::assertSame(Result\transpose(Result\ok(Option\none())), Option\none());
  *
  * $x = Result\ok(Option\some(4));
- * assert(Result\transpose($x) == Option\some(Result\ok(4)));
+ * self::assertEq(Result\transpose($x), Option\some(Result\ok(4)));
  *
  * $x = Result\err("meat");
- * assert(Result\transpose($x) == Option\some($x));
+ * self::assertEq(Result\transpose($x), Option\some($x));
  * ```
  *
  * @template U
@@ -80,10 +83,12 @@ function flatten(Result $result): Result
  * @param Result<Option<U>, F> $result
  * @return Option<Result<U, F>>
  */
-#[\TH\Maybe\Tests\Attributes\ExamplesSetup(\TH\Maybe\Tests\Helpers\IgnoreUnusedResults::class)]
+#[ExamplesSetup(IgnoreUnusedResults::class)]
 function transpose(Result $result): Option
 {
+    /** @var Option<Result<U, F>> */
     return $result->mapOrElse(
+        // @phpstan-ignore-next-line
         static fn (Option $option) => $option->map(Result\ok(...)),
         static fn () => Option\some(clone $result),
     );

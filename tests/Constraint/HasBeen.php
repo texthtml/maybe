@@ -34,10 +34,11 @@ final class HasBeen extends Constraint
     {
         $ro = new \ReflectionObject($result);
 
+        /** @throws void */
         $rp = $ro->getProperty("toBeUsed");
         $rp->setAccessible(true);
 
-        /** \WeakMap<Result, mixed> $toBeUsedMap */
+        /** @var \ArrayAccess<Result<mixed, mixed>, mixed> $toBeUsedMap */
         $toBeUsedMap = $rp->getValue(null);
 
         return isset($toBeUsedMap[$result]);

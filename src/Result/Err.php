@@ -186,22 +186,25 @@ final class Err implements Result
         return $default;
     }
 
+    /**
+     * @return Option\None<E>
+     */
     public function ok(): Option
     {
-        /** @var Option<T> */
-        return $this->mapOrElse(
-            Option\some(...),
-            Option\none(...),
-        );
+        $this->used();
+
+        /** @var Option\None<E> */
+        return Option\none();
     }
 
+    /**
+     * @return Option\Some<E>
+     */
     public function err(): Option
     {
-        /** @var Option<E> */
-        return $this->mapOrElse(
-            Option\none(...),
-            Option\some(...),
-        );
+        $this->used();
+
+        return Option\some($this->value);
     }
 
     public function mapOrElse(callable $callback, callable $default): mixed

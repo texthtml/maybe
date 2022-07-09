@@ -3,29 +3,37 @@
 namespace TH\Maybe\Tests;
 
 use PHPUnit\Framework\Assert as PHPUnitAssert;
+use PHPUnit\Framework\ExpectationFailedException;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use TH\Maybe\Result;
 
 final class Assert extends PHPUnitAssert
 {
     /**
-     * @param Result<mixed,mixed> $result
+     * @template T
+     * @template E
+     * @param Result<T,E> $result
+     * @throws InvalidArgumentException|ExpectationFailedException
      */
     public static function assertResultUsed(Result $result): void
     {
         try {
             self::assertThat($result, new Constraint\HasBeen(used: true));
         } finally {
-            $result->unwrapOr("use the result");
+            $result->mapOr(static fn () => "use the Ok result", "use the Err result");
         }
     }
 
     /**
-     * @param Result<mixed,mixed> $result
+     * @template T
+     * @template E
+     * @param Result<T,E> $result
+     * @throws InvalidArgumentException|ExpectationFailedException
      */
     public static function assertResultNotUsed(Result $result): void
     {
         self::assertThat($result, new Constraint\HasBeen(used: false));
 
-        $result->unwrapOr("use the result");
+        $result->mapOr(static fn () => "use the Ok result", "use the Err result");
     }
 }

@@ -6,15 +6,15 @@ use TH\Maybe\Result;
 
 trait MustBeUsed
 {
-    /** @var \ArrayAccess<Result<mixed,mixed>,\Exception> */
-    private static \ArrayAccess $toBeUsed;
+    /** @var \ArrayAccess<Result<mixed,mixed>,ResultCreationTrace>|null */
+    private static ?\ArrayAccess $toBeUsed = null;
 
     /**
-     * @return \ArrayAccess<Result<mixed,mixed>,\Exception>
+     * @return \ArrayAccess<Result<mixed,mixed>,ResultCreationTrace>
      */
     private static function toBeUsedMap(): \ArrayAccess
     {
-        /** @var \ArrayAccess<Result<mixed,mixed>,\Exception> */
+        /** @var \WeakMap<Result<mixed,mixed>,ResultCreationTrace> */
         return self::$toBeUsed ??= new \WeakMap();
     }
 
@@ -23,7 +23,7 @@ trait MustBeUsed
      */
     protected function mustBeUsed(): void
     {
-        self::toBeUsedMap()[$this] = new \LogicException("Result must be used. Created");
+        self::toBeUsedMap()[$this] = new ResultCreationTrace();
     }
 
     /**
@@ -39,15 +39,18 @@ trait MustBeUsed
         $this->mustBeUsed();
     }
 
+    /**
+     * @throws UnusedResultException
+     */
     public function __destruct()
     {
         $map = self::toBeUsedMap();
 
         if (isset($map[$this])) {
-            $previous = $map[$this];
+            $creationTrace = $map[$this];
             unset($map[$this]);
 
-            throw new \Exception("Dropped", previous: $previous);
+            throw new UnusedResultException($creationTrace);
         }
     }
 }
