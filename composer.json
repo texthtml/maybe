@@ -32,7 +32,7 @@
         "vimeo/psalm": "^4.22",
         "symfony/finder": "^6.1",
         "symfony/console": "^6.1",
-        "texthtml/doctest": "^0.1.0"
+        "texthtml/doctest": "^0.2"
     },
     "config": {
         "allow-plugins": {

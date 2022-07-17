@@ -104,7 +104,7 @@ function writeInFile(string $filepath, string $data): Result {
     $res = file_put_contents($filepath, $data);
 
     if ($res === false) {
-        return Result\err("failed to write in $path");
+        return Result\err("failed to write in $filepath");
     }
 
     return Result\ok($res);

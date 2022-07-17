@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84ffde92f83c32572b452e256a4a2644",
+    "content-hash": "ef1147ef6858970975758126e533317d",
     "packages": [],
     "packages-dev": [
         {
@@ -4233,20 +4233,21 @@
         },
         {
             "name": "texthtml/doctest",
-            "version": "v0.1.0",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/texthtml/doctest.git",
-                "reference": "5c978ab84fc5f692c8f33ea330747fab41c3005c"
+                "reference": "7d56638001a8852613f680a95a3ea5f178f76c5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/texthtml/doctest/zipball/5c978ab84fc5f692c8f33ea330747fab41c3005c",
-                "reference": "5c978ab84fc5f692c8f33ea330747fab41c3005c",
+                "url": "https://api.github.com/repos/texthtml/doctest/zipball/7d56638001a8852613f680a95a3ea5f178f76c5a",
+                "reference": "7d56638001a8852613f680a95a3ea5f178f76c5a",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.2.2",
+                "php": "^8.1",
                 "symfony/console": "^6.1",
                 "symfony/event-dispatcher": "^6.1",
                 "symfony/finder": "^6.1",
@@ -4274,7 +4275,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "AGPL-V3"
+                "AGPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -4285,9 +4286,9 @@
             "description": "Test code examples in PHP comments",
             "support": {
                 "issues": "https://github.com/texthtml/doctest/issues",
-                "source": "https://github.com/texthtml/doctest/tree/v0.1.0"
+                "source": "https://github.com/texthtml/doctest/tree/v0.2.0"
             },
-            "time": "2022-07-16T18:06:12+00:00"
+            "time": "2022-07-17T23:32:24+00:00"
         },
         {
             "name": "theseer/tokenizer",

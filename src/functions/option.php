@@ -32,8 +32,6 @@ function none(): Option\None
  * # Examples
  *
  * ```
- * use TH\Maybe\Option;
- *
  * self::assertEq(Option\fromValue("fruits"), Option\some("fruits"));
  * self::assertEq(Option\fromValue(null), Option\none());
  * ```
@@ -61,8 +59,6 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
  * # Examples
  *
  * ```
- * use TH\Maybe\Option;
- *
  * $x = Option\Some("vegetables");
  * self::assertSame(Option\flatten(Option\some($x)), $x);
  * self::assertSame(Option\flatten(Option\some(Option\none())), Option\none());
@@ -87,8 +83,6 @@ function flatten(Option $option): Option
  * If `self` is `Some([a, b])` this method returns `[Some(a), Some(b)]`. Otherwise, `[None, None]` is returned.
  *
  * ```
- * use TH\Maybe\Option;
- *
  * $x = Option\Some("vegetables");
  * self::assertEq(Option\unzip(Option\some(["a", 2])), [Option\some("a"), Option\some(2)]);
  * self::assertSame(Option\unzip(Option\none()), [Option\none(), Option\none()]);
@@ -115,7 +109,7 @@ function unzip(Option $option): array
  * `Some(Ok(_))` and `Some(Err(_))` will be mapped to `Ok(Some(_))` and `Err(_)`.
  *
  * ```
- * use TH\Maybe\{Option, Result};
+ * use TH\Maybe\Result;
  *
  * self::assertEq(Result\ok(Option\some(4)), Option\transpose(Option\some(Result\ok(4))));
  * self::assertEq(Result\err("meat"), Option\transpose(Option\some(Result\err("meat"))));

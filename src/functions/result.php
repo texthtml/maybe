@@ -37,8 +37,6 @@ function ok(mixed $value): Result\Ok
  * # Examples
  *
  * ```
- * use TH\Maybe\Result;
- *
  * $x = Result\ok(3);
  * self::assertSame(Result\flatten(Result\ok($x)), $x);
  *
@@ -67,7 +65,7 @@ function flatten(Result $result): Result
  * `Ok(Some(_))` and `Err(_)` will be mapped to `Some(Ok(_))` and `Some(Err(_))`.
  *
  * ```
- * use TH\Maybe\{Result, Option};
+ * use TH\Maybe\Option;
  *
  * self::assertSame(Result\transpose(Result\ok(Option\none())), Option\none());
  *
