@@ -130,7 +130,6 @@ and how they can be used.
 
 # TODO
 
-* Document `Result` methods
 * Generate documentation from comments in file
 * To prevent other implementations of `Option` & `Result`, try another implementation with:
     * a class with a `final private constructor` and final unserialize, etc. methods (eg: `class Option`)
