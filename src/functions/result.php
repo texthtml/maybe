@@ -8,7 +8,7 @@ use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
- * Return a `Err` result
+ * Return a `Result\Err` result.
  *
  * @template F
  * @param F $value
@@ -20,7 +20,7 @@ function err(mixed $value): Result\Err
 }
 
 /**
- * Return a `Ok` Result containing `$value`
+ * Return a `Result\Ok` Result containing `$value`.
  *
  * @template U
  * @param U $value

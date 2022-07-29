@@ -8,6 +8,8 @@ use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
+ * Return a `Option\Some` option containing `$value`.
+ *
  * @template T
  * @param T $value
  * @return Option\Some<T>
@@ -18,6 +20,8 @@ function some(mixed $value): Option\Some
 }
 
 /**
+ * Return a `Option\None` option containing no values.
+ *
  * @return Option\None<never>
  */
 function none(): Option\None
