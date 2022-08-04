@@ -6,8 +6,8 @@ use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
- * Type `Option` represents an optional value: every `Option` is either `Some`
- * and contains a value, or `None`, and does not.
+ * `TH\Maybe\Option` is a type that represents an optional value: every
+ * `Option` is either `Some` and contains a value, or `None`, and does not.
  *
  * # Examples
  *

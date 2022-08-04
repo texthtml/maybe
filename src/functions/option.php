@@ -30,8 +30,8 @@ function none(): Option\None
 }
 
 /**
- * Transform a value into an Option.
- * It will be a Some option containing $value if $value is different from $noneValue (default `null`)
+ * Transform a value into an `Option`.
+ * It will be a `Some` option containing `$value` if `$value` is different from `$noneValue` (default `null`)
  *
  * # Examples
  *

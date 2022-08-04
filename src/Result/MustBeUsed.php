@@ -4,6 +4,7 @@ namespace TH\Maybe\Result;
 
 use TH\Maybe\Result;
 
+/** @internal */
 trait MustBeUsed
 {
     /** @var \ArrayAccess<Result<mixed,mixed>,ResultCreationTrace>|null */

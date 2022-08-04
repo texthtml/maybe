@@ -6,11 +6,27 @@ use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
- * `Result` is a type that represents either success (`Ok`) or failure (`Err`).
- *
- * A `Result` must be used
+ * `TH\Maybe\Result` is a type that represents either success (`Ok`) or failure (`Err`).
  *
  * # Examples
+ *
+ * ```
+ * // @return Result<float>
+ * function divide(float $numerator, float $denominator): Result {
+ *     return $denominator === 0.0
+ *         ? Result\err("division by zero")
+ *         : Result\ok($numerator / $denominator);
+ * }
+ *
+ * $r = divide(1, 3);
+ *
+ * if ($r instanceof Result\Ok) {
+ *   echo "result: {$r->unwrap()}";
+ * }
+ * // @prints result: 0.33333333333333
+ * ```
+ *
+ * A `Result` must be used
  *
  * ```
  * Result\ok(42); // @throws TH\Maybe\Result\UnusedResultException Unused Result dropped

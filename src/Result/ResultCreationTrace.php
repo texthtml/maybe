@@ -2,6 +2,7 @@
 
 namespace TH\Maybe\Result;
 
+/** @internal */
 final class ResultCreationTrace extends \RuntimeException
 {
     public function __construct()
