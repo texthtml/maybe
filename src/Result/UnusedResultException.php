@@ -2,6 +2,7 @@
 
 namespace TH\Maybe\Result;
 
+/** @nodoc */
 final class UnusedResultException extends \LogicException
 {
     public function __construct(ResultCreationTrace $trace)

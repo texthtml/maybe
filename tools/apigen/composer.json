@@ -1,0 +1,13 @@
+{
+    "autoload": {
+        "psr-4": {
+            "TH\\Maybe\\Tools\\ApiGen\\": "src/"
+        }
+    },
+    "require": {
+        "apigen/apigen": "^7.0@alpha"
+    },
+    "require-dev": {
+        "tracy/tracy": "^2.9"
+    }
+}

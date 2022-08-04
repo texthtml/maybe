@@ -9,6 +9,7 @@ use TH\Maybe\Result;
  * @template T
  * @template E
  * @implements Result<T, E>
+ * @nodoc
  */
 final class Err implements Result
 {
@@ -16,6 +17,7 @@ final class Err implements Result
 
     /**
      * @param E $value
+     * @nodoc
      */
     public function __construct(private mixed $value) {
         $this->mustBeUsed();

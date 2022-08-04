@@ -9,10 +9,14 @@ use TH\Maybe\Result;
  * @template T
  * @implements Option<T>
  * @immutable
+ * @nodoc
  */
 final class Some implements Option
 {
-    /** @param T $value */
+    /**
+     * @param T $value
+     * @nodoc
+     */
     public function __construct(private mixed $value) {}
 
     /**

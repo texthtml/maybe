@@ -1,3 +1,4 @@
 /vendor/
 /phpstan.neon
 /.phpunit.result.cache
+/docs/

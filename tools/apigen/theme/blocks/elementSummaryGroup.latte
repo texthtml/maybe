@@ -1,0 +1,17 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define elementSummaryGroup, ApiGen\Info\ElementInfo[] $elements, bool $showDescription = true, bool $onlyPrimary = false}
+	{try}
+		{foreach $elements as $element}
+			{skipIf $onlyPrimary && !$element->primary}
+			<p>
+				<h3><a href="{elementUrl($element)}" n:class="$element->isDeprecated() ? deprecated">{elementName($element)}</a></h3>
+				{if $showDescription}{longDescription($element->description)}{/if}
+			</p>
+		{else}
+			{rollback}
+		{/foreach}
+	{/try}
+{/define}

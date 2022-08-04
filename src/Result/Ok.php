@@ -9,12 +9,16 @@ use TH\Maybe\Result;
  * @template T
  * @template E
  * @implements Result<T, E>
+ * @nodoc
  */
 final class Ok implements Result
 {
     use MustBeUsed;
 
-    /** @param T $value */
+    /**
+     * @param T $value
+     * @nodoc
+     */
     public function __construct(private mixed $value) {
         $this->mustBeUsed();
     }

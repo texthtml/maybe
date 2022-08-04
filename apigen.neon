@@ -1,0 +1,26 @@
+parameters:
+	paths: ['%workingDir%/src']
+	excludeProtected: true
+	excludePrivate: true
+	excludeTagged: ['internal', 'nodoc']
+	outputDir: '%workingDir%/docs'
+	themeDir: tools/apigen/theme
+	title: 'texthtml/maybe'
+
+services:
+	commonMark:
+		type: League\CommonMark\ConverterInterface
+		factory: League\CommonMark\MarkdownConverter(@League\CommonMark\Environment\Environment)
+
+	commonMark.environment:
+		type: League\CommonMark\Environment\Environment
+		factory: TH\Maybe\Tools\ApiGen\CommonMark\EnvironmentFactory::create()
+		setup!:
+			- addExtension(@League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension)
+			- addExtension(@League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension)
+
+	commonMark.extension.core:
+		type: League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension
+
+	commonMark.extension.default_attributes:
+		type: League\CommonMark\Extension\DefaultAttributes\DefaultAttributesExtension

@@ -1,0 +1,24 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define menu}
+	<div class="menu">
+		<h1><a href="{indexUrl()}">{$config->title}</a></h1>
+		{include menuElements, elements: $index->interface, heading: "Modules"}
+
+		{if $layout->activeElement instanceof ApiGen\Info\ClassLikeInfo}
+			{foreach $layout->activeElement->methods as $method}
+				{if $iterator->first}
+					<h2>Methods</h2>
+					<ul>
+				{/if}
+				<li>
+					<a href="#{memberAnchor($method)}">{$method->name}</a>
+				</li>
+				{if $iterator->last}</ul>{/if}
+			{/foreach}
+		{/if}
+
+	</div>
+{/define}

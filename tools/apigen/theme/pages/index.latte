@@ -1,0 +1,19 @@
+{templateType ApiGen\Renderer\Latte\Template\TreeTemplate}
+{import '../blocks/@index.latte'}
+
+{embed layout}
+	{block content}
+		<h1>{$config->title} API documentation</h1>
+
+		<p>
+			This library implements two monadic types for PHP :
+				<code>Option</code> and
+				<code>Result</code>.
+		</p>
+		{embed elementSummary}
+			{block elementSummaryContent}
+				{include elementSummaryGroup, heading: 'Interfaces', elements: $index->interface, showDescription: true, onlyPrimary: true}
+			{/block}
+		{/embed}
+	{/block}
+{/embed}

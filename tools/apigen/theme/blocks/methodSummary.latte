@@ -1,0 +1,12 @@
+{varType ApiGen\Index\Index $index}
+{varType ApiGen\Renderer\Latte\Template\ConfigParameters $config}
+{varType ApiGen\Renderer\Latte\Template\LayoutParameters $layout}
+
+{define methodSummary, ApiGen\Info\ClassLikeInfo $classLike}
+	{if $classLike->methods}
+		<h2>Methods</h2>
+		{foreach $classLike->methods as $method}
+			{include method, classLike: $classLike, method: $method}
+		{/foreach}
+	{/if}
+{/define}

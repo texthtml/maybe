@@ -7,8 +7,7 @@ Using those makes it harder to make mistake, make it easy to do common
 operations on unknown returned values and can help static analysis tool detect
 incorrect logic in PHP code.
 
-`doctest` looks for php examples in your functions, methods classes & interfaces
-comments and execute them to ensure they are correct.
+[Documentation](https://texthtml.github.io/maybe/)
 
 # Installation
 

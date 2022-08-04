@@ -1,0 +1,38 @@
+{templateType ApiGen\Renderer\Latte\Template\ClassLikeTemplate}
+{import '../blocks/@index.latte'}
+
+{embed layout}
+	{block title}
+		{if $classLike->isDeprecated()}Deprecated {/if}
+		{include classLikeKind, $classLike}
+		{$classLike->name->full}
+	{/block}
+
+	{block content}
+		<h1 n:class="$classLike->isDeprecated() ? deprecated">
+			{include classLikeKind, $classLike} {include classLikeLinks, $classLike}
+			{if $classLike->genericParameters}
+				<code>{include genericParameters, $classLike->genericParameters}</code>
+			{/if}
+		</h1>
+
+
+		{include classLikeSignatureTable, $classLike}
+		{include classLikeDescription, $classLike}
+
+		{if isEnum($classLike)}
+			{include enumCaseSummary, $classLike}
+		{/if}
+
+		{include methodSummary, $classLike}
+		{include methodInheritedSummary, $classLike, []}
+		{include methodUsedSummary, $classLike, []}
+
+		{include constantSummary, $classLike}
+		{include constantInheritedSummary, $classLike, []}
+
+		{include propertySummary, $classLike}
+		{include propertyInheritedSummary, $classLike, []}
+		{include propertyUsedSummary, $classLike, []}
+	{/block}
+{/embed}

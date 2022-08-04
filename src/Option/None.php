@@ -9,6 +9,7 @@ use TH\Maybe\Result;
  * @template T
  * @implements Option<T>
  * @immutable
+ * @nodoc
  */
 enum None implements Option
 {
