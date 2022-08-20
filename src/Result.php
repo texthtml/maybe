@@ -6,31 +6,63 @@ use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
- * `TH\Maybe\Result` is a type that represents either success (`Ok`) or failure (`Err`).
+ * `Result<T, E>` is the type used for returning and propagating errors. It two
+ * variants, `Ok(T)`, representing success and containing a value, and `Err(E)`,
+ * representing error and containing an error value.
  *
- * # Examples
+ * Functions return `Result` whenever errors are expected and recoverable.
  *
- * ```
- * // @return Result<float>
- * function divide(float $numerator, float $denominator): Result {
- *     return $denominator === 0.0
- *         ? Result\err("division by zero")
- *         : Result\ok($numerator / $denominator);
+ * A simple function returning Result might be defined and used like so:
+ *
+ * ```php
+ * // @param Result<Version,string>
+ * function parse_version(string $header): Result {
+ *     return match ($header[0] ?? null) {
+ *         null => Result\err("invalid header length"),
+ *         "1" => Result\ok(1),
+ *         "2" => Result\ok(2),
+ *         default => Result\err("invalid version"),
+ *     };
  * }
  *
- * $r = divide(1, 3);
- *
- * if ($r instanceof Result\Ok) {
- *   echo "result: {$r->unwrap()}";
+ * $version = parse_version("1.x");
+ * if ($version instanceof Result\Ok) {
+ *     echo "working with version: {$version->unwrap()}";
+ * } else {
+ *     echo "error parsing header: {$version->unwrapErr()}";
  * }
- * // @prints result: 0.33333333333333
+ * // @prints working with version: 1
  * ```
  *
- * A `Result` must be used
+ * ### Results must be used
  *
+ * A common problem with using return values to indicate errors is that it is easy
+ * to ignore the return value, thus failing to handle the error. Unused `Result`s
+ * are tracked and will trigger an exception when a `Result` value is ignored and
+ * goes out of scope. This makes `Result` especially useful with functions that may
+ * encounter errors but don’t otherwise return a useful value.
+ *
+ * ```php
+ * // Write $data in $filepath
+ * // @return Result<int,string> The number of bytes that were written to the file if Ok, an error message otherwise
+ * function writeInFile(string $filepath, string $data): Result {
+ *     $res = @file_put_contents($filepath, $data);
+ *
+ *     if ($res === false) {
+ *         return Result\err("failed to write in $filepath");
+ *     }
+ *
+ *     return Result\ok($res);
+ * }
+ *
+ * $result = writeInFile("/path/to/file", "Hi!");
+ *
+ * // @throws TH\Maybe\Result\UnusedResultException Unused Result dropped
  * ```
- * Result\ok(42); // @throws TH\Maybe\Result\UnusedResultException Unused Result dropped
- * ```
+ *
+ * Using a `Result` can be done by calling any method on it, except `inspect()` & `inspectErr()`.
+ *
+ * Note: some methods return another `Result` that must also be used.
  *
  * @template T
  * @template E

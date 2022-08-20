@@ -7,13 +7,25 @@
 
 		<p>
 			This library implements two monadic types for PHP :
-				<code>Option</code> and
-				<code>Result</code>.
+				<dl>
+					<dt><a href="TH.Maybe.Option.html"><code>Option</code></a></dt>
+					<dd>
+						Type <code>Option</code> represents an optional value: every <code>Option</code> is either
+						<code>Option\Some</code> and contains a value, or <code>Option\None</code>, and does not
+					</dd>
+					<dt><a href="TH.Maybe.Result.html"><code>Result</code></a></dt>
+					<dd>
+						<code>Result<T, E></code> is the type used for returning and propagating errors.
+						It has two variants, <code>Ok(T)</code>, representing success and containing a value,
+						and <code>Err(E)</code>, representing error and containing an error value.
+					</dd>
+				</dl>
 		</p>
-		{embed elementSummary}
-			{block elementSummaryContent}
-				{include elementSummaryGroup, heading: 'Interfaces', elements: $index->interface, showDescription: true, onlyPrimary: true}
-			{/block}
-		{/embed}
+
+		<p>
+			Using those types makes it easier to handle result of operations correctly.
+			Those two types are also carefully annotated to help static analysis tools discover potential issues such as
+			invalid returned type or dead code.
+		</p>
 	{/block}
 {/embed}

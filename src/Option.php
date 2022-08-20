@@ -6,8 +6,18 @@ use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
- * `TH\Maybe\Option` is a type that represents an optional value: every
- * `Option` is either `Some` and contains a value, or `None`, and does not.
+ * Type `Option` represents an optional value: every `Option` is either
+ * `Option\Some` and contains a value, or `Option\None`, and does not. `Option`
+ * types have a number of uses:
+ *
+ * * Initial values
+ * * Return values for functions that are not defined over their entire input range (partial functions)
+ * * Return value for otherwise reporting simple errors, where `None` is returned on error
+ * * Optional class properties
+ * * Swapping things out of difficult situations
+ *
+ * `Option`s are commonly paired with `instanceof Option\{Some|None}` to query the
+ * presence of a value and take action, always accounting for the `None` case.
  *
  * # Examples
  *

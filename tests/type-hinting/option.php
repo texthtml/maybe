@@ -57,8 +57,9 @@ function test_instanceof_none(Option $option): int
         return $option->unwrap();
     }
 
-    // Since I can't prevent user from declaring other class implementing Option,
-    // Psalm & PHPStan can't assume that $option is Option\Some here :(
+    // Other classes could implement `Option`, so Psalm & PHPStan can't assume that `$option` is `Option\Some` here
+    // Resulting in those unwanted detected issues.
+    // The only way to prevent that is to use `instanceof Option\Some` instead
 
     /** @psalm-suppress MissingThrowsDocblock */
     // @phpstan-ignore-next-line Function test_instanceof_none() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
