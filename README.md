@@ -53,7 +53,7 @@ if ($result instanceof Option\Some) {
 
 ```php
 /**
- * @param Result<Version,string>
+ * @param Result<int,string>
  */
 function parse_version(string $header): Result {
     return match ($header[0] ?? null) {

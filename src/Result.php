@@ -15,7 +15,7 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
  * A simple function returning Result might be defined and used like so:
  *
  * ```php
- * // @param Result<Version,string>
+ * // @param Result<int,string>
  * function parse_version(string $header): Result {
  *     return match ($header[0] ?? null) {
  *         null => Result\err("invalid header length"),
