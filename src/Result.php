@@ -55,8 +55,7 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
  *     return Result\ok($res);
  * }
  *
- * $result = writeInFile("/path/to/file", "Hi!");
- *
+ * writeInFile("/path/to/file", "Hi!");
  * // @throws TH\Maybe\Result\UnusedResultException Unused Result dropped
  * ```
  *

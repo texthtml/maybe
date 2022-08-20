@@ -3,8 +3,7 @@
 
 {embed layout}
 	{block content}
-		<h1>{$config->title} API documentation</h1>
-
+		<h1>TH\Maybe</h1>
 		<p>
 			This library implements two monadic types for PHP :
 			<dl>
@@ -28,11 +27,17 @@
 			invalid returned type or dead code.
 		</p>
 
+		<h2>Installation</h2>
+
+		<pre><code class="language-bash">composer req texthtml/maybe</code></pre>
+
 		<h2>Basic usages</h2>
 
 		<h3>Using <code>Option</code>s</h3>
 
-		<p>{capture $code}{syntax off}/**
+		<p>{capture $code}{syntax off}use TH\Maybe\Option;
+
+/**
  * @param Option<float>
  */
 function divide(float $numerator, float $denominator): Option {
@@ -63,7 +68,8 @@ if ($result instanceof Option\Some) {
 		<h3>Using <code>Result</code>s</h3>
 
 		<p>
-			{capture $code}{syntax off}
+			{capture $code}{syntax off}use TH\Maybe\Option;
+
 /**
  * @param Result<int,string>
  */

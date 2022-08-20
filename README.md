@@ -9,8 +9,8 @@ incorrect logic in PHP code.
 
 # Installation
 
-```sh
-composer req --dev texthtml/maybe
+```bash
+composer req texthtml/maybe
 ```
 
 # Documentation

@@ -4,7 +4,13 @@
 
 {define navbar}
 	<nav class="navbar">
-		<div class="navbar-left" />
+		<div class="navbar-left">
+			<ul class="navbar-links">
+				<li>
+					<a href="{indexUrl()}">{$config->title}</a>
+				</li>
+			</ul>
+		</div>
 		<div class="navbar-right">
 			{include search}
 		</div>
