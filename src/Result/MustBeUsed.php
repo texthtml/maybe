@@ -15,8 +15,16 @@ trait MustBeUsed
      */
     private static function toBeUsedMap(): \ArrayAccess
     {
+        return self::$toBeUsed ??= self::emptyToBeUsedMap();
+    }
+
+    /**
+     * @return \WeakMap<Result<mixed,mixed>,ResultCreationTrace>
+     */
+    private static function emptyToBeUsedMap(): \WeakMap
+    {
         /** @var \WeakMap<Result<mixed,mixed>,ResultCreationTrace> */
-        return self::$toBeUsed ??= new \WeakMap();
+        return new \WeakMap();
     }
 
     /**

@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.1']
+        php-versions: ['8.1', '8.2']
 
     steps:
       - uses: actions/checkout@v3
@@ -36,9 +36,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: tools/apigen/vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('tools/apigen/composer.lock') }}
+          key: ${{ runner.os }}-php-${{ matrix.php-versions }}-${{ hashFiles('tools/apigen/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-php-
+            ${{ runner.os }}-php-${{ matrix.php-versions }}-
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress

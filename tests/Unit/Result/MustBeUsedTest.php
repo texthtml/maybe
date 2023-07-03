@@ -65,7 +65,6 @@ final class MustBeUsedTest extends TestCase
             $result = $factory();
             Assert::assertNull($result->unwrapOr(null));
 
-            /** @psalm-suppress UnusedFunctionCall */
             \unserialize(\serialize($result));
         })($factory);
     }

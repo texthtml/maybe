@@ -16,8 +16,10 @@
     </rule>
 
     <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">
+        <exclude name="SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys" />
         <exclude name="SlevomatCodingStandard.Classes.DisallowConstructorPropertyPromotion" />
         <exclude name="SlevomatCodingStandard.Classes.RequireSingleLineMethodSignature" />
+        <exclude name="SlevomatCodingStandard.Classes.RequireSelfReference" />
         <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming" />
         <exclude name="SlevomatCodingStandard.Commenting.DisallowCommentAfterCode" />
         <exclude name="SlevomatCodingStandard.Commenting.DisallowOneLinePropertyDocComment" />
@@ -50,6 +52,12 @@
         <properties>
             <property name="declareOnFirstLine" value="true" />
             <property name="spacesCountAroundEqualsSign" value="0" />
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
+        <properties>
+            <property name="enableStandaloneNullTrueFalseTypeHints" value="false" />
         </properties>
     </rule>
 
@@ -112,6 +120,12 @@
         <exclude-pattern>/src/Option.php</exclude-pattern>
         <exclude-pattern>/src/Result.php</exclude-pattern>
         <exclude-pattern>/tests/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Attributes.AttributesOrder">
+        <properties>
+            <property name="orderAlphabetically" value="true" />
+        </properties>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Files.FunctionLength.FunctionLength">
