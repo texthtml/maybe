@@ -34,7 +34,7 @@ final class HasBeen extends Constraint
     {
         $ro = new \ReflectionObject($result);
 
-        /** @throws void */
+        /** @phpstan-throws void */
         $rp = $ro->getProperty("toBeUsed");
         $rp->setAccessible(true);
 

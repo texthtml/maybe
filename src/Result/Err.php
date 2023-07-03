@@ -19,8 +19,45 @@ final class Err implements Result
      * @param E $value
      * @nodoc
      */
-    public function __construct(private mixed $value) {
+    public function __construct(private readonly mixed $value) {
         $this->mustBeUsed();
+    }
+
+    /**
+     * @return false
+     */
+    public function isOk(): bool
+    {
+        $this->used();
+
+        return false;
+    }
+
+    /**
+     * @return true
+     */
+    public function isErr(): bool
+    {
+        $this->used();
+
+        return true;
+    }
+
+    /**
+     * @return false
+     */
+    public function isOkAnd(callable $predicate): bool
+    {
+        $this->used();
+
+        return false;
+    }
+
+    public function isErrAnd(callable $predicate): bool
+    {
+        $this->used();
+
+        return $predicate($this->value);
     }
 
     /**
@@ -53,6 +90,7 @@ final class Err implements Result
 
     /**
      * @return E
+     * @phpstan-throws void
      */
     public function unwrapErr(): mixed
     {

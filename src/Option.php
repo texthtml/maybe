@@ -52,6 +52,74 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 interface Option extends \IteratorAggregate
 {
     /**
+     * Returns `true` if the option is the `Some` variant.
+     *
+     * # Examples
+     *
+     * ```
+     * // @var Option<int,string> $x
+     * $x = Option\Some(2);
+     * self::assertTrue($x->isSome());
+     * ```
+     *
+     * ```
+     * // @var Option<int,string> $x
+     * $x = Option\none();
+     * self::assertFalse($x->isSome());
+     * ```
+     *
+     * @psalm-assert-if-true Option\Some $this
+     * @psalm-assert-if-false Option\None $this
+     */
+    public function isSome(): bool;
+
+    /**
+     * Returns `true` if the option is the `None` variant.
+     *
+     * # Examples
+     *
+     * ```
+     * // @var Option<int,string> $x
+     * $x = Option\Some(2);
+     * self::assertFalse($x->isNone());
+     * ```
+     *
+     * ```
+     * // @var Option<int,string> $x
+     * $x = Option\none();
+     * self::assertTrue($x->isNone());
+     * ```
+     *
+     * @psalm-assert-if-true Option\None $this
+     * @psalm-assert-if-false Option\Some $this
+     */
+    public function isNone(): bool;
+
+    /**
+     * Returns `true` if the option is the `Some` variant and the value inside of it matches a predicate.
+     *
+     * # Examples
+     *
+     * ```
+     * // @var Option<int,string> $x
+     * $x = Option\Some(2);
+     * self::assertTrue($x->isSomeAnd(fn ($n) => $n < 5));
+     * self::assertFalse($x->isSomeAnd(fn ($n) => $n > 5));
+     * ```
+     *
+     * ```
+     * // @var Option<int,string> $x
+     * $x = Option\none();
+     * self::assertFalse($x->isSomeAnd(fn ($n) => $n < 5));
+     * self::assertFalse($x->isSomeAnd(fn ($n) => $n > 5));
+     * ```
+     *
+     * @param callable(T):bool $predicate
+     * @psalm-assert-if-true Option\Some $this
+     */
+    public function isSomeAnd(callable $predicate): bool;
+
+    /**
      * Extract the contained value in an `Option<T>` when it is the `Some` variant.
      * Throw a `RuntimeException` with a custum provided message if the `Option` is `None`.
      *
@@ -72,6 +140,7 @@ interface Option extends \IteratorAggregate
      *
      * @return T
      * @throws \RuntimeException
+     * @psalm-assert Option\Some $this
      */
     public function expect(string $message): mixed;
 
@@ -95,6 +164,7 @@ interface Option extends \IteratorAggregate
      *
      * @return T
      * @throws \RuntimeException
+     * @psalm-assert Option\Some $this
      */
     public function unwrap(): mixed;
 
@@ -231,6 +301,7 @@ interface Option extends \IteratorAggregate
      *
      * @param Option<T> $right
      * @return Option<T>
+     * @psalm-assert-if-false Option\None $this
      */
     public function or(Option $right): Option;
 
@@ -257,6 +328,7 @@ interface Option extends \IteratorAggregate
      *
      * @param callable():Option<T> $right
      * @return Option<T>
+     * @psalm-assert-if-false Option\None $this
      */
     public function orElse(callable $right): Option;
 
@@ -303,6 +375,8 @@ interface Option extends \IteratorAggregate
      * $x = Option\none();
      * self::assertFalse($x->contains(2));
      * ```
+     *
+     * @psalm-assert-if-true Option\Some $this
      */
     public function contains(mixed $value, bool $strict = true): bool;
 

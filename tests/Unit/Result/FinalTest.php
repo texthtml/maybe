@@ -11,7 +11,7 @@ final class FinalTest extends TestCase
         self::markTestSkipped("Probably have to fork to test that this is a fatal error");
 
         // @phpstan-ignore-next-line Unreachable statement - code above always terminates.
-        $this->expectErrorMessage("Class MyOk cannot extend final class TH\Maybe\Result\Ok");
+        $this->expectExceptionMessage("Class MyOk cannot extend final class TH\Maybe\Result\Ok");
 
         eval("class MyOk extends \TH\Maybe\Result\Ok {}");    }
 
@@ -20,7 +20,7 @@ final class FinalTest extends TestCase
         self::markTestSkipped("Probably have to fork to test that this is a fatal error");
 
         // @phpstan-ignore-next-line Unreachable statement - code above always terminates.
-        $this->expectErrorMessage("Class MyErr cannot extend final class TH\Maybe\Result\Err");
+        $this->expectExceptionMessage("Class MyErr cannot extend final class TH\Maybe\Result\Err");
 
         eval("class MyErr extends \TH\Maybe\Result\Err {}");
     }
@@ -30,7 +30,7 @@ final class FinalTest extends TestCase
         self::markTestSkipped("Don't know how to prevent that");
 
         // @phpstan-ignore-next-line Unreachable statement - code above always terminates.
-        $this->expectErrorMessage(
+        $this->expectExceptionMessage(
             "Call to private TH\Maybe\Result::__construct() from scope TH\Maybe\Tests\Unit\Result\FinalTest",
         );
 

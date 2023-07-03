@@ -9,7 +9,7 @@ final class FinalTest extends TestCase
     // @phpstan-ignore
     public function testCannotInstanciateThirdPartyNone(): void
     {
-        $this->expectErrorMessage("Class MyNone cannot extend final class TH\Maybe\Option\None");
+        $this->expectExceptionMessage("Class MyNone cannot extend final class TH\Maybe\Option\None");
 
         self::markTestSkipped("Probably have to fork to test that this is a fatal error");
 
@@ -18,7 +18,7 @@ final class FinalTest extends TestCase
 
     public function testCannotInstanciateThirdPartySome(): void
     {
-        $this->expectErrorMessage("Class MySome cannot extend final class TH\Maybe\Option\Some");
+        $this->expectExceptionMessage("Class MySome cannot extend final class TH\Maybe\Option\Some");
 
         self::markTestSkipped("Probably have to fork to test that this is a fatal error");
 
@@ -27,7 +27,7 @@ final class FinalTest extends TestCase
 
     public function testCannotInstanciateThirdPartyOption(): void
     {
-        $this->expectErrorMessage(
+        $this->expectExceptionMessage(
             "Call to private TH\Maybe\Option::__construct() from scope TH\Maybe\Tests\Unit\Option\FinalTest",
         );
 

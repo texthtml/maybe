@@ -19,12 +19,50 @@ final class Ok implements Result
      * @param T $value
      * @nodoc
      */
-    public function __construct(private mixed $value) {
+    public function __construct(private readonly mixed $value) {
         $this->mustBeUsed();
     }
 
     /**
+     * @return true
+     */
+    public function isOk(): bool
+    {
+        $this->used();
+
+        return true;
+    }
+
+    /**
+     * @return false
+     */
+    public function isErr(): bool
+    {
+        $this->used();
+
+        return false;
+    }
+
+    public function isOkAnd(callable $predicate): bool
+    {
+        $this->used();
+
+        return $predicate($this->value);
+    }
+
+    /**
+     * @return false
+     */
+    public function isErrAnd(callable $predicate): bool
+    {
+        $this->used();
+
+        return false;
+    }
+
+    /**
      * @return T
+     * @phpstan-throws void
      */
     public function expect(string $message): mixed
     {
@@ -35,6 +73,7 @@ final class Ok implements Result
 
     /**
      * @return T
+     * @phpstan-throws void
      */
     public function unwrap(): mixed
     {

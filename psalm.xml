@@ -65,6 +65,16 @@
                 <directory name="tests/Unit" />
             </errorLevel>
         </MoreSpecificReturnType>
+        <NoValue>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </NoValue>
+        <UnusedClosureParam>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </UnusedClosureParam>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="tests/Unit" />

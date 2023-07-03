@@ -53,7 +53,7 @@ final class IgnoreUnusedResults
     private function properties(): iterable
     {
         foreach ([Ok::class, Err::class] as $className) {
-            /** @throws void */
+            /** @phpstan-throws void */
             yield (new \ReflectionClass($className))->getProperty("toBeUsed");
         }
     }

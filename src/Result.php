@@ -26,7 +26,7 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
  * }
  *
  * $version = parse_version("1.x");
- * if ($version instanceof Result\Ok) {
+ * if ($version->isOk()) {
  *     echo "working with version: {$version->unwrap()}";
  * } else {
  *     echo "error parsing header: {$version->unwrapErr()}";
@@ -71,6 +71,98 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 interface Result extends \IteratorAggregate
 {
     /**
+     * Returns `true` if the result is the `Ok` variant.
+     *
+     * # Examples
+     *
+     * ```
+     * // @var Result<int,string> $x
+     * $x = Result\ok(2);
+     * self::assertTrue($x->isOk());
+     * ```
+     *
+     * ```
+     * // @var Result<int,string> $x
+     * $x = Result\err(2);
+     * self::assertFalse($x->isOk());
+     * ```
+     *
+     * @psalm-assert-if-true Result\Ok $this
+     * @psalm-assert-if-false Result\Err $this
+     */
+    public function isOk(): bool;
+
+    /**
+     * Returns `true` if the result is the `Err` variant.
+     *
+     * # Examples
+     *
+     * ```
+     * // @var Result<int,string> $x
+     * $x = Result\ok(2);
+     * self::assertFalse($x->isErr());
+     * ```
+     *
+     * ```
+     * // @var Result<int,string> $x
+     * $x = Result\err(2);
+     * self::assertTrue($x->isErr());
+     * ```
+     *
+     * @psalm-assert-if-true Result\Err $this
+     * @psalm-assert-if-false Result\Ok $this
+     */
+    public function isErr(): bool;
+
+    /**
+     * Returns `true` if the result is the `Ok` variant and the value inside of it matches a predicate.
+     *
+     * # Examples
+     *
+     * ```
+     * // @var Result<int,string> $x
+     * $x = Result\ok(2);
+     * self::assertTrue($x->isOkAnd(fn ($n) => $n < 5));
+     * self::assertFalse($x->isOkAnd(fn ($n) => $n > 5));
+     * ```
+     *
+     * ```
+     * // @var Result<int,string> $x
+     * $x = Result\err(2);
+     * self::assertFalse($x->isOkAnd(fn ($n) => $n < 5));
+     * self::assertFalse($x->isOkAnd(fn ($n) => $n > 5));
+     * ```
+     *
+     * @param callable(T):bool $predicate
+     * @psalm-assert-if-true Result\Ok $this
+     */
+    public function isOkAnd(callable $predicate): bool;
+
+    /**
+     * Returns `true` if the result is the `Err` variant and the value inside of it matches a predicate.
+     *
+     * # Examples
+     *
+     * ```
+     * // @var Result<int,string> $x
+     * $x = Result\err(2);
+     * self::assertTrue($x->isErrAnd(fn ($n) => $n < 5));
+     * self::assertFalse($x->isErrAnd(fn ($n) => $n > 5));
+     * ```
+     *
+     * ```
+     * // @var Result<int,string> $x
+     * $x = Result\ok(2);
+     * self::assertFalse($x->isErrAnd(fn ($n) => $n < 5));
+     * self::assertFalse($x->isErrAnd(fn ($n) => $n > 5));
+     * ```
+     *
+     * @param callable(E):bool $predicate
+     * @psalm-assert-if-true Result\Err $this
+     */
+    public function isErrAnd(callable $predicate): bool;
+
+    /**
      * Extract the contained value in an `Result<T, E>` when it is the `Ok` variant.
      * Throw a `RuntimeException` with a custum provided message if the `Result` is `Err`.
      *
@@ -84,6 +176,7 @@ interface Result extends \IteratorAggregate
      *
      * @return T
      * @throws \RuntimeException
+     * @psalm-assert Result\Ok $this
      */
     public function expect(string $message): mixed;
 
@@ -108,6 +201,7 @@ interface Result extends \IteratorAggregate
      *
      * @return T
      * @throws \Throwable
+     * @psalm-assert Result\Ok $this
      */
     public function unwrap(): mixed;
 
@@ -125,6 +219,7 @@ interface Result extends \IteratorAggregate
      *
      * @return E
      * @throws \RuntimeException
+     * @psalm-assert Result\Err $this
      */
     public function unwrapErr(): mixed;
 
@@ -371,6 +466,8 @@ interface Result extends \IteratorAggregate
      * $x = Result\err("Some error message");
      * self::assertFalse($x->contains(2));
      * ```
+     *
+     * @psalm-assert-if-true Result\Ok $this
      */
     public function contains(mixed $value, bool $strict = true): bool;
 
@@ -392,6 +489,8 @@ interface Result extends \IteratorAggregate
      * $x = Result\err("Some other error message");
      * self::assertFalse($x->containsErr("Some error message"));
      * ```
+     *
+     * @psalm-assert-if-true Result\Err $this
      */
     public function containsErr(mixed $value, bool $strict = true): bool;
 
@@ -417,7 +516,7 @@ interface Result extends \IteratorAggregate
      * foreach(explode(PHP_EOL, $input) as $num) {
      *     $n = parseInt($num)->map(fn ($i) => $i * 2);
      *
-     *     if ($n instanceof Result\Ok) {
+     *     if ($n->isOk()) {
      *         echo $n->unwrap(), PHP_EOL;
      *     }
      * }

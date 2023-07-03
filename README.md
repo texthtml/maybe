@@ -38,7 +38,7 @@ function divide(float $numerator, float $denominator): Option {
 $result = divide(2.0, 3.0);
 
 // Pattern match to retrieve the value
-if ($result instanceof Option\Some) {
+if ($result->isSome()) {
     // The division was valid
     echo "Result: {$option->unwrap()}";
 } else {
@@ -65,7 +65,7 @@ function parse_version(string $header): Result {
 }
 
 $version = parse_version("1.x");
-if ($version instanceof Result\Ok) {
+if ($version->isOk()) {
     echo "working with version: {$version->unwrap()}";
 } else {
     echo "error parsing header: {$version->unwrapErr()}";

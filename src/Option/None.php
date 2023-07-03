@@ -16,6 +16,30 @@ enum None implements Option
     case instance;
 
     /**
+     * @return false
+     */
+    public function isSome(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @return true
+     */
+    public function isNone(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return false
+     */
+    public function isSomeAnd(callable $predicate): bool
+    {
+        return false;
+    }
+
+    /**
      * @throws \RuntimeException
      */
     public function expect(string $message): never

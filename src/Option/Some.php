@@ -20,7 +20,28 @@ final class Some implements Option
     public function __construct(private mixed $value) {}
 
     /**
-     * @throws void
+     * @return true
+     */
+    public function isSome(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return false
+     */
+    public function isNone(): bool
+    {
+        return false;
+    }
+
+    public function isSomeAnd(callable $predicate): bool
+    {
+        return $predicate($this->value);
+    }
+
+    /**
+     * @phpstan-throws void
      */
     public function expect(string $message): mixed
     {
@@ -28,7 +49,7 @@ final class Some implements Option
     }
 
     /**
-     * @throws void
+     * @phpstan-throws void
      */
     public function unwrap(): mixed
     {
