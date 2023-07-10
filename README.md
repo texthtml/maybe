@@ -25,7 +25,7 @@ Read the [documentation](https://doc.maybe.texthtml.net) full API description, d
 
 ```php
 /**
- * @param Option<float>
+ * @return Option<float>
  */
 function divide(float $numerator, float $denominator): Option {
     return match ($denomintor) {
@@ -53,7 +53,7 @@ if ($result->isSome()) {
 
 ```php
 /**
- * @param Result<int,string>
+ * @return Result<int,string>
  */
 function parse_version(string $header): Result {
     return match ($header[0] ?? null) {
