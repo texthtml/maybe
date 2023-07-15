@@ -6,9 +6,10 @@
 // Annotation with 🙈 are for Psalm / PHPStan false positives.
 // The other annotations - with 🎯 - are expected issues that Psalm / PHPStan should detect.
 
-namespace TH\Maybe\Tests\TypeHinting;
+namespace TH\Maybe\Tests\TypeHinting\option;
 
 use TH\Maybe\Option;
+use TH\Maybe\Tests\TypeHinting\option as here;
 
 /**
  * @param Option<string> $option
@@ -56,4 +57,51 @@ function test_is_none(Option $option): int
     /** @psalm-suppress MissingThrowsDocblock 🙈 */
     // @phpstan-ignore-next-line 🙈 Function TH\Maybe\Tests\TypeHinting\test_is_none() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
     return $option->unwrap();
+}
+
+/**
+ * @param Option<int> $option
+ */
+function test_instanceof_some(Option $option): int
+{
+    if ($option instanceof Option\Some) {
+        /** @psalm-suppress MissingThrowsDocblock 🙈 */
+        // @phpstan-ignore-next-line 🙈 Function TH\Maybe\Tests\TypeHinting\test_instanceof_some() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
+        return $option->unwrap();
+    }
+
+    /** @psalm-suppress MissingThrowsDocblock 🎯 */
+    // @phpstan-ignore-next-line 🎯 Dead catch - RuntimeException is never thrown in the try block.
+    return $option->unwrap();
+}
+
+/**
+ * @param Option<int> $option
+ */
+function test_instanceof_none(Option $option): int
+{
+    if ($option instanceof Option\None) {
+        /** @psalm-suppress NoValue,MissingThrowsDocblock 🎯 */
+        // @phpstan-ignore-next-line 🎯 Function test_instanceof_none() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
+        return $option->unwrap();
+    }
+
+    /** @psalm-suppress MissingThrowsDocblock 🙈 */
+    // @phpstan-ignore-next-line 🙈 Function TH\Maybe\Tests\TypeHinting\test_instanceof_none() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
+    return $option->unwrap();
+}
+
+function test_call_a_function_with_none(): void
+{
+    /** @psalm-suppress InvalidArgument 🙈 */
+    here\test_is_none(Option\none());
+}
+
+function test_call_a_function_with_some(): void
+{
+    here\test_is_none(Option\some(1));
+
+    /** @psalm-suppress InvalidScalarArgument 🎯 */
+    // @phpstan-ignore-next-line 🎯 Parameter #1 $option of function TH\Maybe\Tests\TypeHinting\option\test_is_none expects TH\Maybe\Option<int>, TH\Maybe\Option\Some<string> given.
+    here\test_is_none(Option\some("1"));
 }

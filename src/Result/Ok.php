@@ -7,8 +7,7 @@ use TH\Maybe\Result;
 
 /**
  * @template T
- * @template E
- * @implements Result<T, E>
+ * @implements Result<T, never>
  * @nodoc
  */
 class Ok implements Result
@@ -146,7 +145,7 @@ class Ok implements Result
     }
 
     /**
-     * @return self<T,E>
+     * @return self<T>
      */
     final public function or(Result $right): self
     {
@@ -157,7 +156,7 @@ class Ok implements Result
     }
 
     /**
-     * @return self<T,E>
+     * @return self<T>
      */
     final public function orElse(callable $right): self
     {
@@ -189,18 +188,18 @@ class Ok implements Result
     /**
      * @template U
      * @param callable(T):U $callback
-     * @return Result<U, E>
+     * @return self<U>
      */
     final public function map(callable $callback): self
     {
         $this->used();
 
-        /** @var Result\Ok<U, E> */
+        /** @var self<U> */
         return Result\ok($callback($this->value));
     }
 
     /**
-     * @return self<T,E>
+     * @return self<T>
      */
     final public function mapErr(callable $callback): self
     {
@@ -234,14 +233,10 @@ class Ok implements Result
         return Option\some($this->value);
     }
 
-    /**
-     * @return Option\None<E>
-     */
     final public function err(): Option\None
     {
         $this->used();
 
-        /** @var Option\None<E> */
         return Option\none();
     }
 

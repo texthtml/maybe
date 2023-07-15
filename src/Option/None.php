@@ -6,8 +6,7 @@ use TH\Maybe\Option;
 use TH\Maybe\Result;
 
 /**
- * @template T
- * @implements Option<T>
+ * @implements Option<never>
  * @immutable
  * @nodoc
  */
@@ -141,33 +140,30 @@ enum None implements Option
     /**
      * @template U
      * @param Option<U> $option
-     * @return Option\None<array{T, U}>
+     * @return $this
      */
-    public function zip(Option $option): Option
+    public function zip(Option $option): self
     {
-        /** @var Option\None<array{T, U}> */
         return $this;
     }
 
     /**
      * @template E
      * @param E $err
-     * @return Result\Err<T, E>
+     * @return Result\Err<E>
      */
     public function okOr(mixed $err): Result\Err
     {
-        /** @var Result\Err<T, E> */
         return Result\err($err);
     }
 
     /**
      * @template E
      * @param callable():E $err
-     * @return Result\Err<T, E>
+     * @return Result\Err<E>
      */
     public function okOrElse(callable $err): Result\Err
     {
-        /** @var Result\Err<T, E> */
         return Result\err($err());
     }
 

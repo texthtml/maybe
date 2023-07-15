@@ -3,6 +3,7 @@ parameters:
 	paths:
 		- src
 		- tests
+	checkGenericClassInNonGenericObjectType: false
 	exceptions:
 		check:
 			missingCheckedExceptionInThrows: true
@@ -20,14 +21,5 @@ parameters:
 		-
 			message: "#Method .*::.*\\(\\) throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.#"
 			path: tests/Unit/
-		-
-			message: '#Enum TH\\Maybe\\Option\\None has PHPDoc @template tag but enums cannot be generic.#'
-			path: src/Option/None.php
-		-
-			message: '#Return type \(iterable<array{T, U}>&TH\\Maybe\\Option\\None\) of method TH\\Maybe\\Option\\None::zip\(\) should be compatible with return type \(TH\\Maybe\\Option<array{mixed, mixed}>\) of method TH\\Maybe\\Option<T>::zip\(\)#'
-			path: src/Option/None.php
-		-
-			message: '#Parameter \#1 \$callback of method TH\\Maybe\\Option<U>::map\(\) expects callable\(U\): array{T, U}, Closure\(U\): array{T, U} given.#'
-			path: src/Option/Some.php
 	excludePaths:
 		- tests/examples.php
