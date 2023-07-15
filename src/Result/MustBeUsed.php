@@ -30,7 +30,7 @@ trait MustBeUsed
     /**
      * Mark a result as needed to be used
      */
-    protected function mustBeUsed(): void
+    private function mustBeUsed(): void
     {
         self::toBeUsedMap()[$this] = new ResultCreationTrace();
     }
@@ -38,7 +38,7 @@ trait MustBeUsed
     /**
      * Mark a result as used
      */
-    protected function used(): void
+    private function used(): void
     {
         unset(self::toBeUsedMap()[$this]);
     }
