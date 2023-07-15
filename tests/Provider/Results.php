@@ -73,4 +73,25 @@ trait Results
             "expected" => Result\ok("left"),
         ];
     }
+
+    /**
+     * @return iterable<string, array{class-string<Result>}>
+     */
+    public function resultClasses(): iterable
+    {
+        yield "Ok" => [Result\Ok::class];
+        yield "Err" => [Result\Err::class];
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public function resultMethods(): iterable
+    {
+        $rc = new \ReflectionClass(Result::class);
+
+        foreach ($rc->getMethods() as $method) {
+            yield $method->getName() => [$method->getName()];
+        }
+    }
 }

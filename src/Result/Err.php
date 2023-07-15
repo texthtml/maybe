@@ -11,7 +11,7 @@ use TH\Maybe\Result;
  * @implements Result<T, E>
  * @nodoc
  */
-final class Err implements Result
+class Err implements Result
 {
     use MustBeUsed;
 
@@ -19,14 +19,14 @@ final class Err implements Result
      * @param E $value
      * @nodoc
      */
-    public function __construct(private readonly mixed $value) {
+    final public function __construct(private readonly mixed $value) {
         $this->mustBeUsed();
     }
 
     /**
      * @return false
      */
-    public function isOk(): bool
+    final public function isOk(): bool
     {
         $this->used();
 
@@ -36,7 +36,7 @@ final class Err implements Result
     /**
      * @return true
      */
-    public function isErr(): bool
+    final public function isErr(): bool
     {
         $this->used();
 
@@ -46,14 +46,14 @@ final class Err implements Result
     /**
      * @return false
      */
-    public function isOkAnd(callable $predicate): bool
+    final public function isOkAnd(callable $predicate): bool
     {
         $this->used();
 
         return false;
     }
 
-    public function isErrAnd(callable $predicate): bool
+    final public function isErrAnd(callable $predicate): bool
     {
         $this->used();
 
@@ -63,7 +63,7 @@ final class Err implements Result
     /**
      * @throws \RuntimeException
      */
-    public function expect(string $message): never
+    final public function expect(string $message): never
     {
         $this->used();
 
@@ -77,7 +77,7 @@ final class Err implements Result
     /**
      * @throws \Throwable
      */
-    public function unwrap(): never
+    final public function unwrap(): never
     {
         $this->used();
 
@@ -92,7 +92,7 @@ final class Err implements Result
      * @return E
      * @phpstan-throws void
      */
-    public function unwrapErr(): mixed
+    final public function unwrapErr(): mixed
     {
         $this->used();
 
@@ -106,14 +106,14 @@ final class Err implements Result
      * @param T $default
      * @return T
      */
-    public function unwrapOr(mixed $default): mixed
+    final public function unwrapOr(mixed $default): mixed
     {
         $this->used();
 
         return $default;
     }
 
-    public function unwrapOrElse(callable $default): mixed
+    final public function unwrapOrElse(callable $default): mixed
     {
         $this->used();
 
@@ -123,7 +123,7 @@ final class Err implements Result
     /**
      * @return self<T,E>
      */
-    public function inspect(callable $callback): self
+    final public function inspect(callable $callback): self
     {
         $this->used();
 
@@ -133,7 +133,7 @@ final class Err implements Result
     /**
      * @return $this
      */
-    public function inspectErr(callable $callback): self
+    final public function inspectErr(callable $callback): self
     {
         $callback($this->value);
 
@@ -143,7 +143,7 @@ final class Err implements Result
     /**
      * @return self<T,E>
      */
-    public function and(Result $right): self
+    final public function and(Result $right): self
     {
         $this->used();
         $right->ok(); // use this result
@@ -154,14 +154,14 @@ final class Err implements Result
     /**
      * @return self<T,E>
      */
-    public function andThen(callable $right): Result
+    final public function andThen(callable $right): self
     {
         $this->used();
 
         return clone $this;
     }
 
-    public function or(Result $right): Result
+    final public function or(Result $right): Result
     {
         $this->used();
         $right->ok(); // use this result
@@ -169,7 +169,7 @@ final class Err implements Result
         return clone $right;
     }
 
-    public function orElse(callable $right): Result
+    final public function orElse(callable $right): Result
     {
         $this->used();
 
@@ -179,14 +179,14 @@ final class Err implements Result
     /**
      * @return false
      */
-    public function contains(mixed $value, bool $strict = true): bool
+    final public function contains(mixed $value, bool $strict = true): bool
     {
         $this->used();
 
         return false;
     }
 
-    public function containsErr(mixed $value, bool $strict = true): bool
+    final public function containsErr(mixed $value, bool $strict = true): bool
     {
         $this->used();
 
@@ -199,7 +199,7 @@ final class Err implements Result
     /**
      * @return self<T,E>
      */
-    public function map(callable $callback): Result
+    final public function map(callable $callback): self
     {
         $this->used();
 
@@ -211,7 +211,7 @@ final class Err implements Result
      * @param callable(E):F $callback
      * @return Result\Err<T, F>
      */
-    public function mapErr(callable $callback): Result
+    final public function mapErr(callable $callback): self
     {
         $this->used();
 
@@ -219,7 +219,7 @@ final class Err implements Result
         return Result\err($callback($this->value));
     }
 
-    public function mapOr(callable $callback, mixed $default): mixed
+    final public function mapOr(callable $callback, mixed $default): mixed
     {
         $this->used();
 
@@ -229,7 +229,7 @@ final class Err implements Result
     /**
      * @return Option\None<E>
      */
-    public function ok(): Option
+    final public function ok(): Option\None
     {
         $this->used();
 
@@ -240,21 +240,21 @@ final class Err implements Result
     /**
      * @return Option\Some<E>
      */
-    public function err(): Option
+    final public function err(): Option\Some
     {
         $this->used();
 
         return Option\some($this->value);
     }
 
-    public function mapOrElse(callable $callback, callable $default): mixed
+    final public function mapOrElse(callable $callback, callable $default): mixed
     {
         $this->used();
 
         return $default($this->value);
     }
 
-    public function getIterator(): \Traversable
+    final public function getIterator(): \Traversable
     {
         $this->used();
 

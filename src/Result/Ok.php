@@ -11,7 +11,7 @@ use TH\Maybe\Result;
  * @implements Result<T, E>
  * @nodoc
  */
-final class Ok implements Result
+class Ok implements Result
 {
     use MustBeUsed;
 
@@ -19,14 +19,14 @@ final class Ok implements Result
      * @param T $value
      * @nodoc
      */
-    public function __construct(private readonly mixed $value) {
+    final public function __construct(private readonly mixed $value) {
         $this->mustBeUsed();
     }
 
     /**
      * @return true
      */
-    public function isOk(): bool
+    final public function isOk(): bool
     {
         $this->used();
 
@@ -36,14 +36,14 @@ final class Ok implements Result
     /**
      * @return false
      */
-    public function isErr(): bool
+    final public function isErr(): bool
     {
         $this->used();
 
         return false;
     }
 
-    public function isOkAnd(callable $predicate): bool
+    final public function isOkAnd(callable $predicate): bool
     {
         $this->used();
 
@@ -53,7 +53,7 @@ final class Ok implements Result
     /**
      * @return false
      */
-    public function isErrAnd(callable $predicate): bool
+    final public function isErrAnd(callable $predicate): bool
     {
         $this->used();
 
@@ -64,7 +64,7 @@ final class Ok implements Result
      * @return T
      * @phpstan-throws void
      */
-    public function expect(string $message): mixed
+    final public function expect(string $message): mixed
     {
         $this->used();
 
@@ -75,7 +75,7 @@ final class Ok implements Result
      * @return T
      * @phpstan-throws void
      */
-    public function unwrap(): mixed
+    final public function unwrap(): mixed
     {
         $this->used();
 
@@ -85,21 +85,21 @@ final class Ok implements Result
     /**
      * @throws \RuntimeException
      */
-    public function unwrapErr(): never
+    final public function unwrapErr(): never
     {
         $this->used();
 
         throw new \RuntimeException(\sprintf("Unwrapping err on `Ok`: %s", \serialize($this->value)));
     }
 
-    public function unwrapOr(mixed $default): mixed
+    final public function unwrapOr(mixed $default): mixed
     {
         $this->used();
 
         return $this->value;
     }
 
-    public function unwrapOrElse(callable $default): mixed
+    final public function unwrapOrElse(callable $default): mixed
     {
         $this->used();
 
@@ -109,7 +109,7 @@ final class Ok implements Result
     /**
      * @return $this
      */
-    public function inspect(callable $callback): Result
+    final public function inspect(callable $callback): self
     {
         $callback($this->value);
 
@@ -119,12 +119,12 @@ final class Ok implements Result
     /**
      * @return $this
      */
-    public function inspectErr(callable $callback): Result
+    final public function inspectErr(callable $callback): self
     {
         return $this;
     }
 
-    public function and(Result $right): Result
+    final public function and(Result $right): Result
     {
         $this->used();
         $right->ok(); // use this result
@@ -138,7 +138,7 @@ final class Ok implements Result
      * @param callable(T):Result<U, F> $right
      * @return Result<U, F>
      */
-    public function andThen(callable $right): Result
+    final public function andThen(callable $right): Result
     {
         $this->used();
 
@@ -148,7 +148,7 @@ final class Ok implements Result
     /**
      * @return self<T,E>
      */
-    public function or(Result $right): Result
+    final public function or(Result $right): self
     {
         $this->used();
         $right->ok(); // use this result
@@ -159,14 +159,14 @@ final class Ok implements Result
     /**
      * @return self<T,E>
      */
-    public function orElse(callable $right): Result
+    final public function orElse(callable $right): self
     {
         $this->used();
 
         return clone $this;
     }
 
-    public function contains(mixed $value, bool $strict = true): bool
+    final public function contains(mixed $value, bool $strict = true): bool
     {
         $this->used();
 
@@ -179,7 +179,7 @@ final class Ok implements Result
     /**
      * @return false
      */
-    public function containsErr(mixed $value, bool $strict = true): bool
+    final public function containsErr(mixed $value, bool $strict = true): bool
     {
         $this->used();
 
@@ -191,7 +191,7 @@ final class Ok implements Result
      * @param callable(T):U $callback
      * @return Result<U, E>
      */
-    public function map(callable $callback): Result
+    final public function map(callable $callback): self
     {
         $this->used();
 
@@ -202,21 +202,21 @@ final class Ok implements Result
     /**
      * @return self<T,E>
      */
-    public function mapErr(callable $callback): Result
+    final public function mapErr(callable $callback): self
     {
         $this->used();
 
         return clone $this;
     }
 
-    public function mapOr(callable $callback, mixed $default): mixed
+    final public function mapOr(callable $callback, mixed $default): mixed
     {
         $this->used();
 
         return $callback($this->value);
     }
 
-    public function mapOrElse(callable $callback, callable $default): mixed
+    final public function mapOrElse(callable $callback, callable $default): mixed
     {
         $this->used();
 
@@ -226,7 +226,7 @@ final class Ok implements Result
     /**
      * @return Option\Some<T>
      */
-    public function ok(): Option
+    final public function ok(): Option\Some
     {
         $this->used();
 
@@ -237,7 +237,7 @@ final class Ok implements Result
     /**
      * @return Option\None<E>
      */
-    public function err(): Option
+    final public function err(): Option\None
     {
         $this->used();
 
@@ -245,7 +245,7 @@ final class Ok implements Result
         return Option\none();
     }
 
-    public function getIterator(): \Traversable
+    final public function getIterator(): \Traversable
     {
         $this->used();
 

@@ -42,6 +42,11 @@
         <exclude name="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint" />
     </rule>
 
+    <rule ref="SlevomatCodingStandard.Classes.RequireAbstractOrFinal">
+        <exclude-pattern>/src/Result/Ok.php</exclude-pattern>
+        <exclude-pattern>/src/Result/Err.php</exclude-pattern>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
         <properties>
             <property name="searchAnnotations" value="true" />
