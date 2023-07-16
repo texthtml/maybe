@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="8"
+    errorLevel="5"
     resolveFromConfigFile="true"
     strictBinaryOperands="true"
     checkForThrowsDocblock="true"
@@ -80,5 +80,10 @@
                 <directory name="tests/Unit" />
             </errorLevel>
         </PropertyNotSetInConstructor>
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <directory name="tests/Unit" />
+            </errorLevel>
+        </InvalidArgument>
     </issueHandlers>
 </psalm>

@@ -201,7 +201,7 @@ interface Result extends \IteratorAggregate
      *
      * @return T
      * @throws \Throwable
-     * @psalm-assert Result\Ok $this
+     * @psalm-assert =Result\Ok $this
      */
     public function unwrap(): mixed;
 
@@ -219,7 +219,7 @@ interface Result extends \IteratorAggregate
      *
      * @return E
      * @throws \RuntimeException
-     * @psalm-assert Result\Err $this
+     * @psalm-assert =Result\Err $this
      */
     public function unwrapErr(): mixed;
 
@@ -240,8 +240,9 @@ interface Result extends \IteratorAggregate
      * self::assertEq($x->unwrapOr($default), $default);
      * ```
      *
-     * @param T $default
-     * @return T
+     * @template U
+     * @param U $default
+     * @return T|U
      */
     public function unwrapOr(mixed $default): mixed;
 
@@ -255,8 +256,9 @@ interface Result extends \IteratorAggregate
      * self::assertEq(Result\err("foo")->unwrapOrElse(strlen(...)), 3);
      * ```
      *
-     * @param callable(E):T $default
-     * @return T
+     * @template U
+     * @param callable(E):U $default
+     * @return T|U
      */
     public function unwrapOrElse(callable $default): mixed;
 

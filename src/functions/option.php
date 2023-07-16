@@ -21,8 +21,6 @@ function some(mixed $value): Option\Some
 
 /**
  * Return a `Option\None` option containing no values.
- *
- * @return Option\None<never>
  */
 function none(): Option\None
 {

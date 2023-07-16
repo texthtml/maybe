@@ -12,7 +12,7 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
  *
  * @template F
  * @param F $value
- * @return Result\Err<mixed, F>
+ * @return Result\Err<F>
  */
 function err(mixed $value): Result\Err
 {
@@ -24,7 +24,7 @@ function err(mixed $value): Result\Err
  *
  * @template U
  * @param U $value
- * @return Result\Ok<U, mixed>
+ * @return Result\Ok<U>
  */
 function ok(mixed $value): Result\Ok
 {
@@ -46,16 +46,20 @@ function ok(mixed $value): Result\Ok
  * self::assertEq(Result\flatten($x), Result\err("deity"));
  * ```
  *
- * @template U
- * @template F
- * @template R of Result<U, F>
- * @param Result<R, F> $result
- * @return R
+ * @template T
+ * @template E
+ * @template E1 of E
+ * @template E2 of E
+ * @param Result<Result<T, E1>, E2> $result
+ * @return Result<T, E>
  */
 #[ExamplesSetup(IgnoreUnusedResults::class)]
 function flatten(Result $result): Result
 {
-    return $result->unwrapOrElse(static fn () => clone $result); // @phpstan-ignore-line
+    return $result->mapOrElse(
+        static fn (Result $r) => $r,
+        static fn (mixed $err) => Result\err($err),
+    );
 }
 
 /**

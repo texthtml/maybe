@@ -179,8 +179,9 @@ interface Option extends \IteratorAggregate
      * self::assertSame(Option\none()->unwrapOr("bike"), "bike");
      * ```
      *
-     * @param T $default
-     * @return T
+     * @template U
+     * @param U $default
+     * @return T|U
      */
     public function unwrapOr(mixed $default): mixed;
 
@@ -195,8 +196,9 @@ interface Option extends \IteratorAggregate
      * self::assertSame(Option\none()->unwrapOrElse(fn () => 2 * $k), 20);
      * ```
      *
-     * @param callable():T $default
-     * @return T
+     * @template U
+     * @param callable():U $default
+     * @return T|U
      */
     public function unwrapOrElse(callable $default): mixed;
 
@@ -326,8 +328,9 @@ interface Option extends \IteratorAggregate
      * self::assertSame(Option\none()->orElse(nobody(...)), Option\none());
      * ```
      *
-     * @param callable():Option<T> $right
-     * @return Option<T>
+     * @template U
+     * @param callable():Option<U> $right
+     * @return Option<T|U>
      * @psalm-assert-if-false Option\None $this
      */
     public function orElse(callable $right): Option;

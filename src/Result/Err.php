@@ -6,9 +6,8 @@ use TH\Maybe\Option;
 use TH\Maybe\Result;
 
 /**
- * @template T
  * @template E
- * @implements Result<T, E>
+ * @implements Result<never, E>
  * @nodoc
  */
 class Err implements Result
@@ -103,8 +102,9 @@ class Err implements Result
      * Extract the contained value in an `Result<T, E>` when it is the `Ok` variant.
      * Or `$default` if the `Result` is `Err`.
      *
-     * @param T $default
-     * @return T
+     * @template U
+     * @param U $default
+     * @return U
      */
     final public function unwrapOr(mixed $default): mixed
     {
@@ -113,6 +113,11 @@ class Err implements Result
         return $default;
     }
 
+    /*
+     * @template U
+     * @param callable(E):U $default
+     * @return U
+     */
     final public function unwrapOrElse(callable $default): mixed
     {
         $this->used();
@@ -121,13 +126,11 @@ class Err implements Result
     }
 
     /**
-     * @return self<T,E>
+     * @return $this
      */
     final public function inspect(callable $callback): self
     {
-        $this->used();
-
-        return clone $this;
+        return $this;
     }
 
     /**
@@ -141,18 +144,18 @@ class Err implements Result
     }
 
     /**
-     * @return self<T,E>
+     * @return self<E>
      */
     final public function and(Result $right): self
     {
         $this->used();
-        $right->ok(); // use this result
+        $right->isOk(); // use this result
 
         return clone $this;
     }
 
     /**
-     * @return self<T,E>
+     * @return self<E>
      */
     final public function andThen(callable $right): self
     {
@@ -197,7 +200,7 @@ class Err implements Result
     }
 
     /**
-     * @return self<T,E>
+     * @return self<E>
      */
     final public function map(callable $callback): self
     {
@@ -209,13 +212,13 @@ class Err implements Result
     /**
      * @template F
      * @param callable(E):F $callback
-     * @return Result\Err<T, F>
+     * @return self<F>
      */
     final public function mapErr(callable $callback): self
     {
         $this->used();
 
-        /** @var Result\Err<T, F> */
+        /** @var self<F> */
         return Result\err($callback($this->value));
     }
 
@@ -226,14 +229,10 @@ class Err implements Result
         return $default;
     }
 
-    /**
-     * @return Option\None<E>
-     */
     final public function ok(): Option\None
     {
         $this->used();
 
-        /** @var Option\None<E> */
         return Option\none();
     }
 

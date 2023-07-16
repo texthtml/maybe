@@ -56,11 +56,17 @@ final class Some implements Option
         return $this->value;
     }
 
+    /**
+     * @return T
+     */
     public function unwrapOr(mixed $default): mixed
     {
         return $this->value;
     }
 
+    /**
+     * @return T
+     */
     public function unwrapOrElse(callable $default): mixed
     {
         return $this->value;
@@ -104,7 +110,6 @@ final class Some implements Option
 
     public function xor(Option $right): Option
     {
-        /** @var Option<T> */
         return $right instanceof Option\None
             ? $this
             : Option\none();
@@ -120,7 +125,6 @@ final class Some implements Option
 
     public function filter(callable $predicate): Option
     {
-        /** @var Option<T> */
         return $predicate($this->value)
             ? $this
             : Option\none();
@@ -145,47 +149,39 @@ final class Some implements Option
      * @template U
      * @param Option<U> $option
      * @return Option<array{T, U}>
+     * @psalm-suppress InvalidReturnType,InvalidReturnStatement
      */
     public function zip(Option $option): Option
     {
-        /** @var Option<array{T, U}> */
-        return $option->map($this->zipMap(...));
+        foreach ($option as $value) {
+            return Option\some([$this->value, $value]);
+        }
+
+        return Option\none();
     }
 
     /**
      * @template E
      * @param E $err
-     * @return Result\Ok<T, E>
+     * @return Result\Ok<T>
      */
     public function okOr(mixed $err): Result\Ok
     {
-        /** @var Result\Ok<T, E> */
         return Result\ok($this->value);
     }
 
     /**
      * @template E
      * @param callable():E $err
-     * @return Result\Ok<T, E>
+     * @return Result\Ok<T>
      */
     public function okOrElse(callable $err): Result\Ok
     {
-        /** @var Result\Ok<T, E> */
         return Result\ok($this->value);
     }
 
     public function getIterator(): \Traversable
     {
         yield $this->value;
-    }
-
-    /**
-     * @template U
-     * @param U $value
-     * @return array{T, U}
-     */
-    private function zipMap(mixed $value): array
-    {
-        return [$this->value, $value];
     }
 }
