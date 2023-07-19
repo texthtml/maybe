@@ -56,6 +56,59 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
 }
 
 /**
+ * Execute a callable and transform the result into an `Option`.
+ * It will be a `Some` option containing the result if it is different from `$noneValue` (default `null`).
+ *
+ * # Examples
+ *
+ * ```
+ * self::assertEq(Option\of(fn() => "fruits"), Option\some("fruits"));
+ * self::assertEq(Option\of(fn() => null), Option\none());
+ * ```
+ *
+ * @template U
+ * @param callable():U $callback
+ * @return Option<U>
+ */
+function of(callable $callback, mixed $noneValue = null, bool $strict = true): Option
+{
+    return Option\fromValue($callback(), $noneValue, $strict);
+}
+
+/**
+ * Execute a callable and transform the result into an `Option` as `Option\of()` does
+ * but also return `Option\None` if it an exception matching $exceptionClass was thrown.
+ *
+ * # Examples
+ *
+ * ```
+ * self::assertEq(Option\tryOf(fn() => new \DateTimeImmutable("nope")), Option\none());
+ * Option\tryOf(fn() => 1 / 0); // @throws DivisionByZeroError Division by zero
+ * ```
+ *
+ * @template U
+ * @param callable():U $callback
+ * @return Option<U>
+ * @throws \Throwable
+ */
+function tryOf(
+    callable $callback,
+    mixed $noneValue = null,
+    bool $strict = true,
+    string $exceptionClass = \Exception::class,
+): Option {
+    try {
+        return Option\of($callback, $noneValue, $strict);
+    } catch (\Throwable $th) {
+        if (\is_a($th, $exceptionClass)) {
+            return Option\none();
+        }
+
+        throw $th;
+    }
+}
+
+/**
  * Converts from `Option<Option<T>>` to `Option<T>`.
  *
  * # Examples

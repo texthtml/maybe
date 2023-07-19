@@ -26,6 +26,8 @@
         <exclude name="SlevomatCodingStandard.Commenting.RequireOneLineDocComment" />
         <exclude name="SlevomatCodingStandard.Commenting.RequireOneLinePropertyDocComment" />
         <exclude name="SlevomatCodingStandard.ControlStructures.NewWithoutParentheses" />
+        <exclude name="SlevomatCodingStandard.Exceptions.DisallowNonCapturingCatch" />
+        <exclude name="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly" />
         <exclude name="SlevomatCodingStandard.Files.TypeNameMatchesFileName" />
         <exclude name="SlevomatCodingStandard.Functions.DisallowArrowFunction" />
         <exclude name="SlevomatCodingStandard.Functions.DisallowEmptyFunction" />
