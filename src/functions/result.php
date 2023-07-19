@@ -75,15 +75,17 @@ function err(mixed $value): Result\Err
  * ```
  *
  * @template U
- * @param callable():U $callback
- * @return Result<U,\Throwable>
+ * @template E of \Throwable
+ * @param callable(mixed...):U $callback
+ * @param class-string<E> $exceptionClass
+ * @return Result<U,E>
  * @throws \Throwable
  */
 #[ExamplesSetup(IgnoreUnusedResults::class)]
 function trap(callable $callback, string $exceptionClass = \Exception::class): Result
 {
     try {
-        /** @var Result<U,\Throwable> */
+        /** @var Result<U,E> */
         return Result\ok($callback());
     } catch (\Throwable $th) {
         if (\is_a($th, $exceptionClass)) {
@@ -92,6 +94,73 @@ function trap(callable $callback, string $exceptionClass = \Exception::class): R
 
         throw $th;
     }
+}
+
+/**
+ * Wrap a callable into one that transforms its returned value or thrown exception
+ * into a `Result` like `Result\trap()` does.
+ *
+ * # Examples
+ *
+ * Successful execution:
+ *
+ * ```
+ * self::assertEq(Result\ok(3), Result\ify(fn () => 3)());
+ * ```
+ *
+ * Checked exception:
+ *
+ * ```
+ * $x = Result\ify(fn () => new \DateTimeImmutable("2020-30-30 UTC"))();
+ * self::assertTrue($x->isErr());
+ * $x->unwrap();
+ * // @throws Exception Failed to parse time string (2020-30-30 UTC) at position 6 (0): Unexpected character
+ * ```
+ *
+ * Unchecked exception:
+ *
+ * ```
+ * Result\ify(fn () => 1/0)();
+ * // @throws DivisionByZeroError Division by zero
+ * ```
+ *
+ * Result-ify `strtotime()`:
+ *
+ * ```
+ * $strtotime = Result\ify(
+ *     static fn (...$args)
+ *         => \strtotime(...$args)
+ *             ?: throw new \RuntimeException("Could not convert string to time"),
+ * );
+ *
+ * self::assertEq($strtotime("2015-09-21 UTC midnight")->unwrap(), 1442793600);
+ *
+ * $r = $strtotime("nope");
+ * self::assertTrue($r->isErr());
+ * $r->unwrap(); // @throws RuntimeException Could not convert string to time
+ * ```
+ *
+ * @template U
+ * @template E of \Throwable
+ * @param callable(mixed...):U $callback
+ * @param class-string<E> $exceptionClass
+ * @return \Closure(mixed...):Result<U,E>
+ */
+#[ExamplesSetup(IgnoreUnusedResults::class)]
+function ify(callable $callback, string $exceptionClass = \Exception::class): \Closure
+{
+    return static function (...$args) use ($callback, $exceptionClass): Result
+    {
+        try {
+            return Result\ok($callback(...$args));
+        } catch (\Throwable $th) {
+            if (\is_a($th, $exceptionClass)) {
+                return Result\err($th);
+            }
+
+            throw $th;
+        }
+    };
 }
 
 /**
