@@ -109,6 +109,61 @@ function tryOf(
 }
 
 /**
+ * Wrap a callable into one that return transform its result into an `Option`.
+ * It will be a `Some` option containing the result if it is different from `$noneValue` (default `null`).
+ *
+ * # Examples
+ *
+ * ```
+ * self::assertEq(Option\ify(strtotime(...), noneValue: false)("nope"), Option\none());
+ * self::assertEq(Option\ify(strtotime(...))("2015-09-21 UTC at midnight"), Option\some(1_442_793_600));
+ * ```
+ *
+ * @template U
+ * @param callable():U $callback
+ * @return \Closure(mixed...):Option<U>
+ */
+function ify(callable $callback, mixed $noneValue = null, bool $strict = true): \Closure
+{
+    return static fn (...$args) => Option\fromValue($callback(...$args), $noneValue, $strict);
+}
+
+/**
+ * Wrap a callable into one that return transform its result into an `Option` like `Option\ify()` does
+ * but also return `Option\None` if it an exception matching $exceptionClass was thrown.
+ *
+ * # Examples
+ *
+ * ```
+ * self::assertEq(Option\ify(strtotime(...), noneValue: false)("nope"), Option\none());
+ * self::assertEq(Option\ify(strtotime(...))("2015-09-21 UTC at midnight"), Option\some(1_442_793_600));
+ * ```
+ *
+ * @template U
+ * @param callable():U $callback
+ * @return \Closure(mixed...):Option<U>
+ */
+function tryIfy(
+    callable $callback,
+    mixed $noneValue = null,
+    bool $strict = true,
+    string $exceptionClass = \Exception::class,
+): \Closure
+{
+    return static function (...$args) use ($callback, $noneValue, $strict, $exceptionClass): mixed {
+        try {
+            return Option\fromValue($callback(...$args), $noneValue, $strict);
+        } catch (\Throwable $th) {
+            if (\is_a($th, $exceptionClass)) {
+                return Option\none();
+            }
+
+            throw $th;
+        }
+    };
+}
+
+/**
  * Converts from `Option<Option<T>>` to `Option<T>`.
  *
  * # Examples
