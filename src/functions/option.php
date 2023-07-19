@@ -61,8 +61,15 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
  *
  * # Examples
  *
+ * Successful execution:
+ *
  * ```
  * self::assertEq(Option\of(fn() => "fruits"), Option\some("fruits"));
+ * ```
+ *
+ * Convertion of `null` to `Option\None`:
+ *
+ * ```
  * self::assertEq(Option\of(fn() => null), Option\none());
  * ```
  *
@@ -81,9 +88,29 @@ function of(callable $callback, mixed $noneValue = null, bool $strict = true): O
  *
  * # Examples
  *
+ * Successful execution:
+ *
  * ```
- * self::assertEq(Option\tryOf(fn() => new \DateTimeImmutable("nope")), Option\none());
- * Option\tryOf(fn() => 1 / 0); // @throws DivisionByZeroError Division by zero
+ * self::assertEq(Option\tryOf(fn () => strtolower("FRUITS")), Option\some("fruits"));
+ * ```
+ *
+ * Convertion of `null` to `Option\None`:
+ *
+ * ```
+ * self::assertEq(Option\tryOf(fn() => null), Option\none());
+ * ```
+ *
+ * Checked Exception:
+ *
+ * ```
+ * self::assertEq(Option\tryOf(fn () => new \DateTimeImmutable("nope")), Option\none());
+ * ```
+ *
+ * Unchecked Exception:
+ *
+ * ```
+ * self::assertEq(Option\tryOf(fn () => 1 / 0), Option\none());
+ * // @throws DivisionByZeroError Division by zero
  * ```
  *
  * @template U
@@ -109,14 +136,21 @@ function tryOf(
 }
 
 /**
- * Wrap a callable into one that return transform its result into an `Option`.
+ * Wrap a callable into one that transforms its result into an `Option`.
  * It will be a `Some` option containing the result if it is different from `$noneValue` (default `null`).
  *
  * # Examples
  *
+ * Successful execution:
+ *
  * ```
- * self::assertEq(Option\ify(strtotime(...), noneValue: false)("nope"), Option\none());
- * self::assertEq(Option\ify(strtotime(...))("2015-09-21 UTC at midnight"), Option\some(1_442_793_600));
+ * self::assertEq(Option\ify(strtolower(...))("FRUITS"), Option\some("fruits"));
+ * ```
+ *
+ * Convertion of `null` to `Option\None`:
+ *
+ * ```
+ * self::assertEq(Option\ify(fn() => null)(), Option\none());
  * ```
  *
  * @template U
@@ -129,14 +163,34 @@ function ify(callable $callback, mixed $noneValue = null, bool $strict = true): 
 }
 
 /**
- * Wrap a callable into one that return transform its result into an `Option` like `Option\ify()` does
+ * Wrap a callable into one that transforms its result into an `Option` like `Option\ify()` does
  * but also return `Option\None` if it an exception matching $exceptionClass was thrown.
  *
  * # Examples
  *
+ * Successful execution:
+ *
  * ```
- * self::assertEq(Option\ify(strtotime(...), noneValue: false)("nope"), Option\none());
- * self::assertEq(Option\ify(strtotime(...))("2015-09-21 UTC at midnight"), Option\some(1_442_793_600));
+ * self::assertEq(Option\tryIfy(strtolower(...))("FRUITS"), Option\some("fruits"));
+ * ```
+ *
+ * Convertion of `null` to `Option\None`:
+ *
+ * ```
+ * self::assertEq(Option\tryIfy(fn() => null)(), Option\none());
+ * ```
+ *
+ * Checked Exception:
+ *
+ * ```
+ * self::assertEq(Option\tryIfy(fn () => new \DateTimeImmutable("nope"))(), Option\none());
+ * ```
+ *
+ * Unchecked Exception:
+ *
+ * ```
+ * self::assertEq(Option\tryIfy(fn () => 1 / 0)(), Option\none());
+ * // @throws DivisionByZeroError Division by zero
  * ```
  *
  * @template U

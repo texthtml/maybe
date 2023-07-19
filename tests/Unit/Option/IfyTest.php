@@ -60,11 +60,11 @@ final class IfyTest extends TestCase
     public function testTryOfExeptions(): void
     {
         // @phpstan-ignore-next-line
-        Assert::assertEquals(Option\tryIfy(static fn () => new \DateTimeImmutable("none"))(), Option\none());
+        Assert::assertEquals(Option\none(), Option\tryIfy(static fn () => new \DateTimeImmutable("nope"))());
 
         try {
             // @phpstan-ignore-next-line
-            Assert::assertEquals(Option\tryIfy(static fn () => 1 / 0)(), Option\none());
+            Option\tryIfy(static fn () => 1 / 0)();
             Assert::fail("An exception should have been thrown");
         } catch (\DivisionByZeroError) {
         }

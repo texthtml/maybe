@@ -2,8 +2,6 @@
 
 namespace TH\Maybe\Tests\Provider;
 
-use TH\Maybe\Option;
-
 trait Values
 {
     /**

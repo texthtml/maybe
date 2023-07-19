@@ -8,7 +8,33 @@ use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
+ * Return a `Result\Ok` Result containing `$value`.
+ *
+ * ```
+ * $x = Result\ok(3);
+ * self::assertTrue($x->isOk());
+ * self::assertSame(3, $x->unwrap());
+ * ```
+ *
+ * @template U
+ * @param U $value
+ * @return Result\Ok<U>
+ */
+function ok(mixed $value): Result\Ok
+{
+    return new Result\Ok($value);
+}
+/**
  * Return a `Result\Err` result.
+ *
+ * # Examples
+ *
+ * ```
+ * $x = Result\err("nope");
+ * self::assertTrue($x->isErr());
+ * self::assertSame("nope", $x->unwrapErr());
+ * $x->unwrap(); // @throws RuntimeException Unwrapping `Err`: s:4:"nope";
+ * ```
  *
  * @template F
  * @param F $value
@@ -20,15 +46,52 @@ function err(mixed $value): Result\Err
 }
 
 /**
- * Return a `Result\Ok` Result containing `$value`.
+ * Execute a callable and transform the result into an `Result`.
+ * It will be a `Result\Ok` containing the result or, if it threw an exception
+ * matching $exceptionClass, a `Result\Err` containing the exception.
+ *
+ * # Examples
+ *
+ * Successful execution:
+ *
+ * ```
+ * self::assertEq(Result\ok(3), Result\trap(fn () => 3));
+ * ```
+ *
+ * Checked exception:
+ *
+ * ```
+ * $x = Result\trap(fn () => new \DateTimeImmutable("2020-30-30 UTC"));
+ * self::assertTrue($x->isErr());
+ * $x->unwrap();
+ * // @throws Exception Failed to parse time string (2020-30-30 UTC) at position 6 (0): Unexpected character
+ * ```
+ *
+ * Unchecked exception:
+ *
+ * ```
+ * Result\trap(fn () => 1/0);
+ * // @throws DivisionByZeroError Division by zero
+ * ```
  *
  * @template U
- * @param U $value
- * @return Result\Ok<U>
+ * @param callable():U $callback
+ * @return Result<U,\Throwable>
+ * @throws \Throwable
  */
-function ok(mixed $value): Result\Ok
+#[ExamplesSetup(IgnoreUnusedResults::class)]
+function trap(callable $callback, string $exceptionClass = \Exception::class): Result
 {
-    return new Result\Ok($value);
+    try {
+        /** @var Result<U,\Throwable> */
+        return Result\ok($callback());
+    } catch (\Throwable $th) {
+        if (\is_a($th, $exceptionClass)) {
+            return Result\err($th);
+        }
+
+        throw $th;
+    }
 }
 
 /**

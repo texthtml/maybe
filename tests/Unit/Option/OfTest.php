@@ -60,11 +60,11 @@ final class OfTest extends TestCase
     public function testTryOfExeptions(): void
     {
         // @phpstan-ignore-next-line
-        Assert::assertEquals(Option\tryOf(static fn () => new \DateTimeImmutable("none")), Option\none());
+        Assert::assertEquals(Option\none(), Option\tryOf(static fn () => new \DateTimeImmutable("nope")));
 
         try {
             // @phpstan-ignore-next-line
-            Assert::assertEquals(Option\tryOf(static fn () => 1 / 0), Option\none());
+            Option\tryOf(static fn () => 1 / 0);
             Assert::fail("An exception should have been thrown");
         } catch (\DivisionByZeroError) {
         }
