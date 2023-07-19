@@ -9,7 +9,7 @@ use TH\Maybe\Tests\Provider;
 
 final class IfyTest extends TestCase
 {
-    use Provider\Values;
+    use Provider\Options;
 
     /**
      * @dataProvider fromValueMatrix
