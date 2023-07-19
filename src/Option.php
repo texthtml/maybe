@@ -68,6 +68,8 @@ interface Option extends \IteratorAggregate
      * self::assertFalse($x->isSome());
      * ```
      *
+     * @return (T is never ? false : bool)
+     * @phpstan-return bool
      * @psalm-assert-if-true Option\Some $this
      * @psalm-assert-if-false Option\None $this
      */
@@ -90,6 +92,8 @@ interface Option extends \IteratorAggregate
      * self::assertTrue($x->isNone());
      * ```
      *
+     * @return (T is never ? true : bool)
+     * @phpstan-return bool
      * @psalm-assert-if-true Option\None $this
      * @psalm-assert-if-false Option\Some $this
      */
@@ -115,6 +119,8 @@ interface Option extends \IteratorAggregate
      * ```
      *
      * @param callable(T):bool $predicate
+     * @return (T is never ? false : bool)
+     * @phpstan-return bool
      * @psalm-assert-if-true Option\Some $this
      */
     public function isSomeAnd(callable $predicate): bool;
@@ -247,7 +253,8 @@ interface Option extends \IteratorAggregate
      *
      * @template U
      * @param Option<U> $right
-     * @return Option<U>
+     * @return (T is never ? Option\None : Option<U>)
+     * @phpstan-return Option<U>
      */
     public function and(Option $right): Option;
 
@@ -270,7 +277,8 @@ interface Option extends \IteratorAggregate
      *
      * @template U
      * @param callable(T):Option<U> $right
-     * @return Option<U>
+     * @return (T is never ? Option\None : Option<U>)
+     * @phpstan-return Option<U>
      */
     public function andThen(callable $right): Option;
 
@@ -301,9 +309,9 @@ interface Option extends \IteratorAggregate
      * self::assertSame($x->or($y), Option\none());
      * ```
      *
-     * @param Option<T> $right
-     * @return Option<T>
-     * @psalm-assert-if-false Option\None $this
+     * @template U
+     * @param Option<U> $right
+     * @return Option<T|U>
      */
     public function or(Option $right): Option;
 
@@ -336,7 +344,7 @@ interface Option extends \IteratorAggregate
     public function orElse(callable $right): Option;
 
     /**
-     * Returns the option if it is `Some`, otherwise returns `$right`.
+     * Returns the some option if exactly one is a `Some`, return `None` otherwise.
      *
      * # Examples
      *
@@ -359,8 +367,9 @@ interface Option extends \IteratorAggregate
      * self::assertSame($x->xor($y), Option\none());
      * ```
      *
-     * @param Option<T> $right
-     * @return Option<T>
+     * @template U
+     * @param Option<U> $right
+     * @return Option<T|U>
      */
     public function xor(Option $right): Option;
 
@@ -380,6 +389,8 @@ interface Option extends \IteratorAggregate
      * ```
      *
      * @psalm-assert-if-true Option\Some $this
+     * @return (T is never ? false : bool)
+     * @phpstan-return bool
      */
     public function contains(mixed $value, bool $strict = true): bool;
 
@@ -416,7 +427,8 @@ interface Option extends \IteratorAggregate
      *
      * @template U
      * @param callable(T):U $callback
-     * @return Option<U>
+     * @return (T is never ? Option\None : Option<U>)
+     * @phpstan-return Option<U>
      */
     public function map(callable $callback): Option;
 
@@ -435,9 +447,11 @@ interface Option extends \IteratorAggregate
      * ```
      *
      * @template U
+     * @template V
      * @param callable(T):U $callback
-     * @param U $default
-     * @return U
+     * @param V $default
+     * @return (T is never ? V : U)
+     * @phpstan-return U|V
      */
     public function mapOr(callable $callback, mixed $default): mixed;
 
@@ -457,9 +471,11 @@ interface Option extends \IteratorAggregate
      * ```
      *
      * @template U
+     * @template V
      * @param callable(T):U $callback
-     * @param callable():U $default
-     * @return U
+     * @param callable():V $default
+     * @return (T is never ? V : U)
+     * @phpstan-return U|V
      */
     public function mapOrElse(callable $callback, callable $default): mixed;
 
@@ -482,7 +498,8 @@ interface Option extends \IteratorAggregate
      *
      * @template U
      * @param Option<U> $option
-     * @return Option<array{T, U}>
+     * @return (T is never ? Option\None : (U is never ? Option\None : Option<array{T, U}>))
+     * @phpstan-return Option<array{T, U}>
      */
     public function zip(Option $option): Option;
 
@@ -500,7 +517,8 @@ interface Option extends \IteratorAggregate
      *
      * @template E
      * @param E $err
-     * @return Result<T, E>
+     * @return (T is never ? Result\Err<E> : Result<T,E>)
+     * @phpstan-return Result<T,E>
      */
     #[ExamplesSetup(IgnoreUnusedResults::class)]
     public function okOr(mixed $err): Result;
@@ -519,7 +537,8 @@ interface Option extends \IteratorAggregate
      *
      * @template E
      * @param callable():E $err
-     * @return Result<T, E>
+     * @phpstan-return Result<T,E>
+     * @return (T is never ? Result\Err<E> : Result<T,E>)
      */
     #[ExamplesSetup(IgnoreUnusedResults::class)]
     public function okOrElse(callable $err): Result;

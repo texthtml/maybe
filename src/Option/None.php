@@ -127,11 +127,25 @@ enum None implements Option
         return $this;
     }
 
+   /**
+    * @template U
+    * @template V
+    * @param callable(never):U $callback
+    * @param V $default
+    * @return V
+    */
     public function mapOr(callable $callback, mixed $default): mixed
     {
         return $default;
     }
 
+   /**
+    * @template U
+    * @template V
+    * @param callable(never):U $callback
+    * @param callable():V $default
+    * @return V
+    */
     public function mapOrElse(callable $callback, callable $default): mixed
     {
         return $default();
