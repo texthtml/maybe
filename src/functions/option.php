@@ -3,6 +3,7 @@
 namespace TH\Maybe\Option;
 
 use TH\DocTest\Attributes\ExamplesSetup;
+use TH\Maybe\Internal;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
@@ -114,7 +115,9 @@ function of(callable $callback, mixed $noneValue = null, bool $strict = true): O
  * ```
  *
  * @template U
+ * @template E of \Throwable
  * @param callable():U $callback
+ * @param class-string<E> $exceptionClass
  * @return Option<U>
  * @throws \Throwable
  */
@@ -154,7 +157,7 @@ function tryOf(
  * ```
  *
  * @template U
- * @param callable():U $callback
+ * @param callable(mixed...):U $callback
  * @return \Closure(mixed...):Option<U>
  */
 function ify(callable $callback, mixed $noneValue = null, bool $strict = true): \Closure
@@ -194,7 +197,10 @@ function ify(callable $callback, mixed $noneValue = null, bool $strict = true): 
  * ```
  *
  * @template U
- * @param callable():U $callback
+ * @template E of \Throwable
+ * @param callable(mixed...):U $callback
+ * @param class-string<E> $exceptionClass
+ * @param class-string<E> $additionalExceptionClasses
  * @return \Closure(mixed...):Option<U>
  */
 function tryIfy(
@@ -202,17 +208,20 @@ function tryIfy(
     mixed $noneValue = null,
     bool $strict = true,
     string $exceptionClass = \Exception::class,
+    string ...$additionalExceptionClasses,
 ): \Closure
 {
-    return static function (...$args) use ($callback, $noneValue, $strict, $exceptionClass): mixed {
+    return static function (...$args) use (
+        $callback,
+        $noneValue,
+        $strict,
+        $exceptionClass,
+        $additionalExceptionClasses,
+    ): mixed {
         try {
             return Option\fromValue($callback(...$args), $noneValue, $strict);
         } catch (\Throwable $th) {
-            if (\is_a($th, $exceptionClass)) {
-                return Option\none();
-            }
-
-            throw $th;
+            return Internal\trap($th, Option\none(...), $exceptionClass, ...$additionalExceptionClasses);
         }
     };
 }
