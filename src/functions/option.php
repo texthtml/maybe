@@ -114,9 +114,7 @@ function of(callable $callback, mixed $noneValue = null, bool $strict = true): O
  * ```
  *
  * @template U
- * @template E of \Throwable
  * @param callable():U $callback
- * @param class-string<E> $exceptionClass
  * @return Option<U>
  * @throws \Throwable
  */
@@ -156,7 +154,7 @@ function tryOf(
  * ```
  *
  * @template U
- * @param callable(mixed...):U $callback
+ * @param callable():U $callback
  * @return \Closure(mixed...):Option<U>
  */
 function ify(callable $callback, mixed $noneValue = null, bool $strict = true): \Closure
@@ -196,9 +194,7 @@ function ify(callable $callback, mixed $noneValue = null, bool $strict = true): 
  * ```
  *
  * @template U
- * @template E of \Throwable
- * @param callable(mixed...):U $callback
- * @param class-string<E> $exceptionClass
+ * @param callable():U $callback
  * @return \Closure(mixed...):Option<U>
  */
 function tryIfy(
