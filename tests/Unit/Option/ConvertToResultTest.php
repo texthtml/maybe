@@ -49,7 +49,7 @@ final class ConvertToResultTest extends TestCase
     /**
      * @return iterable<array{Option<mixed>, mixed, Result<mixed, mixed>, int}>
      */
-    public function okOrMatrix(): iterable
+    public static function okOrMatrix(): iterable
     {
         yield "none" => [
             Option\none(),

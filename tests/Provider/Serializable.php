@@ -7,7 +7,7 @@ trait Serializable
     /**
      * @return iterable<mixed>
      */
-    public function serializableValues(): iterable
+    public static function serializableValues(): iterable
     {
         yield "null" => [null];
 

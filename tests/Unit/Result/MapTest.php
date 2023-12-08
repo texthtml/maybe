@@ -45,7 +45,7 @@ final class MapTest extends TestCase
      *   array<mixed>
      * }>
      */
-    public function mapMatrix(): iterable
+    public static function mapMatrix(): iterable
     {
         yield "err" => [
             Result\err(null),
@@ -99,7 +99,7 @@ final class MapTest extends TestCase
      *   array<mixed>
      * }>
      */
-    public function mapErrMatrix(): iterable
+    public static function mapErrMatrix(): iterable
     {
         yield "ok" => [
             Result\ok(null),
@@ -158,7 +158,7 @@ final class MapTest extends TestCase
      *   array<mixed>
      * }>
      */
-    public function mapOrMatrix(): iterable
+    public static function mapOrMatrix(): iterable
     {
         yield "err" => [
             Result\err(null),

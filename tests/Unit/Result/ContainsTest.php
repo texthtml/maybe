@@ -25,7 +25,7 @@ final class ContainsTest extends TestCase
     /**
      * @return iterable<array{0:Result<mixed, null>, 1:mixed, 2:bool}>
      */
-    public function containsMatrix(): iterable
+    public static function containsMatrix(): iterable
     {
         $o = (object)[];
 
@@ -66,7 +66,7 @@ final class ContainsTest extends TestCase
     /**
      * @return iterable<array{0:Result<mixed, mixed>, 1:mixed, 2:bool}>
      */
-    public function containsErrMatrix(): iterable
+    public static function containsErrMatrix(): iterable
     {
         $o = (object)[];
 

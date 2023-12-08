@@ -28,7 +28,7 @@ final class ZipTest extends TestCase
      *   Option<array{mixed, mixed}>,
      * }>
      */
-    public function zipMatrix(): iterable
+    public static function zipMatrix(): iterable
     {
         yield "none-none" => [
             Option\none(),
@@ -75,7 +75,7 @@ final class ZipTest extends TestCase
      *   Option<mixed>,
      * }>
      */
-    public function unzipMatrix(): iterable
+    public static function unzipMatrix(): iterable
     {
         yield "none" => [
             Option\none(),

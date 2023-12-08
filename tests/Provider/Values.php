@@ -7,7 +7,7 @@ trait Values
     /**
      * @return iterable<string, array{mixed}>
      */
-    public function values(): iterable
+    public static function values(): iterable
     {
         yield "null" => [null];
         yield "int" => [42];
