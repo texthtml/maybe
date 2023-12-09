@@ -23,8 +23,12 @@ final class TrapTest extends TestCase
 
     public function testTrapCheckedException(): void
     {
+        $exceptionClass = \version_compare(PHP_VERSION, '8.3.0') >= 0
+            ? \DateMalformedStringException::class
+            : \Exception::class;
+
         Assert::assertEquals(
-            new \Exception(
+            new $exceptionClass(
                 "Failed to parse time string (nope) at position 0 (n): The timezone could not be found in the database",
             ),
             // @phpstan-ignore-next-line

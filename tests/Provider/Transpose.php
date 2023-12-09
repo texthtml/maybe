@@ -10,7 +10,7 @@ trait Transpose
     /**
      * @return iterable<array{option:Option<mixed>, result:Result<mixed, mixed>}>
      */
-    public function transposeMatrix(): iterable
+    public static function transposeMatrix(): iterable
     {
         yield "none" => [
             "option" => Option\none(),

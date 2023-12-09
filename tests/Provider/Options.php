@@ -13,7 +13,7 @@ trait Options
      *   expected:Option<string>
      * }>
      */
-    public function andMatrix(): iterable
+    public static function andMatrix(): iterable
     {
         /** @var Option<string> $none */
         $none = Option\none();
@@ -52,7 +52,7 @@ trait Options
      *   expected:Option<string>
      * }>
      */
-    public function orMatrix(): iterable
+    public static function orMatrix(): iterable
     {
         /** @var Option<string> $none */
         $none = Option\none();
@@ -91,7 +91,7 @@ trait Options
      *   expected:Option<string>
      * }>
      */
-    public function xorMatrix(): iterable
+    public static function xorMatrix(): iterable
     {
         /** @var Option<string> $none */
         $none = Option\none();
@@ -126,7 +126,7 @@ trait Options
     /**
      * @return iterable<array{Option<mixed>, mixed, mixed, 3?:bool}>
      */
-    public function fromValueMatrix(): iterable
+    public static function fromValueMatrix(): iterable
     {
         $o = (object)[];
 

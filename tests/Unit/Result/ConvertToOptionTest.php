@@ -25,7 +25,7 @@ final class ConvertToOptionTest extends TestCase
     /**
      * @return iterable<array{Option<mixed>, mixed, Result<mixed, mixed>, int}>
      */
-    public function okMatrix(): iterable
+    public static function okMatrix(): iterable
     {
         yield "err" => [
             Result\err("Don't panic !"),
@@ -51,7 +51,7 @@ final class ConvertToOptionTest extends TestCase
     /**
      * @return iterable<array{Option<mixed>, mixed, Result<mixed, mixed>, int}>
      */
-    public function errMatrix(): iterable
+    public static function errMatrix(): iterable
     {
         yield "err" => [
             Result\err("Don't panic !"),

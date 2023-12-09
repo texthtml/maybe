@@ -27,7 +27,7 @@ final class FlattenTest extends TestCase
     /**
      * @return iterable<array{Result<mixed, null>, Result<Result<mixed, null>, null>}>
      */
-    public function flattenMatrix(): iterable
+    public static function flattenMatrix(): iterable
     {
         yield "err" => [Result\err(null), Result\err(null)];
 

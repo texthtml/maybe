@@ -23,7 +23,7 @@ final class ContainsTest extends TestCase
     /**
      * @return iterable<array{0:Option<mixed>, 1:mixed, 2:bool}>
      */
-    public function containsMatrix(): iterable
+    public static function containsMatrix(): iterable
     {
         $o = (object)[];
 
