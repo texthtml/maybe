@@ -29,7 +29,7 @@
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-strict-rules": "^1.1",
         "phpstan/phpstan-phpunit": "^1.0",
-        "vimeo/psalm": "^4.22",
+        "vimeo/psalm": "^5.25",
         "symfony/finder": "^6.1",
         "symfony/console": "^6.1",
         "texthtml/doctest": "^0.2"
