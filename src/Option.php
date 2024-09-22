@@ -7,8 +7,9 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
  * Type `Option` represents an optional value: every `Option` is either
- * `Option\Some` and contains a value, or `Option\None`, and does not. `Option`
- * types have a number of uses:
+ * `Option\Some` and contains a value, or `Option\None`, and does not.
+ *
+ * `Option` types have a number of uses:
  *
  * * Initial values
  * * Return values for functions that are not defined over their entire input range (partial functions)

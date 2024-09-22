@@ -18,42 +18,20 @@
 				<div>
 					{foreach $method->tags['deprecated'] ?? [] as $tag}
 						{skipIf !$tag->description}
-						{longDescription($tag->description)}{sep}<br>{/sep}
+						{longDescription($index, $classLike, $tag->description)}{sep}<br>{/sep}
 					{else}
 						{rollback}
 					{/foreach}
 				</div>
 			{/try}
 
-			{try}
-				<h4>Parameters</h4>
-				<table>
-					{foreach $method->parameters as $parameter}
-						{var string $description = $parameter->getEffectiveDescription($index, $classLike, $method)}
-						{skipIf $description === ''}
-						<tr>
-							<td>{if $parameter->variadic}...{/if}<var>${$parameter->name}</var>&nbsp;&nbsp;</td>
-							<td>{longDescription($description)}</td>
-						</tr>
-					{else}
-						{rollback}
-					{/foreach}
-				</table>
-			{/try}
-
-			{var string $returnDescription = $method->getEffectiveReturnDescription($index, $classLike)}
-			{if $returnDescription !== ''}
-				<h4>Returns</h4>
-				<div>{longDescription($returnDescription)}</div>
-			{/if}
-
 			{if !empty($method->tags['throws'])}
 				<h4>Throws</h4>
 				<table>
 					{foreach $method->tags['throws'] as $tag}
 						<tr>
-							<td><code>{include type, type: $tag->type, short: false}</code>&nbsp;</td>
-							<td>{longDescription($tag->description)}</td>
+							<td><code>{include type, type: $tag->type, scope: $classLike, short: false}</code>&nbsp;</td>
+							<td>{longDescription($index, $classLike, $tag->description)}</td>
 						</tr>
 					{/foreach}
 				</table>

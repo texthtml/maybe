@@ -8,6 +8,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
+	{if $layout->noindex}<meta name="robots" content="noindex">{/if}
 	<title>{ifset title}{include title|spaceless} | {/ifset}{$config->title} API</title>
 	<link rel="stylesheet" href="{assetUrl('main.css')}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.css" rel="stylesheet" />
@@ -18,6 +19,7 @@
 		}
 	</style>
 	<script src="{assetUrl('main.js')}" defer></script>
+	{include head}
 </head>
 
 <body class="layout">

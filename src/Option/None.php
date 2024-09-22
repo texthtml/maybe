@@ -15,6 +15,8 @@ enum None implements Option
     case instance;
 
     /**
+     * Returns `false`.
+     *
      * @return false
      */
     public function isSome(): bool
@@ -23,6 +25,8 @@ enum None implements Option
     }
 
     /**
+     * Returns `true`.
+     *
      * @return true
      */
     public function isNone(): bool
@@ -31,6 +35,8 @@ enum None implements Option
     }
 
     /**
+     * Returns `false` without calling `$predicate`.
+     *
      * @return false
      */
     public function isSomeAnd(callable $predicate): bool
@@ -39,6 +45,8 @@ enum None implements Option
     }
 
     /**
+     * Throws `new \RuntimeException($message)`.
+     *
      * @throws \RuntimeException
      */
     public function expect(string $message): never
@@ -47,6 +55,8 @@ enum None implements Option
     }
 
     /**
+     * Throws `new \RuntimeException("Unwrapping a `None` value")`.
+     *
      * @throws \RuntimeException
      */
     public function unwrap(): never
@@ -54,17 +64,33 @@ enum None implements Option
         $this->expect("Unwrapping a `None` value");
     }
 
+    /**
+     * Returns `$default`.
+     *
+     * @template U
+     * @param U $default
+     * @return U
+     */
     public function unwrapOr(mixed $default): mixed
     {
         return $default;
     }
 
+    /**
+     * Returns `$default()`.
+     *
+     * @template U
+     * @param callable():U $default
+     * @return U
+     */
     public function unwrapOrElse(callable $default): mixed
     {
         return $default();
     }
 
     /**
+     * Returns `None` without calling `$callback`.
+     *
      * @return $this
      */
     public function inspect(callable $callback): self
@@ -73,6 +99,8 @@ enum None implements Option
     }
 
     /**
+     * Returns `None`.
+     *
      * @return $this
      */
     public function and(Option $right): Option
@@ -81,6 +109,8 @@ enum None implements Option
     }
 
     /**
+     * Returns `None` without calling `$right`.
+     *
      * @return $this
      */
     public function andThen(callable $right): Option
@@ -88,30 +118,42 @@ enum None implements Option
         return $this;
     }
 
+    /**
+     * Returns `$right`.
+     */
     public function or(Option $right): Option
     {
         return $right;
     }
 
+    /**
+     * Returns `$right()`.
+     */
     public function orElse(callable $right): Option
     {
         return $right();
     }
 
+    /**
+     * Returns `$right`.
+     */
     public function xor(Option $right): Option
     {
         return $right;
     }
 
     /**
+     * Returns `false`.
+     *
      * @return false
      */
     public function contains(mixed $value, bool $strict = true): bool
     {
         return false;
     }
-
     /**
+     * Returns `None` without calling `$predicate`.
+     *
      * @return $this
      */
     public function filter(callable $predicate): Option
@@ -120,6 +162,8 @@ enum None implements Option
     }
 
     /**
+     * Returns `None`.
+     *
      * @return $this
      */
     public function map(callable $callback): Option
@@ -127,19 +171,25 @@ enum None implements Option
         return $this;
     }
 
+    /**
+     * Returns `$default` without calling `$callback`.
+     */
     public function mapOr(callable $callback, mixed $default): mixed
     {
         return $default;
     }
 
+    /**
+     * Returns `$default()` without calling `$callback`.
+     */
     public function mapOrElse(callable $callback, callable $default): mixed
     {
         return $default();
     }
 
     /**
-     * @template U
-     * @param Option<U> $option
+     * Returns `None`.
+     *
      * @return $this
      */
     public function zip(Option $option): self
@@ -148,9 +198,7 @@ enum None implements Option
     }
 
     /**
-     * @template E
-     * @param E $err
-     * @return Result\Err<E>
+     * Returns `Result\err($err)`.
      */
     public function okOr(mixed $err): Result\Err
     {
@@ -158,9 +206,7 @@ enum None implements Option
     }
 
     /**
-     * @template E
-     * @param callable():E $err
-     * @return Result\Err<E>
+     * Returns `Result\err($err())`.
      */
     public function okOrElse(callable $err): Result\Err
     {

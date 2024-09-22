@@ -2,7 +2,7 @@ parameters:
 	paths: ['%workingDir%/src']
 	excludeProtected: true
 	excludePrivate: true
-	excludeTagged: ['internal', 'nodoc']
+	excludeTagged: ['@internal', '@nodoc']
 	outputDir: '%workingDir%/docs'
 	themeDir: tools/apigen/theme
 	title: 'texthtml/maybe'
