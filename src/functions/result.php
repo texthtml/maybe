@@ -24,6 +24,7 @@ function ok(mixed $value): Result\Ok
 {
     return new Result\Ok($value);
 }
+
 /**
  * Return a `Result\Err` result.
  *
@@ -121,6 +122,7 @@ function trap(callable $callback, string $exceptionClass = \Exception::class): R
 #[ExamplesSetup(IgnoreUnusedResults::class)]
 function flatten(Result $result): Result
 {
+    /** @phpstan-ignore return.type */
     return $result->mapOrElse(
         static fn (Result $r) => $r,
         static fn (mixed $err) => Result\err($err),

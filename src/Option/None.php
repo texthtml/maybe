@@ -51,7 +51,7 @@ enum None implements Option
      */
     public function unwrap(): never
     {
-        $this->expect("Unwrapping a `None` value");
+        throw new \RuntimeException("Unwrapping a `None` value");
     }
 
     public function unwrapOr(mixed $default): mixed

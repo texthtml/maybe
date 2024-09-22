@@ -34,9 +34,11 @@ final class HasBeen extends Constraint
     {
         $ro = new \ReflectionObject($result);
 
-        /** @phpstan-throws void */
+        /**
+         * @phpstan-throws void
+         * @psalm-suppress MissingThrowsDocblock
+         */
         $rp = $ro->getProperty("toBeUsed");
-        $rp->setAccessible(true);
 
         /** @var \ArrayAccess<Result<mixed, mixed>, mixed> $toBeUsedMap */
         $toBeUsedMap = $rp->getValue(null);

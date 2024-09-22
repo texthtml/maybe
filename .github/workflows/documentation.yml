@@ -16,15 +16,15 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.1', '8.2']
+        php-versions: ['8.3']
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: 8.3
           ini-values:  zend.assertions=1,  assert.exception=1
 
       - name: Validate composer.json and composer.lock
@@ -33,12 +33,12 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-apigen-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: tools/apigen/vendor
-          key: ${{ runner.os }}-php-${{ matrix.php-versions }}-${{ hashFiles('tools/apigen/composer.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('tools/apigen/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-php-${{ matrix.php-versions }}-
+            ${{ runner.os }}
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
@@ -51,7 +51,7 @@ jobs:
         run: ./tools/apigen/apigen
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: 'docs'
 

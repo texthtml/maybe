@@ -5,6 +5,7 @@
     strictBinaryOperands="true"
     checkForThrowsDocblock="true"
     findUnusedVariablesAndParams="true"
+    findUnusedBaselineEntry="true"
     disableSuppressAll="true"
     findUnusedPsalmSuppress="true"
     ensureArrayStringOffsetsExist="true"

@@ -16,10 +16,10 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.1', '8.2']
+        php-versions: ['8.1', '8.2', '8.3']
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -32,7 +32,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ matrix.php-versions }}-${{ hashFiles('composer.json') }}
@@ -43,16 +43,26 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run the unit tests
-        run: vendor/bin/phpunit --testdox
+        run:
+          - vendor/bin/phpunit --version
+          - vendor/bin/phpunit --testdox
 
       - name: Run the doc tests
-        run: vendor/bin/doctest
+        run:
+          - vendor/bin/doctest --version
+          - vendor/bin/doctest
 
       - name: Run linter
-        run: vendor/bin/phpcs -ps
+        run:
+          - vendor/bin/phpcs --version
+          - vendor/bin/phpcs -ps
 
       - name: Run static analysis (PHPStan)
-        run: vendor/bin/phpstan
+        run:
+          - vendor/bin/phpstan --version
+          - vendor/bin/phpstan
 
       - name: Run static analysis (Psalm)
-        run: vendor/bin/psalm
+        run:
+          - vendor/bin/psalm --version
+          - vendor/bin/psalm

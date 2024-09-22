@@ -135,12 +135,6 @@
         </properties>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.Files.FunctionLength.FunctionLength">
-        <exclude-pattern>/src/Option.php</exclude-pattern>
-        <exclude-pattern>/src/Result.php</exclude-pattern>
-        <exclude-pattern>/tests/</exclude-pattern>
-    </rule>
-
     <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint">
         <exclude-pattern>/tests/</exclude-pattern>
     </rule>

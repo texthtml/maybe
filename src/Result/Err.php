@@ -84,7 +84,7 @@ class Err implements Result
             throw $this->value;
         }
 
-        $this->expect("Unwrapping `Err`: %s");
+        throw new \RuntimeException(\sprintf("Unwrapping `Err`: %s", \serialize($this->value)));
     }
 
     /**

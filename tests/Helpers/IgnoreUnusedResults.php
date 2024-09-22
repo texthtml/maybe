@@ -2,8 +2,10 @@
 
 namespace TH\Maybe\Tests\Helpers;
 
+use TH\Maybe\Result;
 use TH\Maybe\Result\Err;
 use TH\Maybe\Result\Ok;
+use TH\Maybe\Result\ResultCreationTrace;
 
 /**
  * @internal
@@ -25,25 +27,32 @@ final class IgnoreUnusedResults
                 ? $rp->getValue()
                 : null;
 
-            $rp->setValue(null, new class implements \ArrayAccess {
-                public function offsetExists(mixed $offset): bool
-                {
-                    return false;
-                }
+            $rp->setValue(
+                null,
+                new
+                /**
+                 * @implements \ArrayAccess<Result<mixed,mixed>,ResultCreationTrace>
+                 */
+                class implements \ArrayAccess {
+                    public function offsetExists(mixed $offset): bool
+                    {
+                        return false;
+                    }
 
-                public function offsetGet(mixed $offset): mixed
-                {
-                    return null;
-                }
+                    public function offsetGet(mixed $offset): mixed
+                    {
+                        return null;
+                    }
 
-                public function offsetSet(mixed $offset, mixed $value): void
-                {
-                }
+                    public function offsetSet(mixed $offset, mixed $value): void
+                    {
+                    }
 
-                public function offsetUnset(mixed $offset): void
-                {
-                }
-            });
+                    public function offsetUnset(mixed $offset): void
+                    {
+                    }
+                },
+            );
         }
     }
 

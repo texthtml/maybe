@@ -3,7 +3,6 @@ parameters:
 	paths:
 		- src
 		- tests
-	checkGenericClassInNonGenericObjectType: false
 	exceptions:
 		check:
 			missingCheckedExceptionInThrows: true

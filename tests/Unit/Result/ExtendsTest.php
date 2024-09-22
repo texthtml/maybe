@@ -30,7 +30,7 @@ final class ExtendsTest extends TestCase
      * Allowing overriding constructors would make the "Must be used" feature unsafe
      *
      * @dataProvider resultClasses
-     * @param class-string<Result> $resultClass
+     * @param class-string<Result<mixed,mixed>> $resultClass
      * @throws \ReflectionException
      */
     public function testConstructorsCannotBeOverriden(string $resultClass): void

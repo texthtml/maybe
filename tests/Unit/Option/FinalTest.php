@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 final class FinalTest extends TestCase
 {
-    // @phpstan-ignore
     public function testCannotInstanciateThirdPartyNone(): void
     {
         $this->expectExceptionMessage("Class MyNone cannot extend final class TH\Maybe\Option\None");

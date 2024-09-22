@@ -75,7 +75,7 @@ trait Results
     }
 
     /**
-     * @return iterable<string, array{class-string<Result>}>
+     * @return iterable<string, array{class-string<Result<mixed,mixed>>}>
      */
     public function resultClasses(): iterable
     {

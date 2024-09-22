@@ -155,10 +155,10 @@ function tryOf(
  */
 function flatten(Option $option): Option
 {
-    /** @var Option<U> */
-    return $option instanceof Option\Some
-        ? $option->unwrap()
-        : Option\none();
+    return $option instanceof Option\None
+        ? $option
+        /** @phpstan-ignore missingType.checkedException */
+        : $option->unwrap();
 }
 
 /**

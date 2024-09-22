@@ -149,7 +149,7 @@ final class Some implements Option
      * @template U
      * @param Option<U> $option
      * @return Option<array{T, U}>
-     * @psalm-suppress InvalidReturnType,InvalidReturnStatement
+     * @psalm-suppress InvalidReturnType
      */
     public function zip(Option $option): Option
     {

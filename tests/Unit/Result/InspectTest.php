@@ -38,6 +38,33 @@ final class InspectTest extends TestCase
         Assert::assertResultNotUsed($result);
     }
 
+    public function testInspectErrOk(): void
+    {
+        $result = Result\ok(null);
+
+        ["result" => $result, "calls" => $calls] = $this->inspectErr($result);
+
+        Assert::assertSame($result, $result);
+        Assert::assertSame([], $calls);
+
+        Assert::assertResultNotUsed($result);
+    }
+
+    /**
+     * @dataProvider values
+     */
+    public function testInspectErrNone(mixed $value): void
+    {
+        $result = Result\err($value);
+
+        ["result" => $result, "calls" => $calls] = $this->inspectErr($result);
+
+        Assert::assertSame($result, $result);
+        Assert::assertSame([$value], $calls);
+
+        Assert::assertResultNotUsed($result);
+    }
+
     /**
      * @template T
      * @template E
@@ -49,6 +76,23 @@ final class InspectTest extends TestCase
         $calls = [];
 
         $result = $result->inspect(static function (mixed $value) use (&$calls): void {
+            $calls[] = $value;
+        });
+
+        return ["result" => $result, "calls" => $calls];
+    }
+
+    /**
+     * @template T
+     * @template E
+     * @param Result<T, E> $result
+     * @return array{result:Result<T, E>, calls: array<E>}
+     */
+    private function inspectErr(Result $result): array
+    {
+        $calls = [];
+
+        $result = $result->inspectErr(static function (mixed $value) use (&$calls): void {
             $calls[] = $value;
         });
 

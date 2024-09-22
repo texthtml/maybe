@@ -124,7 +124,7 @@ trait Options
     }
 
     /**
-     * @return iterable<array{Option<mixed>, mixed, mixed, 3?:bool}>
+     * @return iterable<array{0:Option<mixed>, 1:mixed, 2:mixed, 3?:bool}>
      */
     public function fromValueMatrix(): iterable
     {
