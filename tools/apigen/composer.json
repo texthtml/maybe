@@ -5,7 +5,7 @@
         }
     },
     "require": {
-        "apigen/apigen": "^7.0@alpha"
+        "apigen/apigen": "dev-master"
     },
     "require-dev": {
         "tracy/tracy": "^2.9"
