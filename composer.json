@@ -33,8 +33,8 @@
         "phpstan/phpstan-strict-rules": "^1.1",
         "phpstan/phpstan-phpunit": "^1.0",
         "vimeo/psalm": "^4.22",
-        "symfony/finder": "^6.1",
-        "symfony/console": "^6.1",
+        "symfony/finder": "^7.0",
+        "symfony/console": "^7.0",
         "texthtml/doctest": "^0.2"
     },
     "config": {
