@@ -141,6 +141,7 @@ enum None implements Option
      * @template U
      * @param Option<U> $option
      * @return $this
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function zip(Option $option): self
     {

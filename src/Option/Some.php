@@ -157,6 +157,7 @@ final class Some implements Option
             return Option\some([$this->value, $value]);
         }
 
+        /** @psalm-suppress InvalidReturnStatement */
         return Option\none();
     }
 

@@ -24,25 +24,18 @@ final class TrapTest extends TestCase
     public function testTrapCheckedException(): void
     {
         Assert::assertEquals(
-            new \Exception(
-                "Failed to parse time string (nope) at position 0 (n): The timezone could not be found in the database",
-            ),
+            new \Exception("Ooops"),
             // @phpstan-ignore-next-line
-            Result\trap(static fn () => new \DateTimeImmutable("nope"))->unwrapErr(),
+            Result\trap(static fn () => throw new \Exception("Ooops"))->unwrapErr(),
         );
     }
 
     public function testTrapUncheckedException(): void
     {
-        try {
-            // @phpstan-ignore-next-line
-            Result\trap(static fn () => 1 / 0);
-            Assert::fail("An exception should have been thrown");
-        } catch (\DivisionByZeroError $ex) {
-            Assert::assertEquals(
-                "Division by zero",
-                $ex->getMessage(),
-            );
-        }
+        $this->expectException(\DivisionByZeroError::class);
+        $this->expectExceptionMessage("Division by zero");
+
+        // @phpstan-ignore-next-line
+        Result\trap(static fn () => 1 / 0);
     }
 }

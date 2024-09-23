@@ -21,10 +21,7 @@ function test_generic_type(Option $option): int
     /** @psalm-suppress RedundantConditionGivenDocblockType 🎯 */
     // @phpstan-ignore-next-line 🎯 Call to function is_string() with string will always evaluate to true.
     if (\is_string($option->unwrap())) {
-        /**
-         * @psalm-suppress RedundantCondition 🙈
-         * @psalm-suppress InvalidReturnStatement 🎯
-         */
+        /** @psalm-suppress InvalidReturnStatement 🎯 */
         // @phpstan-ignore-next-line 🎯 Function test_generic_type() should return int but returns string.
         return $option->unwrap();
     }
@@ -36,15 +33,12 @@ function test_generic_type(Option $option): int
 function test_is_some(Option $option): int
 {
     if ($option->isSome()) {
-        /** @psalm-suppress MissingThrowsDocblock,RedundantCondition 🙈 */
+        /** @psalm-suppress MissingThrowsDocblock 🙈 */
         // @phpstan-ignore-next-line 🙈 Function TH\Maybe\Tests\TypeHinting\test_is_some() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
         return $option->unwrap();
     }
 
-    /**
-     * @psalm-suppress RedundantConditionGivenDocblockType 🙈
-     * @psalm-suppress MissingThrowsDocblock 🎯
-     */
+    /** @psalm-suppress MissingThrowsDocblock 🎯 */
     // @phpstan-ignore-next-line 🎯 Dead catch - RuntimeException is never thrown in the try block.
     return $option->unwrap();
 }
@@ -57,13 +51,13 @@ function test_is_none(Option $option): int
     if ($option->isNone()) {
         /**
          * @psalm-suppress NoValue 🙈
-         * @psalm-suppress MissingThrowsDocblock,TypeDoesNotContainType 🎯
+         * @psalm-suppress MissingThrowsDocblock 🎯
          */
         // @phpstan-ignore-next-line 🎯 Function test_instanceof_none() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
         return $option->unwrap();
     }
 
-    /** @psalm-suppress MissingThrowsDocblock,RedundantCondition 🙈 */
+    /** @psalm-suppress MissingThrowsDocblock 🙈 */
     // @phpstan-ignore-next-line 🙈 Function TH\Maybe\Tests\TypeHinting\test_is_none() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
     return $option->unwrap();
 }
@@ -74,7 +68,7 @@ function test_is_none(Option $option): int
 function test_instanceof_some(Option $option): int
 {
     if ($option instanceof Option\Some) {
-        /** @psalm-suppress MissingThrowsDocblock,RedundantCondition 🙈 */
+        /** @psalm-suppress MissingThrowsDocblock 🙈 */
         // @phpstan-ignore-next-line 🙈 Function TH\Maybe\Tests\TypeHinting\test_instanceof_some() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
         return $option->unwrap();
     }
@@ -90,7 +84,7 @@ function test_instanceof_some(Option $option): int
 function test_instanceof_none(Option $option): int
 {
     if ($option instanceof Option\None) {
-        /** @psalm-suppress NoValue,MissingThrowsDocblock,TypeDoesNotContainType 🎯 */
+        /** @psalm-suppress NoValue,MissingThrowsDocblock 🎯 */
         // @phpstan-ignore-next-line 🎯 Function test_instanceof_none() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
         return $option->unwrap();
     }
@@ -102,6 +96,7 @@ function test_instanceof_none(Option $option): int
 
 function test_call_a_function_with_none(): void
 {
+    /** @psalm-suppress InvalidArgument 🙈 Argument 1 of TH\Maybe\Tests\TypeHinting\option\test_is_none expects TH\Maybe\Option<int>, but TH\Maybe\Option\None provided */
     here\test_is_none(Option\none());
 }
 
@@ -109,7 +104,7 @@ function test_call_a_function_with_some(): void
 {
     here\test_is_none(Option\some(1));
 
-    /** @psalm-suppress InvalidArgument 🎯 */
+    /** @psalm-suppress InvalidScalarArgument 🎯 */
     // @phpstan-ignore-next-line 🎯 Parameter #1 $option of function TH\Maybe\Tests\TypeHinting\option\test_is_none expects TH\Maybe\Option<int>, TH\Maybe\Option\Some<string> given.
     here\test_is_none(Option\some("1"));
 }
