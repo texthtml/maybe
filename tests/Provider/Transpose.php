@@ -10,16 +10,16 @@ trait Transpose
     /**
      * @return iterable<array{option:Option<mixed>, result:Result<mixed, mixed>}>
      */
-    public function transposeMatrix(): iterable
+    public static function transposeMatrix(): iterable
     {
         yield "none" => [
             "option" => Option\none(),
-            "result" => Result\ok(Option\none()),
+            "expected" => Result\ok(Option\none()),
         ];
 
         yield "some-ok" => [
             "option" => Option\some(Result\ok(42)),
-            "result" => Result\ok(Option\some(42)),
+            "expected" => Result\ok(Option\some(42)),
         ];
 
         yield "some-err" => [

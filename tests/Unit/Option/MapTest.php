@@ -41,7 +41,7 @@ final class MapTest extends TestCase
      *   array<mixed>
      * }>
      */
-    public function mapMatrix(): iterable
+    public static function mapMatrix(): iterable
     {
         yield "none" => [
             Option\none(),
@@ -98,7 +98,7 @@ final class MapTest extends TestCase
      *   array<mixed>
      * }>
      */
-    public function mapOrMatrix(): iterable
+    public static function mapOrMatrix(): iterable
     {
         yield "none" => [
             Option\none(),

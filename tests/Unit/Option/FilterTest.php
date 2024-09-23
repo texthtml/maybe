@@ -38,7 +38,7 @@ final class FilterTest extends TestCase
      *   array<mixed>
      * }>
      */
-    public function filterMatrix(): iterable
+    public static function filterMatrix(): iterable
     {
         yield "none-true" => [
             Option\none(),

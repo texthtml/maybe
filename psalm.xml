@@ -8,6 +8,7 @@
     findUnusedBaselineEntry="true"
     disableSuppressAll="true"
     findUnusedPsalmSuppress="true"
+    findUnusedCode="false"
     ensureArrayStringOffsetsExist="true"
     ensureArrayIntOffsetsExist="true"
     sealAllMethods="true"

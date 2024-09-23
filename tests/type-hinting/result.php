@@ -25,7 +25,7 @@ function test_generic_type(Result $result): int
         return $result->unwrap();
     }
 
-    /** @psalm-suppress NoValue 🎯 This function or method call never returns output */
+    /** @psalm-suppress TypeDoesNotContainType,NoValue 🎯 This function or method call never returns output */
     // @phpstan-ignore-next-line 🎯 Unreachable statement - code above always terminates.
     return $result->unwrapErr();
 }

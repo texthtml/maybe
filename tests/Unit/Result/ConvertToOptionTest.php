@@ -25,7 +25,7 @@ final class ConvertToOptionTest extends TestCase
     /**
      * @return iterable<array{Option<mixed>, mixed, Result<mixed, mixed>, int}>
      */
-    public function okMatrix(): iterable
+    public static function okMatrix(): iterable
     {
         yield "err" => [
             Result\err("Don't panic !"),
@@ -51,7 +51,7 @@ final class ConvertToOptionTest extends TestCase
     /**
      * @return iterable<array{Option<mixed>, mixed, Result<mixed, mixed>, int}>
      */
-    public function errMatrix(): iterable
+    public static function errMatrix(): iterable
     {
         yield "err" => [
             Result\err("Don't panic !"),
@@ -68,14 +68,14 @@ final class ConvertToOptionTest extends TestCase
      * @template T
      * @template E
      * @dataProvider transposeMatrix
-     * @param Result<Option<T>, E> $result
+     * @param Result<Option<T>, E> $expected
      * @param Option<Result<T,E>> $option
      */
-    public function testTranspose(Option $option, Result $result): void
+    public function testTranspose(Option $option, Result $expected): void
     {
-        Assert::assertEquals($option, $option2 = Result\transpose($result));
+        Assert::assertEquals($option, $option2 = Result\transpose($expected));
 
-        Assert::assertResultUsed($result);
+        Assert::assertResultUsed($expected);
         // @phpstan-ignore-next-line
         $option->map(Assert::assertResultNotUsed(...));
         // @phpstan-ignore-next-line

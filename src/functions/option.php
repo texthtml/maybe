@@ -152,11 +152,9 @@ function tryOf(
  * @template U
  * @param Option<Option<U>> $option
  * @return Option<U>
- * @psalm-suppress InvalidReturnType
  */
 function flatten(Option $option): Option
 {
-    /** @psalm-suppress InvalidReturnStatement */
     return $option instanceof Option\None
         ? $option
         /** @phpstan-ignore missingType.checkedException */

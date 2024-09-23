@@ -13,7 +13,7 @@ trait Results
      *   expected:Result<string, null>
      * }>
      */
-    public function andMatrix(): iterable
+    public static function andMatrix(): iterable
     {
         yield "err-err" => [
             "left"     => Result\err("left"),
@@ -47,7 +47,7 @@ trait Results
      *   expected:Result<string, null>
      * }>
      */
-    public function orMatrix(): iterable
+    public static function orMatrix(): iterable
     {
         yield "err-err" => [
             "left"     => Result\err("left"),
@@ -77,7 +77,7 @@ trait Results
     /**
      * @return iterable<string, array{class-string<Result<mixed,mixed>>}>
      */
-    public function resultClasses(): iterable
+    public static function resultClasses(): iterable
     {
         yield "Ok" => [Result\Ok::class];
         yield "Err" => [Result\Err::class];
@@ -86,7 +86,7 @@ trait Results
     /**
      * @return iterable<string, array{string}>
      */
-    public function resultMethods(): iterable
+    public static function resultMethods(): iterable
     {
         $rc = new \ReflectionClass(Result::class);
 

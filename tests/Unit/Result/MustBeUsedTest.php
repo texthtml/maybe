@@ -72,7 +72,7 @@ final class MustBeUsedTest extends TestCase
     /**
      * @return iterable<array{callable():Result<mixed,mixed>}>
      */
-    public function resultsFactory(): iterable
+    public static function resultsFactory(): iterable
     {
         yield "ok"  => [static fn (): Result => Result\ok(null)];
         yield "err" => [static fn (): Result => Result\err(null)];

@@ -4,7 +4,6 @@ namespace TH\Maybe\Tests;
 
 use PHPUnit\Framework\Assert as PHPUnitAssert;
 use PHPUnit\Framework\ExpectationFailedException;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use TH\Maybe\Result;
 
 final class Assert extends PHPUnitAssert
@@ -13,7 +12,7 @@ final class Assert extends PHPUnitAssert
      * @template T
      * @template E
      * @param Result<T,E> $result
-     * @throws InvalidArgumentException|ExpectationFailedException
+     * @throws ExpectationFailedException
      */
     public static function assertResultUsed(Result $result): void
     {
@@ -28,7 +27,7 @@ final class Assert extends PHPUnitAssert
      * @template T
      * @template E
      * @param Result<T,E> $result
-     * @throws InvalidArgumentException|ExpectationFailedException
+     * @throws ExpectationFailedException
      */
     public static function assertResultNotUsed(Result $result): void
     {
