@@ -7,7 +7,7 @@
         "psr-4": {
             "TH\\Maybe\\": "src/"
         },
-        "files": ["src/functions/option.php", "src/functions/result.php"]
+        "files": ["src/functions/option.php", "src/functions/result.php", "src/functions/internal.php"]
     },
     "autoload-dev": {
         "psr-4": {
