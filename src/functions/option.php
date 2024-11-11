@@ -47,7 +47,7 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
     $same = $strict
         ? ($value === $noneValue)
         // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-        : ($value == $noneValue);
+        : ($value == $noneValue); // @phpstan-ignore equal.notAllowed
 
     /** @var Option<U> */
     return $same
@@ -209,7 +209,7 @@ function unzip(Option $option): array
 function transpose(Option $option): Result
 {
     /** @var Result<Option<U>, E> */
-    return $option->mapOrElse(
+    return $option->mapOrElse( // @phpstan-ignore varTag.type
         // @phpstan-ignore-next-line
         static fn (Result $result) => $result->map(Option\some(...)),
         static fn () => Result\ok(Option\none()),

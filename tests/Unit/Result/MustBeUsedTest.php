@@ -49,7 +49,7 @@ final class MustBeUsedTest extends TestCase
             $result = $factory();
             Assert::assertNull($result->unwrapOr(null));
 
-            clone $result;
+            clone $result; // @phpstan-ignore expr.resultUnused
         })($factory);
 
         Assert::fail("The exception should have been thrown before that");

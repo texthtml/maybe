@@ -133,7 +133,7 @@ final class Some implements Option
         return $strict
             ? ($this->value === $value)
             // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-            : ($this->value == $value);
+            : ($this->value == $value); // @phpstan-ignore equal.notAllowed
     }
 
     public function filter(callable $predicate): Option
