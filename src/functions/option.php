@@ -209,7 +209,7 @@ function unzip(Option $option): array
 function transpose(Option $option): Result
 {
     /** @var Result<Option<U>, E> */
-    return $option->mapOrElse( // @phpstan-ignore
+    return $option->mapOrElse( // @phpstan-ignore varTag.type
         // @phpstan-ignore-next-line
         static fn (Result $result) => $result->map(Option\some(...)),
         static fn () => Result\ok(Option\none()),
