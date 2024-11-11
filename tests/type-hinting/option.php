@@ -42,7 +42,7 @@ function test_is_some(Option $option): int
         return $option->unwrap();
     }
 
-    /** @psalm-suppress MissingThrowsDocblock,RedundantConditionGivenDocblockType 🎯 */
+    /** @psalm-suppress MissingThrowsDocblock 🎯 */
     // @phpstan-ignore-next-line 🎯 Dead catch - RuntimeException is never thrown in the try block.
     return $option->unwrap();
 }
