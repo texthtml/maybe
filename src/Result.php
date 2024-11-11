@@ -87,8 +87,8 @@ interface Result extends \IteratorAggregate
      * self::assertFalse($x->isOk());
      * ```
      *
-     * @psalm-assert-if-true Result\Ok $this
-     * @psalm-assert-if-false Result\Err $this
+     * @psalm-assert-if-true Result\Ok<T> $this
+     * @psalm-assert-if-false Result\Err<E> $this
      */
     public function isOk(): bool;
 
@@ -109,8 +109,8 @@ interface Result extends \IteratorAggregate
      * self::assertTrue($x->isErr());
      * ```
      *
-     * @psalm-assert-if-true Result\Err $this
-     * @psalm-assert-if-false Result\Ok $this
+     * @psalm-assert-if-true Result\Err<E> $this
+     * @psalm-assert-if-false Result\Ok<T> $this
      */
     public function isErr(): bool;
 
@@ -134,7 +134,7 @@ interface Result extends \IteratorAggregate
      * ```
      *
      * @param callable(T):bool $predicate
-     * @psalm-assert-if-true Result\Ok $this
+     * @psalm-assert-if-true Result\Ok<T> $this
      */
     public function isOkAnd(callable $predicate): bool;
 
@@ -158,7 +158,7 @@ interface Result extends \IteratorAggregate
      * ```
      *
      * @param callable(E):bool $predicate
-     * @psalm-assert-if-true Result\Err $this
+     * @psalm-assert-if-true Result\Err<E> $this
      */
     public function isErrAnd(callable $predicate): bool;
 
@@ -176,7 +176,7 @@ interface Result extends \IteratorAggregate
      *
      * @return T
      * @throws \RuntimeException
-     * @psalm-assert Result\Ok $this
+     * @psalm-assert Result\Ok<T> $this
      */
     public function expect(string $message): mixed;
 
@@ -201,7 +201,7 @@ interface Result extends \IteratorAggregate
      *
      * @return T
      * @throws \Throwable
-     * @psalm-assert =Result\Ok $this
+     * @psalm-assert =Result\Ok<T> $this
      */
     public function unwrap(): mixed;
 
@@ -219,7 +219,7 @@ interface Result extends \IteratorAggregate
      *
      * @return E
      * @throws \RuntimeException
-     * @psalm-assert =Result\Err $this
+     * @psalm-assert =Result\Err<E> $this
      */
     public function unwrapErr(): mixed;
 
@@ -469,7 +469,7 @@ interface Result extends \IteratorAggregate
      * self::assertFalse($x->contains(2));
      * ```
      *
-     * @psalm-assert-if-true Result\Ok $this
+     * @psalm-assert-if-true Result\Ok<T> $this
      */
     public function contains(mixed $value, bool $strict = true): bool;
 
@@ -492,7 +492,7 @@ interface Result extends \IteratorAggregate
      * self::assertFalse($x->containsErr("Some error message"));
      * ```
      *
-     * @psalm-assert-if-true Result\Err $this
+     * @psalm-assert-if-true Result\Err<E> $this
      */
     public function containsErr(mixed $value, bool $strict = true): bool;
 

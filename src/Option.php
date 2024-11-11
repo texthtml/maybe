@@ -70,7 +70,7 @@ interface Option extends \IteratorAggregate
      *
      * @return (T is never ? false : bool)
      * @phpstan-return bool
-     * @psalm-assert-if-true Option\Some $this
+     * @psalm-assert-if-true Option\Some<T> $this
      * @psalm-assert-if-false Option\None $this
      */
     public function isSome(): bool;
@@ -95,7 +95,7 @@ interface Option extends \IteratorAggregate
      * @return (T is never ? true : bool)
      * @phpstan-return bool
      * @psalm-assert-if-true Option\None $this
-     * @psalm-assert-if-false Option\Some $this
+     * @psalm-assert-if-false Option\Some<T> $this
      */
     public function isNone(): bool;
 
@@ -121,7 +121,7 @@ interface Option extends \IteratorAggregate
      * @param callable(T):bool $predicate
      * @return (T is never ? false : bool)
      * @phpstan-return bool
-     * @psalm-assert-if-true Option\Some $this
+     * @psalm-assert-if-true Option\Some<T> $this
      */
     public function isSomeAnd(callable $predicate): bool;
 
@@ -146,7 +146,7 @@ interface Option extends \IteratorAggregate
      *
      * @return T
      * @throws \RuntimeException
-     * @psalm-assert Option\Some $this
+     * @psalm-assert Option\Some<T> $this
      */
     public function expect(string $message): mixed;
 
@@ -170,7 +170,7 @@ interface Option extends \IteratorAggregate
      *
      * @return T
      * @throws \RuntimeException
-     * @psalm-assert Option\Some $this
+     * @psalm-assert Option\Some<T> $this
      */
     public function unwrap(): mixed;
 
@@ -388,7 +388,7 @@ interface Option extends \IteratorAggregate
      * self::assertFalse($x->contains(2));
      * ```
      *
-     * @psalm-assert-if-true Option\Some $this
+     * @psalm-assert-if-true Option\Some<T> $this
      * @return (T is never ? false : bool)
      * @phpstan-return bool
      */

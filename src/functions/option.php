@@ -47,7 +47,7 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
     $same = $strict
         ? ($value === $noneValue)
         // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-        : ($value == $noneValue);
+        : ($value == $noneValue); // @phpstan-ignore equal.notAllowed
 
     /** @var Option<U> */
     return $same
