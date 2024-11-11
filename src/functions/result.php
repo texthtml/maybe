@@ -156,7 +156,7 @@ function flatten(Result $result): Result
 function transpose(Result $result): Option
 {
     /** @var Option<Result<U, F>> */
-    return $result->mapOrElse(
+    return $result->mapOrElse( // @phpstan-ignore
         // @phpstan-ignore-next-line
         static fn (Option $option) => $option->map(Result\ok(...)),
         static fn () => Option\some(clone $result),

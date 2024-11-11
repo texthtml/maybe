@@ -37,9 +37,8 @@ function test_is_some(Option $option): int
     if ($option->isSome()) {
         /**
          * @psalm-suppress MissingThrowsDocblock 🙈 https://github.com/vimeo/psalm/issues/2912
-         * @psalm-suppress RedundantCondition 🎯
+         * @psalm-suppress RedundantCondition 🙈
          */
-        // @phpstan-ignore-next-line 🙈 Function TH\Maybe\Tests\TypeHinting\test_is_some() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
         return $option->unwrap();
     }
 
@@ -61,9 +60,8 @@ function test_is_none(Option $option): int
 
     /**
      * @psalm-suppress MissingThrowsDocblock 🙈
-     * @psalm-suppress RedundantConditionGivenDocblockType 🎯
+     * @psalm-suppress RedundantConditionGivenDocblockType 🙈
      */
-    // @phpstan-ignore-next-line 🙈 Function TH\Maybe\Tests\TypeHinting\test_is_none() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
     return $option->unwrap();
 }
 
