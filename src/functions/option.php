@@ -3,6 +3,7 @@
 namespace TH\Maybe\Option;
 
 use TH\DocTest\Attributes\ExamplesSetup;
+use TH\Maybe\Internal;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
@@ -135,6 +136,94 @@ function tryOf(
 
         throw $th;
     }
+}
+
+/**
+ * Wrap a callable into one that transforms its result into an `Option`.
+ * It will be a `Some` option containing the result if it is different from `$noneValue` (default `null`).
+ *
+ * # Examples
+ *
+ * Successful execution:
+ *
+ * ```
+ * self::assertEq(Option\ify(strtolower(...))("FRUITS"), Option\some("fruits"));
+ * ```
+ *
+ * Convertion of `null` to `Option\None`:
+ *
+ * ```
+ * self::assertEq(Option\ify(fn() => null)(), Option\none());
+ * ```
+ *
+ * @template U
+ * @param callable(mixed...):U $callback
+ * @return \Closure(mixed...):Option<U>
+ */
+function ify(callable $callback, mixed $noneValue = null, bool $strict = true): \Closure
+{
+    return static fn (...$args) => Option\fromValue($callback(...$args), $noneValue, $strict);
+}
+
+/**
+ * Wrap a callable into one that transforms its result into an `Option` like `Option\ify()` does
+ * but also return `Option\None` if it an exception matching $exceptionClass was thrown.
+ *
+ * # Examples
+ *
+ * Successful execution:
+ *
+ * ```
+ * self::assertEq(Option\tryIfy(strtolower(...))("FRUITS"), Option\some("fruits"));
+ * ```
+ *
+ * Convertion of `null` to `Option\None`:
+ *
+ * ```
+ * self::assertEq(Option\tryIfy(fn() => null)(), Option\none());
+ * ```
+ *
+ * Checked Exception:
+ *
+ * ```
+ * self::assertEq(Option\tryIfy(fn () => new \DateTimeImmutable("nope"))(), Option\none());
+ * ```
+ *
+ * Unchecked Exception:
+ *
+ * ```
+ * self::assertEq(Option\tryIfy(fn () => 1 / 0)(), Option\none());
+ * // @throws DivisionByZeroError Division by zero
+ * ```
+ *
+ * @template U
+ * @template E of \Throwable
+ * @param callable(mixed...):U $callback
+ * @param class-string<E> $exceptionClass
+ * @param class-string<E> $additionalExceptionClasses
+ * @return \Closure(mixed...):Option<U>
+ */
+function tryIfy(
+    callable $callback,
+    mixed $noneValue = null,
+    bool $strict = true,
+    string $exceptionClass = \Exception::class,
+    string ...$additionalExceptionClasses,
+): \Closure
+{
+    return static function (...$args) use (
+        $callback,
+        $noneValue,
+        $strict,
+        $exceptionClass,
+        $additionalExceptionClasses,
+    ): mixed {
+        try {
+            return Option\fromValue($callback(...$args), $noneValue, $strict);
+        } catch (\Throwable $th) {
+            return Internal\trap($th, Option\none(...), $exceptionClass, ...$additionalExceptionClasses);
+        }
+    };
 }
 
 /**
