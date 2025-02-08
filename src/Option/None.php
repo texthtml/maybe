@@ -162,6 +162,18 @@ enum None implements Option
     }
 
     /**
+     * @template U
+     * @template V
+     * @param Option<U> $option
+     * @param callable(never, U):V $callback
+     * @return $this
+     */
+    public function zipWith(Option $option, callable $callback): self
+    {
+        return $this;
+    }
+
+    /**
      * @template E
      * @param E $err
      * @return Result\Err<E>

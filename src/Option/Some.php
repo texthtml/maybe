@@ -193,6 +193,23 @@ final class Some implements Option
     }
 
     /**
+     * @template U
+     * @template V
+     * @param Option<U> $option
+     * @param callable(T, U):V $callback
+     * @return (U is never ? Option\None : Option<V>)
+     * @return Option<V>
+     */
+    public function zipWith(Option $option, callable $callback): Option
+    {
+        foreach ($option as $value) {
+            return Option\some($callback($this->value, $value));
+        }
+
+        return Option\none();
+    }
+
+    /**
      * @template E
      * @param E $err
      * @return Result\Ok<T>
