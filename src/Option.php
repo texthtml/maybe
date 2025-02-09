@@ -504,6 +504,33 @@ interface Option extends \IteratorAggregate
     public function zip(Option $option): Option;
 
     /**
+     * Zips `$this` and another `Option` with a function.
+     *
+     * If `$this` is `Some(s)` and other is `Some(o)`, this method returns `Some(f([s, o]))`.
+     * Otherwise, `None` is returned.
+     *
+     * # Examples
+     *
+     * ```
+     * $x = Option\some(new \DateTime('2025-02-08T23:15:07+00:00'));
+     * $y = Option\some(new \DateInterval('P1M0D'));
+     * // @var Option<int> $z
+     * $z = Option\none();
+     * self::assertEq($x->zipWith($y, date_add(...)), Option\some(new \DateTimeImmutable('2025-03-08T23:15:07+00:00')));
+     * self::assertSame($x->zipWith($z, date_add(...)), Option\none());
+     * self::assertSame($z->zipWith($y, date_add(...)), Option\none());
+     * ```
+     *
+     * @template U
+     * @template V
+     * @param Option<U> $option
+     * @param callable(T, U):V $callback
+     * @return (T is never ? Option\None : (U is never ? Option\None : Option<V>))
+     * @phpstan-return Option<V>
+     */
+    public function zipWith(Option $option, callable $callback): Option;
+
+    /**
      * Transforms the `Option<T>` into a `Result<T, E>`, mapping `Some(v)` to `Ok(v)` and `None` to `Err(err)`.
      *
      * # Examples

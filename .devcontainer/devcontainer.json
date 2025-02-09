@@ -14,13 +14,17 @@
 		"XDEBUG_SESSION": "1",
 		"XDEBUG_CONFIG": "log_level=0",
 		"PATH": "${containerEnv:PATH}:/app/vendor/bin",
-        "PROMPT_COMMAND": "short_pwd=$(sed \"s:\\([^/\\.]\\)[^/]*/:\\1/:g\" <<< ${PWD/#$HOME/\\~})",
+		"PROMPT_COMMAND": "short_pwd=$(sed \"s:\\([^/\\.]\\)[^/]*/:\\1/:g\" <<< ${PWD/#$HOME/\\~})",
 		"PS1": "\\[\\e[0;35m\\]$short_pwd \\n\\[\\e[0;33m\\]$((( _ret_value )) && printf \"\\[\\e[0;31m\\]\")$\\[\\e[0m\\] ",
 		"PS2": "\\[${_y}\\]❯ \\[${reset}\\]"
 	},
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {},
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/sshd:1": {}
+	},
 
 	// Add the IDs of extensions you want installed when the container is created.
 	// Note that some extensions may not work in Alpine Linux. See https://aka.ms/vscode-remote/linux.
