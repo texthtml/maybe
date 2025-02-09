@@ -25,7 +25,7 @@ function test_generic_type(Result $result): int
         return $result->unwrap();
     }
 
-    /** @psalm-suppress TypeDoesNotContainType,NoValue 🎯 This function or method call never returns output */
+    /** @psalm-suppress NoValue 🎯 This function or method call never returns output */
     // @phpstan-ignore-next-line 🎯 Unreachable statement - code above always terminates.
     return $result->unwrapErr();
 }
@@ -37,7 +37,6 @@ function test_is_ok(Result $result): int
 {
     if ($result->isOk()) {
         /** @psalm-suppress MissingThrowsDocblock 🙈 Throwable is thrown but not caught - please either catch or add a @throws annotation */
-        // @phpstan-ignore-next-line 🙈 Function TH\Maybe\Tests\TypeHinting\result\test_is_ok() should return int but returns mixed.
         return $result->unwrap();
     }
 
@@ -52,11 +51,9 @@ function test_is_none(Result $result): string
 {
     if ($result->isErr()) {
         /** @psalm-suppress MissingThrowsDocblock 🙈 Throwable is thrown but not caught - please either catch or add a @throws annotation */
-        // @phpstan-ignore-next-line 🙈 Function TH\Maybe\Tests\TypeHinting\test_is_none() throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.
         return $result->unwrapErr();
     }
 
     /** @psalm-suppress MissingThrowsDocblock 🙈 Throwable is thrown but not caught - please either catch or add a @throws annotation */
-    // @phpstan-ignore-next-line 🙈 Cannot cast mixed to string.
     return (string) $result->unwrap();
 }

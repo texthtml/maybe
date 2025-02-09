@@ -127,11 +127,25 @@ enum None implements Option
         return $this;
     }
 
+   /**
+    * @template U
+    * @template V
+    * @param callable(never):U $callback
+    * @param V $default
+    * @return V
+    */
     public function mapOr(callable $callback, mixed $default): mixed
     {
         return $default;
     }
 
+   /**
+    * @template U
+    * @template V
+    * @param callable(never):U $callback
+    * @param callable():V $default
+    * @return V
+    */
     public function mapOrElse(callable $callback, callable $default): mixed
     {
         return $default();
@@ -143,6 +157,18 @@ enum None implements Option
      * @return $this
      */
     public function zip(Option $option): self
+    {
+        return $this;
+    }
+
+    /**
+     * @template U
+     * @template V
+     * @param Option<U> $option
+     * @param callable(never, U):V $callback
+     * @return $this
+     */
+    public function zipWith(Option $option, callable $callback): self
     {
         return $this;
     }

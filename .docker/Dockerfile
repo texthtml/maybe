@@ -1,4 +1,4 @@
-FROM php:8.3
+FROM php:8.4
 
 COPY dev.sh /tmp/library-scripts/
 
@@ -11,7 +11,7 @@ ARG USER_GID=${USER_UID}
 RUN groupadd --gid ${USER_GID} ${USERNAME} && \
     useradd -s /bin/bash --uid ${USER_UID} --gid ${USERNAME} -m ${USERNAME}
 
-COPY --from=composer:2.7.9 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.8.5 /usr/bin/composer /usr/bin/composer
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && \
     bash /tmp/library-scripts/dev.sh "${USERNAME}"

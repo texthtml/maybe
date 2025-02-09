@@ -13,7 +13,7 @@ final class ConvertToOptionTest extends TestCase
     use Provider\Transpose;
 
     /**
-     * @dataProvider OkMatrix
+     * @dataProvider okMatrix
      * @param Result<mixed, mixed> $result
      * @param Option<mixed> $expected
      */
@@ -39,7 +39,7 @@ final class ConvertToOptionTest extends TestCase
     }
 
     /**
-     * @dataProvider ErrMatrix
+     * @dataProvider errMatrix
      * @param Result<mixed, mixed> $result
      * @param Option<mixed> $expected
      */

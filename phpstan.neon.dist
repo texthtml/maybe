@@ -20,5 +20,8 @@ parameters:
 		-
 			message: "#Method .*::.*\\(\\) throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.#"
 			path: tests/Unit/
-	excludePaths:
-		- tests/examples.php
+		-
+			message: "#PHPDoc tag @var with type .* is not subtype of native type .*.#"
+			paths:
+				- tests/Provider/
+				- tests/Unit/

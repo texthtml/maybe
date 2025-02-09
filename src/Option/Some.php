@@ -35,6 +35,9 @@ final class Some implements Option
         return false;
     }
 
+   /**
+    * @param callable(T):bool $predicate
+    */
     public function isSomeAnd(callable $predicate): bool
     {
         return $predicate($this->value);
@@ -82,11 +85,21 @@ final class Some implements Option
         return $this;
     }
 
+   /**
+    * @template U
+    * @param Option<U> $right
+    * @return Option<U>
+    */
     public function and(Option $right): Option
     {
         return $right;
     }
 
+   /**
+    * @template U
+    * @param callable(T):Option<U> $right
+    * @return Option<U>
+    */
     public function andThen(callable $right): Option
     {
         return $right($this->value);
@@ -120,7 +133,7 @@ final class Some implements Option
         return $strict
             ? ($this->value === $value)
             // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-            : ($this->value == $value);
+            : ($this->value == $value); // @phpstan-ignore equal.notAllowed
     }
 
     public function filter(callable $predicate): Option
@@ -130,16 +143,35 @@ final class Some implements Option
             : Option\none();
     }
 
+   /**
+    * @template U
+    * @param callable(T):U $callback
+    * @return Option<U>
+    */
     public function map(callable $callback): Option
     {
         return Option\some($callback($this->value));
     }
 
+   /**
+    * @template U
+    * @template V
+    * @param callable(T):U $callback
+    * @param V $default
+    * @return U
+    */
     public function mapOr(callable $callback, mixed $default): mixed
     {
         return $callback($this->value);
     }
 
+   /**
+    * @template U
+    * @template V
+    * @param callable(T):U $callback
+    * @param callable():V $default
+    * @return U
+    */
     public function mapOrElse(callable $callback, callable $default): mixed
     {
         return $callback($this->value);
@@ -155,6 +187,23 @@ final class Some implements Option
     {
         foreach ($option as $value) {
             return Option\some([$this->value, $value]);
+        }
+
+        return Option\none();
+    }
+
+    /**
+     * @template U
+     * @template V
+     * @param Option<U> $option
+     * @param callable(T, U):V $callback
+     * @return (U is never ? Option\None : Option<V>)
+     * @return Option<V>
+     */
+    public function zipWith(Option $option, callable $callback): Option
+    {
+        foreach ($option as $value) {
+            return Option\some($callback($this->value, $value));
         }
 
         return Option\none();
