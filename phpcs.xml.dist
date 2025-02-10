@@ -34,6 +34,7 @@
         <exclude name="SlevomatCodingStandard.Functions.DisallowNamedArguments" />
         <exclude name="SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall" />
         <exclude name="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration" />
+        <exclude name="SlevomatCodingStandard.Functions.DisallowTrailingCommaInClosureUse" />
         <exclude name="SlevomatCodingStandard.Functions.UnusedParameter" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation" />
         <exclude name="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions" />
