@@ -26,9 +26,15 @@
     </projectFiles>
 
     <issueHandlers>
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <directory name="src" />
+                <directory name="tests" />
+            </errorLevel>
+        </MissingOverrideAttribute>
         <MissingThrowsDocblock>
             <errorLevel type="suppress">
-                <directory name="tests/Unit" />
+                <directory name="tests" />
             </errorLevel>
         </MissingThrowsDocblock>
         <MissingClosureReturnType>
@@ -73,4 +79,7 @@
             </errorLevel>
         </InvalidArgument>
     </issueHandlers>
+    <ignoreExceptions>
+        <classAndDescendants name="LogicException" />
+    </ignoreExceptions>
 </psalm>

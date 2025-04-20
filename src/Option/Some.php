@@ -198,7 +198,7 @@ final class Some implements Option
      * @param Option<U> $option
      * @param callable(T, U):V $callback
      * @return (U is never ? Option\None : Option<V>)
-     * @return Option<V>
+     * @phpstan-return Option<V>
      */
     public function zipWith(Option $option, callable $callback): Option
     {
