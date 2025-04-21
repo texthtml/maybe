@@ -3,7 +3,7 @@
 namespace TH\Maybe\Result;
 
 /** @internal */
-final class ResultCreationTrace extends \RuntimeException
+final class ResultCreationTrace extends \LogicException
 {
     public function __construct()
     {

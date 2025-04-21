@@ -76,9 +76,7 @@ final class ConvertToOptionTest extends TestCase
         Assert::assertEquals($option, $option2 = Result\transpose($expected));
 
         Assert::assertResultUsed($expected);
-        // @phpstan-ignore-next-line
         $option->map(Assert::assertResultNotUsed(...));
-        // @phpstan-ignore-next-line
         $option2->map(Assert::assertResultNotUsed(...));
     }
 }

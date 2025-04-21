@@ -2,64 +2,46 @@
 
 namespace TH\Maybe\Result;
 
-use TH\Maybe\Result;
+use TH\ObjectReaper\Reaper;
 
 /** @internal */
 trait MustBeUsed
 {
-    /** @var \ArrayAccess<Result<mixed,mixed>,ResultCreationTrace>|null */
-    private static ?\ArrayAccess $toBeUsed = null;
-
-    /**
-     * @return \ArrayAccess<Result<mixed,mixed>,ResultCreationTrace>
-     */
-    private static function toBeUsedMap(): \ArrayAccess
+    /** @return \WeakMap<static,Reaper> */
+    private static function reapers(): \WeakMap
     {
-        return self::$toBeUsed ??= self::emptyToBeUsedMap();
+        static $reapers;
+
+        return $reapers ??= new \WeakMap();
     }
 
     /**
-     * @return \WeakMap<Result<mixed,mixed>,ResultCreationTrace>
-     */
-    private static function emptyToBeUsedMap(): \WeakMap
-    {
-        /** @var \WeakMap<Result<mixed,mixed>,ResultCreationTrace> */
-        return new \WeakMap();
-    }
-
-    /**
-     * Mark a result as needed to be used
+     * Mark a result as needed to be used. Must be called at most once on an object.
      */
     private function mustBeUsed(): void
     {
-        self::toBeUsedMap()[$this] = new ResultCreationTrace();
+        $reapers = self::reapers();
+
+        if (isset($reapers[$this])) {
+            throw new \LogicException('Object already register to be used');
+        }
+
+        $creationTrace = new ResultCreationTrace();
+
+        $reapers[$this] = Reaper::watch($this, static fn () => throw new UnusedResultException($creationTrace));
     }
 
     /**
-     * Mark a result as used
+     * Mark a result as used.
      */
     private function used(): void
     {
-        unset(self::toBeUsedMap()[$this]);
+        $reaper = self::reapers()[$this] ?? throw new \LogicException('Object not registered to be used');
+        $reaper->forget();
     }
 
     public function __clone()
     {
         $this->mustBeUsed();
-    }
-
-    /**
-     * @throws UnusedResultException
-     */
-    public function __destruct()
-    {
-        $map = self::toBeUsedMap();
-
-        if (isset($map[$this])) {
-            $creationTrace = $map[$this];
-            unset($map[$this]);
-
-            throw new UnusedResultException($creationTrace);
-        }
     }
 }

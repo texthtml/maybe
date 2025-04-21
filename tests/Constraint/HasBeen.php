@@ -4,6 +4,7 @@ namespace TH\Maybe\Tests\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
 use TH\Maybe\Result;
+use TH\ObjectReaper\Reaper;
 
 final class HasBeen extends Constraint
 {
@@ -28,21 +29,29 @@ final class HasBeen extends Constraint
     }
 
     /**
-     * @param Result<mixed,mixed> $result
+     * @template T of Result<mixed,mixed>
+     * @param T $result
      */
     protected function toBeUsed(Result $result): bool
     {
         $ro = new \ReflectionObject($result);
 
-        /**
-         * @phpstan-throws void
-         * @psalm-suppress MissingThrowsDocblock
-         */
-        $rp = $ro->getProperty("toBeUsed");
+        /** @throws void */
+        $reapers = $ro->getMethod('reapers')->invoke(null);
+        /** @var \WeakMap<T,Reaper> $reapers */
+        $reaper = $reapers[$result];
 
-        /** @var \ArrayAccess<Result<mixed, mixed>, mixed> $toBeUsedMap */
-        $toBeUsedMap = $rp->getValue(null);
+        $ro = new \ReflectionObject($reaper);
 
-        return isset($toBeUsedMap[$result]);
+        /** @throws void */
+        $rp = $ro->getProperty('active');
+        /** @psalm-suppress UnusedMethodCall */
+        $rp->setAccessible(true);
+
+        $result = $rp->getValue($reaper);
+
+        \assert(\is_bool($result));
+
+        return $result;
     }
 }

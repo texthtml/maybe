@@ -7,6 +7,8 @@ parameters:
 		check:
 			missingCheckedExceptionInThrows: true
 			tooWideThrowType: true
+		uncheckedExceptionClasses:
+			- LogicException
 	ignoreErrors:
 		-
 			message: '#Unreachable statement - code above always terminates.#'
