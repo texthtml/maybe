@@ -2,6 +2,8 @@
 
 namespace TH\Maybe\Internal;
 
+use function TH\Maybe\Option\isOfAnyClass;
+
 /**
  * Call $callback with $exception if it matches one of $exceptionClasses
  * and return its value, or rethrow it otherwise.
@@ -10,9 +12,9 @@ namespace TH\Maybe\Internal;
  * @template T
  * @param E $error
  * @param callable(E): T $callback
- * @param class-string<E> $exceptionClasses
- * @throws \Throwable
+ * @param class-string<E> ...$exceptionClasses
  * @return T
+ * @throws \Throwable
  * @internal
  * @nodoc
  */
@@ -21,10 +23,8 @@ function trap(
     callable $callback,
     string ...$exceptionClasses,
 ): mixed {
-    foreach ($exceptionClasses as $exceptionClass) {
-        if (\is_a($error, $exceptionClass)) {
-            return $callback($error);
-        }
+    if (isOfAnyClass($error, $exceptionClasses)) {
+        return $callback($error);
     }
 
     throw $error;

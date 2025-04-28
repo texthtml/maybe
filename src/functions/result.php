@@ -6,6 +6,7 @@ use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
+use function TH\Maybe\Option\isOfAnyClass;
 
 /**
  * Return a `Result\Ok` Result containing `$value`.
@@ -78,18 +79,18 @@ function err(mixed $value): Result\Err
  * @template U
  * @template E of \Throwable
  * @param callable(mixed...):U $callback
- * @param class-string<E> $exceptionClass
+ * @param list<class-string<E>>|class-string<E> $exceptionClass
  * @return Result<U,E>
  * @throws \Throwable
  */
 #[ExamplesSetup(IgnoreUnusedResults::class)]
-function trap(callable $callback, string $exceptionClass = \Exception::class): Result
+function trap(callable $callback, array|string $exceptionClass = \Exception::class): Result
 {
     try {
         /** @var Result<U,E> */
         return Result\ok($callback());
     } catch (\Throwable $th) {
-        if (\is_a($th, $exceptionClass)) {
+        if (isOfAnyClass($th, (array) $exceptionClass)) {
             return Result\err($th);
         }
 

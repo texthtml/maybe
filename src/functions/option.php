@@ -116,7 +116,7 @@ function of(callable $callback, mixed $noneValue = null, bool $strict = true): O
  * @template U
  * @template E of \Throwable
  * @param callable():U $callback
- * @param class-string<E> $exceptionClass
+ * @param list<class-string<E>>|class-string<E> $exceptionClass
  * @return Option<U>
  * @throws \Throwable
  */
@@ -124,12 +124,12 @@ function tryOf(
     callable $callback,
     mixed $noneValue = null,
     bool $strict = true,
-    string $exceptionClass = \Exception::class,
+    array|string $exceptionClass = \Exception::class,
 ): Option {
     try {
         return Option\of($callback, $noneValue, $strict);
     } catch (\Throwable $th) {
-        if (\is_a($th, $exceptionClass)) {
+        if (Option\isOfAnyClass($th, (array) $exceptionClass)) {
             return Option\none();
         }
 
@@ -213,4 +213,22 @@ function transpose(Option $option): Result
         static fn (Result $result) => $result->map(Option\some(...)),
         static fn () => Result\ok(Option\none()),
     );
+}
+
+/**
+ * Check if the type of the given value is any of the passed classes.
+ *
+ * @param iterable<class-string> $classes
+ */
+function isOfAnyClass(
+    object $value,
+    iterable $classes,
+): bool {
+    foreach ($classes as $class) {
+        if (\is_a($value, $class)) {
+            return true;
+        }
+    }
+
+    return false;
 }

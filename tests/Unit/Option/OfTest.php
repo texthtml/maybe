@@ -57,7 +57,7 @@ final class OfTest extends TestCase
         Assert::assertEquals($o, Option\tryOf(static fn () => $o, (object)[])->unwrap());
     }
 
-    public function testTryOfExeptions(): void
+    public function testTryOfExceptions(): void
     {
         // @phpstan-ignore-next-line
         Assert::assertEquals(Option\none(), Option\tryOf(static fn () => new \DateTimeImmutable("nope")));
@@ -65,6 +65,34 @@ final class OfTest extends TestCase
         try {
             // @phpstan-ignore-next-line
             Option\tryOf(static fn () => 1 / 0);
+            Assert::fail("An exception should have been thrown");
+        } catch (\DivisionByZeroError) {
+        }
+    }
+
+    public function testTryOfExceptionsWithExpectedClass(): void
+    {
+        Assert::assertEquals(
+            Option\none(),
+            // @phpstan-ignore-next-line
+            Option\tryOf(static fn () => 1 / 0, exceptionClass: \ArithmeticError::class),
+        );
+        Assert::assertEquals(
+            Option\none(),
+            // @phpstan-ignore-next-line
+            Option\tryOf(static fn () => 1 / 0, exceptionClass: [\LogicException::class, \ArithmeticError::class]),
+        );
+
+        try {
+            // @phpstan-ignore-next-line
+            Option\tryOf(static fn () => 1 / 0, exceptionClass: [\LogicException::class, \RuntimeException::class]);
+            Assert::fail("An exception should have been thrown");
+        } catch (\DivisionByZeroError) {
+        }
+
+        try {
+            // @phpstan-ignore-next-line
+            Option\tryOf(static fn () => 1 / 0, exceptionClass: \LogicException::class);
             Assert::fail("An exception should have been thrown");
         } catch (\DivisionByZeroError) {
         }
