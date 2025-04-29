@@ -6,7 +6,7 @@ use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
-use function TH\Maybe\Option\isOfAnyClass;
+use function TH\Maybe\Internal\isOfAnyClass;
 
 /**
  * Return a `Result\Ok` Result containing `$value`.

@@ -6,6 +6,7 @@ use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
+use function TH\Maybe\Internal\isOfAnyClass;
 
 /**
  * Return a `Option\Some` option containing `$value`.
@@ -129,7 +130,7 @@ function tryOf(
     try {
         return Option\of($callback, $noneValue, $strict);
     } catch (\Throwable $th) {
-        if (Option\isOfAnyClass($th, (array) $exceptionClass)) {
+        if (isOfAnyClass($th, (array) $exceptionClass)) {
             return Option\none();
         }
 
@@ -213,26 +214,4 @@ function transpose(Option $option): Result
         static fn (Result $result) => $result->map(Option\some(...)),
         static fn () => Result\ok(Option\none()),
     );
-}
-
-/**
- * Check if the type of the given value is any of the passed classes.
- *
- * @template T
- * @param iterable<class-string<T>> $classes
- * @return ($value is T ? true : false)
- * @psalm-assert-if-false !T $value
- * @psalm-assert-if-true T $value
- */
-function isOfAnyClass(
-    object $value,
-    iterable $classes,
-): bool {
-    foreach ($classes as $class) {
-        if (\is_a($value, $class)) {
-            return true;
-        }
-    }
-
-    return false;
 }
