@@ -218,7 +218,11 @@ function transpose(Option $option): Result
 /**
  * Check if the type of the given value is any of the passed classes.
  *
- * @param iterable<class-string> $classes
+ * @template T
+ * @param iterable<class-string<T>> $classes
+ * @return ($value is T ? true : false)
+ * @psalm-assert-if-false !T $value
+ * @psalm-assert-if-true T $value
  */
 function isOfAnyClass(
     object $value,
