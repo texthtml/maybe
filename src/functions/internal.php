@@ -3,29 +3,22 @@
 namespace TH\Maybe\Internal;
 
 /**
- * Call $callback with $exception if it matches one of $exceptionClasses
- * and return its value, or rethrow it otherwise.
+ * Check if the type of the given value is any of the passed classes.
  *
- * @template E of \Throwable
  * @template T
- * @param E $error
- * @param callable(E): T $callback
- * @param class-string<E> $exceptionClasses
- * @throws \Throwable
- * @return T
- * @internal
- * @nodoc
+ * @param iterable<class-string<T>> $classes
+ * @psalm-assert-if-false !T $value
+ * @psalm-assert-if-true T $value
  */
-function trap(
-    \Throwable $error,
-    callable $callback,
-    string ...$exceptionClasses,
-): mixed {
-    foreach ($exceptionClasses as $exceptionClass) {
-        if (\is_a($error, $exceptionClass)) {
-            return $callback($error);
+function isOfAnyClass(
+    object $value,
+    iterable $classes,
+): bool {
+    foreach ($classes as $class) {
+        if (\is_a($value, $class)) {
+            return true;
         }
     }
 
-    throw $error;
+    return false;
 }

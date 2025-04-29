@@ -6,6 +6,7 @@ use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
+use function TH\Maybe\Internal\isOfAnyClass;
 
 /**
  * Return a `Option\Some` option containing `$value`.
@@ -116,7 +117,7 @@ function of(callable $callback, mixed $noneValue = null, bool $strict = true): O
  * @template U
  * @template E of \Throwable
  * @param callable():U $callback
- * @param class-string<E> $exceptionClass
+ * @param list<class-string<E>>|class-string<E> $exceptionClass
  * @return Option<U>
  * @throws \Throwable
  */
@@ -124,12 +125,12 @@ function tryOf(
     callable $callback,
     mixed $noneValue = null,
     bool $strict = true,
-    string $exceptionClass = \Exception::class,
+    array|string $exceptionClass = \Exception::class,
 ): Option {
     try {
         return Option\of($callback, $noneValue, $strict);
     } catch (\Throwable $th) {
-        if (\is_a($th, $exceptionClass)) {
+        if (isOfAnyClass($th, (array) $exceptionClass)) {
             return Option\none();
         }
 
