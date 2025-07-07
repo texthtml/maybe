@@ -28,7 +28,7 @@ Read the [documentation](https://doc.maybe.texthtml.net) full API description, d
  * @return Option<float>
  */
 function divide(float $numerator, float $denominator): Option {
-    return match ($denomintor) {
+    return match ($denominator) {
         0.0 => Option\none(),
         default => Option\some($numerator / $denominator),
     };
@@ -40,7 +40,7 @@ $result = divide(2.0, 3.0);
 // Pattern match to retrieve the value
 if ($result->isSome()) {
     // The division was valid
-    echo "Result: {$option->unwrap()}";
+    echo "Result: {$result->unwrap()}";
 } else {
     // The division was invalid
     echo "Cannot divide by 0";
