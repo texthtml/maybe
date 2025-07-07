@@ -4,6 +4,7 @@ namespace TH\Maybe\Tests\Unit\Option;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Provider;
 
@@ -12,8 +13,8 @@ final class InspectTest extends TestCase
     use Provider\Values;
 
     /**
-     * @dataProvider values
      */
+     #[DataProvider('values')]
     public function testInspectSome(mixed $value): void
     {
         $option = Option\some($value);

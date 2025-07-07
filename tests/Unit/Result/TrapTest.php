@@ -3,6 +3,7 @@
 namespace TH\Maybe\Tests\Unit\Result;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Assert;
 use TH\Maybe\Tests\Provider;
@@ -12,8 +13,8 @@ final class TrapTest extends TestCase
     use Provider\Values;
 
     /**
-     * @dataProvider values
      */
+     #[DataProvider('values')]
     public function testTrapOk(mixed $value): void
     {
         $callback = static fn () => $value;

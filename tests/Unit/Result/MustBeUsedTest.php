@@ -4,15 +4,16 @@ namespace TH\Maybe\Tests\Unit\Result;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Result;
 use TH\Maybe\Result\UnusedResultException;
 
 final class MustBeUsedTest extends TestCase
 {
     /**
-     * @dataProvider resultsFactory
      * @param callable(): Result<mixed, mixed> $factory
      */
+     #[DataProvider('resultsFactory')]
     public function testNotUsingAResultThrowAnExceptionWhenFreed(callable $factory): void
     {
         $this->expectException(UnusedResultException::class);
@@ -25,9 +26,9 @@ final class MustBeUsedTest extends TestCase
     }
 
     /**
-     * @dataProvider resultsFactory
      * @param callable(): Result<mixed, mixed> $factory
      */
+     #[DataProvider('resultsFactory')]
     public function testUsingAResultAvoidTheExceptionWhenFreed(callable $factory): void
     {
         (static function (callable $factory): void {
@@ -37,9 +38,9 @@ final class MustBeUsedTest extends TestCase
     }
 
     /**
-     * @dataProvider resultsFactory
      * @param callable(): Result<mixed, mixed> $factory
      */
+     #[DataProvider('resultsFactory')]
     public function testAClonedResultMustBeUsed(callable $factory): void
     {
         $this->expectException(UnusedResultException::class);
@@ -56,9 +57,9 @@ final class MustBeUsedTest extends TestCase
     }
 
     /**
-     * @dataProvider resultsFactory
      * @param callable(): Result<mixed, mixed> $factory
      */
+     #[DataProvider('resultsFactory')]
     public function testAnUnserializedResultDontHaveToBeUsed(callable $factory): void
     {
         (static function (callable $factory): void {

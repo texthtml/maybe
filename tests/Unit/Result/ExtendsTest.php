@@ -3,6 +3,7 @@
 namespace TH\Maybe\Tests\Unit\Result;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Assert;
 use TH\Maybe\Tests\Helpers;
@@ -29,10 +30,10 @@ final class ExtendsTest extends TestCase
     /**
      * Allowing overriding constructors would make the "Must be used" feature unsafe
      *
-     * @dataProvider resultClasses
      * @param class-string<Result<mixed,mixed>> $resultClass
      * @throws \ReflectionException
      */
+     #[DataProvider('resultClasses')]
     public function testConstructorsCannotBeOverriden(string $resultClass): void
     {
         $rc = new \ReflectionClass($resultClass);
@@ -42,9 +43,9 @@ final class ExtendsTest extends TestCase
     }
 
     /**
-     * @dataProvider resultMethods
      * @throws \ReflectionException
      */
+     #[DataProvider('resultMethods')]
     public function testOkResultMethodsCannotBeOverriden(string $method): void
     {
         $rc = new \ReflectionClass(Result\Ok::class);
@@ -55,9 +56,9 @@ final class ExtendsTest extends TestCase
     }
 
     /**
-     * @dataProvider resultMethods
      * @throws \ReflectionException
      */
+     #[DataProvider('resultMethods')]
     public function testErrResultMethodsCannotBeOverriden(string $method): void
     {
         $rc = new \ReflectionClass(Result\Err::class);

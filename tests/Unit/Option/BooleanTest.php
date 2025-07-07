@@ -4,6 +4,7 @@ namespace TH\Maybe\Tests\Unit\Option;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Provider;
 
@@ -12,24 +13,24 @@ final class BooleanTest extends TestCase
     use Provider\Options;
 
     /**
-     * @dataProvider andMatrix
      * @template T
      * @param Option<T> $left
      * @param Option<T> $right
      * @param Option<T> $expected
      */
+     #[DataProvider('andMatrix')]
     public function testAnd(Option $left, Option $right, Option $expected): void
     {
         Assert::assertSame($expected, $left->and($right));
     }
 
     /**
-     * @dataProvider andMatrix
      * @template T
      * @param Option<T> $left
      * @param Option<T> $right
      * @param Option<T> $expected
      */
+     #[DataProvider('andMatrix')]
     public function testAndThen(Option $left, Option $right, Option $expected): void
     {
         $calls = [];
@@ -47,12 +48,12 @@ final class BooleanTest extends TestCase
     }
 
     /**
-     * @dataProvider orMatrix
      * @template T
      * @param Option<T> $left
      * @param Option<T> $right
      * @param Option<T> $expected
      */
+     #[DataProvider('orMatrix')]
     public function testOrElse(Option $left, Option $right, Option $expected): void
     {
         $calls = 0;
@@ -70,24 +71,24 @@ final class BooleanTest extends TestCase
     }
 
     /**
-     * @dataProvider orMatrix
      * @template T
      * @param Option<T> $left
      * @param Option<T> $right
      * @param Option<T> $expected
      */
+     #[DataProvider('orMatrix')]
     public function testOr(Option $left, Option $right, Option $expected): void
     {
         Assert::assertSame($expected, $left->or($right));
     }
 
     /**
-     * @dataProvider xorMatrix
      * @template T
      * @param Option<T> $left
      * @param Option<T> $right
      * @param Option<T> $expected
      */
+     #[DataProvider('xorMatrix')]
     public function testXor(Option $left, Option $right, Option $expected): void
     {
         Assert::assertEquals($expected, $left->xor($right));

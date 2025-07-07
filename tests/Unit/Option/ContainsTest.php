@@ -4,6 +4,7 @@ namespace TH\Maybe\Tests\Unit\Option;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Provider;
 
@@ -12,9 +13,9 @@ final class ContainsTest extends TestCase
     use Provider\Values;
 
     /**
-     * @dataProvider containsMatrix
      * @param Option<mixed> $option
      */
+     #[DataProvider('containsMatrix')]
     public function testContains(Option $option, mixed $value, bool $expect, bool $strict = true): void
     {
         Assert::assertSame($expect, $option->contains($value, strict: $strict));

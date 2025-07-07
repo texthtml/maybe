@@ -3,6 +3,7 @@
 namespace TH\Maybe\Tests\Unit\Result;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Assert;
 use TH\Maybe\Tests\Provider;
@@ -12,9 +13,9 @@ final class ContainsTest extends TestCase
     use Provider\Values;
 
     /**
-     * @dataProvider containsMatrix
      * @param Result<mixed, null> $result
      */
+     #[DataProvider('containsMatrix')]
     public function testContains(Result $result, mixed $value, bool $expect, bool $strict = true): void
     {
         Assert::assertSame($expect, $result->contains($value, strict: $strict));
@@ -55,9 +56,9 @@ final class ContainsTest extends TestCase
     }
 
     /**
-     * @dataProvider containsErrMatrix
      * @param Result<mixed, null> $result
      */
+     #[DataProvider('containsErrMatrix')]
     public function testContainsErr(Result $result, mixed $value, bool $expect, bool $strict = true): void
     {
         Assert::assertSame($expect, $result->containsErr($value, strict: $strict));
