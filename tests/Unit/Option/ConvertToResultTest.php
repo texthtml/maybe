@@ -3,6 +3,7 @@
 namespace TH\Maybe\Tests\Unit\Option;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Assert;
@@ -13,10 +14,10 @@ final class ConvertToResultTest extends TestCase
     use Provider\Transpose;
 
     /**
-     * @dataProvider okOrMatrix
      * @param Option<mixed> $option
      * @param Result<mixed, mixed> $expected
      */
+    #[DataProvider('okOrMatrix')]
     public function testOkOr(Option $option, mixed $err, Result $expected): void
     {
         Assert::assertEquals($expected, $result = $option->okOr($err));
@@ -26,10 +27,10 @@ final class ConvertToResultTest extends TestCase
     }
 
     /**
-     * @dataProvider okOrMatrix
      * @param Option<mixed> $option
      * @param Result<mixed, mixed> $expected
      */
+    #[DataProvider('okOrElseMatrix')]
     public function testOkOrElse(Option $option, mixed $err, Result $expected, int $expectedCalls): void
     {
         $calls = 0;
@@ -47,7 +48,7 @@ final class ConvertToResultTest extends TestCase
     }
 
     /**
-     * @return iterable<array{Option<mixed>, mixed, Result<mixed, mixed>, int}>
+     * @return iterable<array{Option<mixed>, mixed, Result<mixed, mixed>}>
      */
     public static function okOrMatrix(): iterable
     {
@@ -55,22 +56,35 @@ final class ConvertToResultTest extends TestCase
             Option\none(),
             "Don't panic !",
             Result\err("Don't panic !"),
-            1,
         ];
 
         yield "some" => [
             Option\some(42),
             "Don't panic !",
             Result\ok(42),
-            0,
         ];
     }
 
     /**
-     * @dataProvider transposeMatrix
+     * @return iterable<array{Option<mixed>, mixed, Result<mixed, mixed>, int}>
+     */
+    public static function okOrElseMatrix(): iterable
+    {
+        foreach (self::okOrMatrix() as $key => [$option, $err, $result]) {
+            yield $key => [
+                $option,
+                $err,
+                $result,
+                $option instanceof Option\None ? 1 : 0,
+            ];
+        }
+    }
+
+    /**
      * @param Option<Result<mixed, mixed>> $option
      * @param Result<mixed, mixed> $expected
      */
+     #[DataProvider('transposeMatrix')]
     public function testTranspose(Option $option, Result $expected): void
     {
         Assert::assertEquals($expected, $result = Option\transpose($option));

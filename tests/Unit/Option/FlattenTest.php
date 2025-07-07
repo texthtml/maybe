@@ -4,15 +4,16 @@ namespace TH\Maybe\Tests\Unit\Option;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Option;
 
 final class FlattenTest extends TestCase
 {
     /**
-     * @dataProvider flattenMatrix
      * @param Option<mixed> $expected
      * @param Option<Option<mixed>> $option
      */
+     #[DataProvider('flattenMatrix')]
     public function testFlatten(Option $expected, Option $option): void
     {
         Assert::assertEquals($expected, Option\flatten($option));

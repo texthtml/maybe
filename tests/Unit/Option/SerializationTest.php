@@ -4,6 +4,7 @@ namespace TH\Maybe\Tests\Unit\Option;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Provider;
 
@@ -20,8 +21,8 @@ final class SerializationTest extends TestCase
     }
 
     /**
-     * @dataProvider serializableValues
      */
+     #[DataProvider('serializableValues')]
     public function testWithSomeValidValues(mixed $value): void
     {
         $this->testSerializableOption(Option\some($value));

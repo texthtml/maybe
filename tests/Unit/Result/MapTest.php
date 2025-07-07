@@ -3,13 +3,13 @@
 namespace TH\Maybe\Tests\Unit\Result;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Assert;
 
 final class MapTest extends TestCase
 {
     /**
-     * @dataProvider mapMatrix
      * @template T
      * @template U
      * @param Result<T, null> $result
@@ -17,6 +17,7 @@ final class MapTest extends TestCase
      * @param Result<U, null> $expected
      * @param array<T> $expectedCalls
      */
+     #[DataProvider('mapMatrix')]
     public function testMap(Result $result, mixed $mapResult, Result $expected, array $expectedCalls): void
     {
         $calls = [];
@@ -63,7 +64,6 @@ final class MapTest extends TestCase
     }
 
     /**
-     * @dataProvider mapErrMatrix
      * @template T
      * @template U
      * @param Result<T, null> $result
@@ -71,6 +71,7 @@ final class MapTest extends TestCase
      * @param Result<U, null> $expected
      * @param array<T> $expectedCalls
      */
+     #[DataProvider('mapErrMatrix')]
     public function testMapErr(Result $result, mixed $mapResult, Result $expected, array $expectedCalls): void
     {
         $calls = [];
@@ -117,7 +118,6 @@ final class MapTest extends TestCase
     }
 
     /**
-     * @dataProvider mapOrMatrix
      * @template T
      * @template U
      * @param Result<T, null> $result
@@ -126,6 +126,7 @@ final class MapTest extends TestCase
      * @param U $expected
      * @param array<T> $expectedCalls
      */
+     #[DataProvider('mapOrMatrix')]
     public function testMapOr(
         Result $result,
         mixed $mapResult,

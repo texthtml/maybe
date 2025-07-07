@@ -3,6 +3,7 @@
 namespace TH\Maybe\Tests\Unit\Result;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Assert;
@@ -13,10 +14,10 @@ final class ConvertToOptionTest extends TestCase
     use Provider\Transpose;
 
     /**
-     * @dataProvider okMatrix
      * @param Result<mixed, mixed> $result
      * @param Option<mixed> $expected
      */
+     #[DataProvider('okMatrix')]
     public function testOk(Result $result, Option $expected): void
     {
         Assert::assertEquals($expected, $result->ok());
@@ -39,10 +40,10 @@ final class ConvertToOptionTest extends TestCase
     }
 
     /**
-     * @dataProvider errMatrix
      * @param Result<mixed, mixed> $result
      * @param Option<mixed> $expected
      */
+     #[DataProvider('errMatrix')]
     public function testErr(Result $result, Option $expected): void
     {
         Assert::assertEquals($expected, $result->err());
@@ -67,10 +68,10 @@ final class ConvertToOptionTest extends TestCase
     /**
      * @template T
      * @template E
-     * @dataProvider transposeMatrix
      * @param Result<Option<T>, E> $expected
      * @param Option<Result<T,E>> $option
      */
+     #[DataProvider('transposeMatrix')]
     public function testTranspose(Option $option, Result $expected): void
     {
         Assert::assertEquals($option, $option2 = Result\transpose($expected));

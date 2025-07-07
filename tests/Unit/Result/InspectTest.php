@@ -3,6 +3,7 @@
 namespace TH\Maybe\Tests\Unit\Result;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Assert;
 use TH\Maybe\Tests\Provider;
@@ -12,8 +13,8 @@ final class InspectTest extends TestCase
     use Provider\Values;
 
     /**
-     * @dataProvider values
      */
+     #[DataProvider('values')]
     public function testInspectOk(mixed $value): void
     {
         $result = Result\ok($value);
@@ -51,8 +52,8 @@ final class InspectTest extends TestCase
     }
 
     /**
-     * @dataProvider values
      */
+     #[DataProvider('values')]
     public function testInspectErrNone(mixed $value): void
     {
         $result = Result\err($value);
