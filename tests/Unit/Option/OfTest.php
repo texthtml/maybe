@@ -3,6 +3,7 @@
 namespace TH\Maybe\Tests\Unit\Option;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Provider;
@@ -12,18 +13,18 @@ final class OfTest extends TestCase
     use Provider\Options;
 
     /**
-     * @dataProvider fromValueMatrix
      * @param Option<mixed> $expected
-     */
+    */
+    #[DataProvider('fromValueMatrix')]
     public function testOf(Option $expected, mixed $value, mixed $noneValue, bool $strict = true): void
     {
         Assert::assertEquals($expected, Option\of(static fn () => $value, $noneValue, strict: $strict));
     }
 
     /**
-     * @dataProvider fromValueMatrix
      * @param Option<mixed> $expected
-     */
+    */
+    #[DataProvider('fromValueMatrix')]
     public function testTryOf(Option $expected, mixed $value, mixed $noneValue, bool $strict = true): void
     {
         Assert::assertEquals($expected, Option\tryOf(static fn () => $value, $noneValue, strict: $strict));
