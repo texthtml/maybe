@@ -2,6 +2,7 @@
 
 namespace TH\Maybe\Tests\Unit\Option;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Result;
@@ -13,10 +14,10 @@ final class ConvertToResultTest extends TestCase
     use Provider\Transpose;
 
     /**
-     * @dataProvider okOrMatrix
      * @param Option<mixed> $option
      * @param Result<mixed, mixed> $expected
-     */
+    */
+    #[DataProvider('okOrMatrix')]
     public function testOkOr(Option $option, mixed $err, Result $expected): void
     {
         Assert::assertEquals($expected, $result = $option->okOr($err));
@@ -26,11 +27,11 @@ final class ConvertToResultTest extends TestCase
     }
 
     /**
-     * @dataProvider okOrMatrix
      * @param Option<mixed> $option
      * @param Result<mixed, mixed> $expected
-     */
-    public function testOkOrElse(Option $option, mixed $err, Result $expected, int $expectedCalls): void
+    */
+    #[DataProvider('okOrMatrix')]
+    public function testOkOrElse(Option $option, mixed $err, Result $expected): void
     {
         $calls = 0;
 
@@ -43,7 +44,7 @@ final class ConvertToResultTest extends TestCase
         Assert::assertResultNotUsed($expected);
         Assert::assertResultNotUsed($result);
 
-        Assert::assertSame($expectedCalls, $calls);
+        Assert::assertSame($result->isErr() ? 1 : 0, $calls);
     }
 
     /**
@@ -55,22 +56,20 @@ final class ConvertToResultTest extends TestCase
             Option\none(),
             "Don't panic !",
             Result\err("Don't panic !"),
-            1,
         ];
 
         yield "some" => [
             Option\some(42),
             "Don't panic !",
             Result\ok(42),
-            0,
         ];
     }
 
     /**
-     * @dataProvider transposeMatrix
      * @param Option<Result<mixed, mixed>> $option
      * @param Result<mixed, mixed> $expected
-     */
+    */
+    #[DataProvider('transposeMatrix')]
     public function testTranspose(Option $option, Result $expected): void
     {
         Assert::assertEquals($expected, $result = Option\transpose($option));

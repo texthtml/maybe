@@ -3,6 +3,7 @@
 namespace TH\Maybe\Tests\Unit\Option;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Provider;
@@ -18,9 +19,7 @@ final class UnwrapTest extends TestCase
         Option\none()->expect("This should fail");
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testExpectSome(mixed $value): void
     {
         Assert::assertSame($value, Option\some($value)->expect("This should succeed"));
@@ -33,41 +32,31 @@ final class UnwrapTest extends TestCase
         Option\none()->unwrap();
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testUnwrapSome(mixed $value): void
     {
         Assert::assertSame($value, Option\some($value)->unwrap());
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testUnwrapOrNone(mixed $value): void
     {
         Assert::assertSame($value, Option\none()->unwrapOr($value));
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testUnwrapOrSome(mixed $value): void
     {
         Assert::assertSame($value, Option\some($value)->unwrapOr(false));
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testUnwrapOrElseNone(mixed $value): void
     {
         Assert::assertSame($value, Option\none()->unwrapOrElse(static fn () => $value));
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testUnwrapOrElseSome(mixed $value): void
     {
         Assert::assertSame($value, Option\some($value)->unwrapOrElse(static fn () => false));

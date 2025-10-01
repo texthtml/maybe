@@ -2,6 +2,7 @@
 
 namespace TH\Maybe\Tests\Unit\Option;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 use TH\Maybe\Tests\Assert;
@@ -11,9 +12,7 @@ final class IsTest extends TestCase
 {
     use Provider\Values;
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testIsSome(mixed $value): void
     {
         $option = Option\some($value);
@@ -25,9 +24,7 @@ final class IsTest extends TestCase
         Assert::assertFalse($option->isSome());
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testIsNone(mixed $value): void
     {
         $option = Option\some($value);
@@ -39,9 +36,7 @@ final class IsTest extends TestCase
         Assert::assertTrue($option->isNone());
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testIsSomeAnd(mixed $value): void
     {
         $option = Option\some($value);
