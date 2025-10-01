@@ -41,9 +41,9 @@
  * @param Option<float>
  */
 function divide(float $numerator, float $denominator): Option {
-    return match ($denomintor) {
+    return match ($denominator) {
         0.0 => Option\none(),
-        _ => Option\some($numerator / $denominator)
+        default => Option\some($numerator / $denominator),
     };
 }
 
@@ -53,7 +53,7 @@ $result = divide(2.0, 3.0);
 // Pattern match to retrieve the value
 if ($result instanceof Option\Some) {
     // The division was valid
-    echo "Result: {$option->unwrap()}");
+    echo "Result: {$result->unwrap()}";
 } else {
     // The division was invalid
     echo "Cannot divide by 0";
