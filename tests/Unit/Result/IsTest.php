@@ -2,6 +2,7 @@
 
 namespace TH\Maybe\Tests\Unit\Result;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Assert;
@@ -11,9 +12,7 @@ final class IsTest extends TestCase
 {
     use Provider\Values;
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testIsOk(mixed $value): void
     {
         $result = Result\ok($value);
@@ -27,9 +26,7 @@ final class IsTest extends TestCase
         Assert::assertResultUsed($result);
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testIsErr(mixed $value): void
     {
         $result = Result\ok($value);
@@ -43,9 +40,7 @@ final class IsTest extends TestCase
         Assert::assertResultUsed($result);
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testIsOkAnd(mixed $value): void
     {
         $result = Result\ok($value);
@@ -61,9 +56,7 @@ final class IsTest extends TestCase
         Assert::assertResultUsed($result);
     }
 
-    /**
-     * @dataProvider values
-     */
+    #[DataProvider('values')]
     public function testIsErrAnd(mixed $value): void
     {
         $result = Result\ok($value);

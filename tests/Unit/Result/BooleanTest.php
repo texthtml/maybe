@@ -2,6 +2,7 @@
 
 namespace TH\Maybe\Tests\Unit\Result;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Assert;
@@ -12,12 +13,12 @@ final class BooleanTest extends TestCase
     use Provider\Results;
 
     /**
-     * @dataProvider andMatrix
      * @template T
      * @param Result<T, mixed> $left
      * @param Result<T, mixed> $right
      * @param Result<T, mixed> $expected
-     */
+    */
+    #[DataProvider('andMatrix')]
     public function testAnd(Result $left, Result $right, Result $expected): void
     {
         Assert::assertEquals($expected, $result = $left->and($right));
@@ -29,12 +30,12 @@ final class BooleanTest extends TestCase
     }
 
     /**
-     * @dataProvider andMatrix
      * @template T
      * @param Result<T, mixed> $left
      * @param Result<T, mixed> $right
      * @param Result<T, mixed> $expected
-     */
+    */
+    #[DataProvider('andMatrix')]
     public function testAndThen(Result $left, Result $right, Result $expected): void
     {
         $calls = [];
@@ -64,12 +65,12 @@ final class BooleanTest extends TestCase
     }
 
     /**
-     * @dataProvider orMatrix
      * @template T
      * @param Result<T, mixed> $left
      * @param Result<T, mixed> $right
      * @param Result<T, mixed> $expected
-     */
+    */
+    #[DataProvider('orMatrix')]
     public function testOrElse(Result $left, Result $right, Result $expected): void
     {
         $calls = 0;
@@ -97,12 +98,12 @@ final class BooleanTest extends TestCase
     }
 
     /**
-     * @dataProvider orMatrix
      * @template T
      * @param Result<T, mixed> $left
      * @param Result<T, mixed> $right
      * @param Result<T, mixed> $expected
-     */
+    */
+    #[DataProvider('orMatrix')]
     public function testOr(Result $left, Result $right, Result $expected): void
     {
         Assert::assertEquals($expected, $result = $left->or($right));

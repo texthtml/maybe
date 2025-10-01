@@ -3,19 +3,20 @@
 namespace TH\Maybe\Tests\Unit\Option;
 
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
 
 final class ZipTest extends TestCase
 {
     /**
-     * @dataProvider zipMatrix
      * @template L
      * @template R
      * @param Option<L> $left
      * @param Option<R> $right
      * @param Option<array{L, R}> $expected
-     */
+    */
+    #[DataProvider('zipMatrix')]
     public function testZip(Option $left, Option $right, Option $expected): void
     {
         Assert::assertEquals($expected, $left->zip($right));
@@ -56,13 +57,13 @@ final class ZipTest extends TestCase
     }
 
     /**
-     * @dataProvider unzipMatrix
      * @template L
      * @template R
      * @param Option<array{L, R}> $zipped
      * @param Option<L> $left
      * @param Option<R> $right
-     */
+    */
+    #[DataProvider('unzipMatrix')]
     public function testUnzip(Option $zipped, Option $left, Option $right): void
     {
         Assert::assertEquals([$left, $right], Option\unzip($zipped));

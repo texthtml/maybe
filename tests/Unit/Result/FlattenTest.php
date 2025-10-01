@@ -2,6 +2,7 @@
 
 namespace TH\Maybe\Tests\Unit\Result;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Assert;
@@ -9,10 +10,10 @@ use TH\Maybe\Tests\Assert;
 final class FlattenTest extends TestCase
 {
     /**
-     * @dataProvider flattenMatrix
      * @param Result<mixed, null> $expected
      * @param Result<Result<mixed, null>, null> $result
-     */
+    */
+    #[DataProvider('flattenMatrix')]
     public function testFlatten(Result $expected, Result $result): void
     {
         Assert::assertResultNotUsed($result);
