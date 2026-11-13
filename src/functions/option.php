@@ -222,3 +222,40 @@ function transpose(Option $option): Result
         static fn () => Result\ok(Option\none()),
     );
 }
+
+/**
+ * Takes each element in the iterable: if it is a `None`, no further elements are
+ * taken and `None` is returned. Should no `None` occur, a `Some` containing the
+ * list of all the values is returned.
+ *
+ * # Examples
+ *
+ * ```
+ * self::assertEq(Option\collect([Option\some(1), Option\some(2)]), Option\some([1, 2]));
+ * self::assertEq(Option\collect([Option\some(1), Option\none()]), Option\none());
+ * self::assertEq(Option\collect([Option\none(), Option\some(2)]), Option\none());
+ * self::assertEq(Option\collect([]), Option\some([]));
+ * ```
+ *
+ * @template U
+ * @param iterable<Option<U>> $options
+ * @return Option<list<U>>
+ */
+function collect(iterable $options): Option
+{
+    /** @var list<U> $values */
+    $values = [];
+
+    foreach ($options as $option) {
+        if ($option instanceof Option\None) {
+            return Option\none();
+        }
+
+        // @mago-ignore analysis:unhandled-thrown-type 🙈 unwrap() cannot throw: $option is not None
+        /** @psalm-suppress MissingThrowsDocblock 🙈 unwrap() cannot throw: $option is not None */
+        // @phpstan-ignore missingType.checkedException (unwrap() cannot throw: $option is not None)
+        $values[] = $option->unwrap();
+    }
+
+    return Option\some($values);
+}

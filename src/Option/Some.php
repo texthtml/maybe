@@ -46,6 +46,14 @@ final class Some implements Option
     }
 
     /**
+     * @param callable(T):bool $predicate
+     */
+    public function isNoneOr(callable $predicate): bool
+    {
+        return $predicate($this->value);
+    }
+
+    /**
      * @return T
      * @phpstan-throws void
      */

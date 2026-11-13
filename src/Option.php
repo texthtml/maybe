@@ -125,6 +125,30 @@ interface Option extends \IteratorAggregate
     public function isSomeAnd(callable $predicate): bool;
 
     /**
+     * Returns `true` if the option is the `None` variant or the value inside of it matches a predicate.
+     *
+     * # Examples
+     *
+     * ```
+     * // @var Option<int,string> $x
+     * $x = Option\Some(2);
+     * self::assertTrue($x->isNoneOr(fn ($n) => $n < 5));
+     * self::assertFalse($x->isNoneOr(fn ($n) => $n > 5));
+     * ```
+     *
+     * ```
+     * // @var Option<int,string> $x
+     * $x = Option\none();
+     * self::assertTrue($x->isNoneOr(fn ($n) => $n < 5));
+     * self::assertTrue($x->isNoneOr(fn ($n) => $n > 5));
+     * ```
+     *
+     * @param callable(T):bool $predicate
+     * @return (T is never ? true : bool)
+     */
+    public function isNoneOr(callable $predicate): bool;
+
+    /**
      * Extract the contained value in an `Option<T>` when it is the `Some` variant.
      * Throw a `RuntimeException` with a custom provided message if the `Option` is `None`.
      *
