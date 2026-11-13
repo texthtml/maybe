@@ -1,0 +1,631 @@
+variant = "loose"
+
+[[issues]]
+file = "tests/Constraint/HasBeen.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Option<string>, 'left': TH\Maybe\Option<string>, 'right': TH\Maybe\Option<string>}`, but found `array{'expected': TH\Maybe\Option<string>, 'left': TH\Maybe\Option<string>, 'right': TH\Maybe\Option\Some<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Option<string>, 'left': TH\Maybe\Option<string>, 'right': TH\Maybe\Option<string>}`, but found `array{'expected': TH\Maybe\Option<string>, 'left': TH\Maybe\Option\Some<string('left')>, 'right': TH\Maybe\Option<string>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Option<string>, 'left': TH\Maybe\Option<string>, 'right': TH\Maybe\Option<string>}`, but found `array{'expected': TH\Maybe\Option<string>, 'left': TH\Maybe\Option\Some<string('left')>, 'right': TH\Maybe\Option\Some<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Option<string>, 'left': TH\Maybe\Option<string>, 'right': TH\Maybe\Option<string>}`, but found `array{'expected': TH\Maybe\Option\Some<string('left')>, 'left': TH\Maybe\Option\Some<string('left')>, 'right': TH\Maybe\Option<string>}`.'''
+count = 2
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Option<string>, 'left': TH\Maybe\Option<string>, 'right': TH\Maybe\Option<string>}`, but found `array{'expected': TH\Maybe\Option\Some<string('left')>, 'left': TH\Maybe\Option\Some<string('left')>, 'right': TH\Maybe\Option\Some<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Option<string>, 'left': TH\Maybe\Option<string>, 'right': TH\Maybe\Option<string>}`, but found `array{'expected': TH\Maybe\Option\Some<string('right')>, 'left': TH\Maybe\Option<string>, 'right': TH\Maybe\Option\Some<string('right')>}`.'''
+count = 2
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Option<string>, 'left': TH\Maybe\Option<string>, 'right': TH\Maybe\Option<string>}`, but found `array{'expected': TH\Maybe\Option\Some<string('right')>, 'left': TH\Maybe\Option\Some<string('left')>, 'right': TH\Maybe\Option\Some<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: mixed, 3?: bool}`, but found `list{TH\Maybe\Option\Some<int(0)>, int(0), int(1)}`.'
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: mixed, 3?: bool}`, but found `list{TH\Maybe\Option\Some<int(1)>, int(1), int(0)}`.'
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: mixed, 3?: bool}`, but found `list{TH\Maybe\Option\Some<int(1)>, int(1), string('1')}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: mixed, 3?: bool}`, but found `list{TH\Maybe\Option\Some<int(1)>, int(1), true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: mixed, 3?: bool}`, but found `list{TH\Maybe\Option\Some<list{int(1)}>, list{int(1)}, list{int(2)}}`.'
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: mixed, 3?: bool}`, but found `list{TH\Maybe\Option\Some<null>, null, int(0)}`.'
+count = 1
+
+[[issues]]
+file = "tests/Provider/Options.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: mixed, 3?: bool}`, but found `list{TH\Maybe\Option\Some<stdClass>, stdClass, stdClass}`.'
+count = 1
+
+[[issues]]
+file = "tests/Provider/Results.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<string, null>, 'left': TH\Maybe\Result<string, null>, 'right': TH\Maybe\Result<string, null>}`, but found `array{'expected': TH\Maybe\Result\Err<string('left')>, 'left': TH\Maybe\Result\Err<string('left')>, 'right': TH\Maybe\Result\Err<string('left')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Results.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<string, null>, 'left': TH\Maybe\Result<string, null>, 'right': TH\Maybe\Result<string, null>}`, but found `array{'expected': TH\Maybe\Result\Err<string('left')>, 'left': TH\Maybe\Result\Err<string('left')>, 'right': TH\Maybe\Result\Ok<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Results.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<string, null>, 'left': TH\Maybe\Result<string, null>, 'right': TH\Maybe\Result<string, null>}`, but found `array{'expected': TH\Maybe\Result\Err<string('right')>, 'left': TH\Maybe\Result\Err<string('left')>, 'right': TH\Maybe\Result\Err<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Results.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<string, null>, 'left': TH\Maybe\Result<string, null>, 'right': TH\Maybe\Result<string, null>}`, but found `array{'expected': TH\Maybe\Result\Err<string('right')>, 'left': TH\Maybe\Result\Ok<string('left')>, 'right': TH\Maybe\Result\Err<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Results.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<string, null>, 'left': TH\Maybe\Result<string, null>, 'right': TH\Maybe\Result<string, null>}`, but found `array{'expected': TH\Maybe\Result\Ok<string('left')>, 'left': TH\Maybe\Result\Ok<string('left')>, 'right': TH\Maybe\Result\Err<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Results.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<string, null>, 'left': TH\Maybe\Result<string, null>, 'right': TH\Maybe\Result<string, null>}`, but found `array{'expected': TH\Maybe\Result\Ok<string('left')>, 'left': TH\Maybe\Result\Ok<string('left')>, 'right': TH\Maybe\Result\Ok<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Results.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<string, null>, 'left': TH\Maybe\Result<string, null>, 'right': TH\Maybe\Result<string, null>}`, but found `array{'expected': TH\Maybe\Result\Ok<string('right')>, 'left': TH\Maybe\Result\Err<string('left')>, 'right': TH\Maybe\Result\Ok<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Results.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<string, null>, 'left': TH\Maybe\Result<string, null>, 'right': TH\Maybe\Result<string, null>}`, but found `array{'expected': TH\Maybe\Result\Ok<string('right')>, 'left': TH\Maybe\Result\Ok<string('left')>, 'right': TH\Maybe\Result\Ok<string('right')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Transpose.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<mixed, mixed>, 'option': TH\Maybe\Option<mixed>}`, but found `array{'expected': TH\Maybe\Result\Err<string('Don't panic !')>, 'option': TH\Maybe\Option\Some<TH\Maybe\Result\Err<string('Don't panic !')>>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Transpose.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<mixed, mixed>, 'option': TH\Maybe\Option<mixed>}`, but found `array{'expected': TH\Maybe\Result\Ok<TH\Maybe\Option\Some<int(42)>>, 'option': TH\Maybe\Option\Some<TH\Maybe\Result\Ok<int(42)>>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Provider/Transpose.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{'expected': TH\Maybe\Result<mixed, mixed>, 'option': TH\Maybe\Option<mixed>}`, but found `array{'expected': TH\Maybe\Result\Ok<enum(TH\Maybe\Option\None)>, 'option': enum(TH\Maybe\Option\None)}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Option\Some<int(0)>, int(0), true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Option\Some<int(0)>, int(1), false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Option\Some<list{int(1)}>, list{int(1)}, true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Option\Some<list{int(1)}>, list{int(2)}, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Option\Some<null>, null, true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Option\Some<stdClass>, stdClass, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Option\Some<stdClass>, stdClass, true, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Option\Some<stdClass>, stdClass, true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ConvertToResultTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: TH\Maybe\Result<mixed, mixed>, 3: int}`, but found `list{TH\Maybe\Option\Some<int(42)>, string('Don't panic !'), TH\Maybe\Result\Ok<int(42)>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ConvertToResultTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: TH\Maybe\Result<mixed, mixed>, 3: int}`, but found `list{enum(TH\Maybe\Option\None), string('Don't panic !'), TH\Maybe\Result\Err<string('Don't panic !')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/FilterTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: bool, 2: bool, 3: array<array-key, mixed>}`, but found `list{TH\Maybe\Option\Some<int(42)>, false, true, list{int(42)}}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/FilterTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: bool, 2: bool, 3: array<array-key, mixed>}`, but found `list{TH\Maybe\Option\Some<int(5)>, true, false, list{int(5)}}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/FinalTest.php"
+code = "unevaluated-code"
+message = "Unreachable code detected."
+count = 3
+
+[[issues]]
+file = "tests/Unit/Option/FlattenTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: TH\Maybe\Option<TH\Maybe\Option<mixed>>}`, but found `list{TH\Maybe\Option<mixed>, TH\Maybe\Option<mixed>}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/FlattenTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: TH\Maybe\Option<TH\Maybe\Option<mixed>>}`, but found `list{TH\Maybe\Option\Some<null>, TH\Maybe\Option\Some<TH\Maybe\Option\Some<null>>}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/IsTest.php"
+code = "impossible-type-comparison"
+message = 'Impossible type assertion: `$option` of type `TH\Maybe\Option\Some<mixed>` can never be `enum(TH\Maybe\Option\None)`.'
+count = 2
+
+[[issues]]
+file = "tests/Unit/Option/IsTest.php"
+code = "impossible-type-comparison"
+message = 'Impossible type assertion: `$option` of type `enum(TH\Maybe\Option\None)` can never be `TH\Maybe\Option\Some<never>`.'
+count = 4
+
+[[issues]]
+file = "tests/Unit/Option/IsTest.php"
+code = "redundant-type-comparison"
+message = 'Redundant type assertion: `$option` is already `TH\Maybe\Option\Some<mixed>`.'
+count = 4
+
+[[issues]]
+file = "tests/Unit/Option/IsTest.php"
+code = "redundant-type-comparison"
+message = 'Redundant type assertion: `$option` is already `enum(TH\Maybe\Option\None)`.'
+count = 2
+
+[[issues]]
+file = "tests/Unit/Option/MapTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: TH\Maybe\Option<mixed>, 3: array<array-key, mixed>}`, but found `list{TH\Maybe\Option\Some<int(42)>, string('fish'), TH\Maybe\Option\Some<string('fish')>, list{int(42)}}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/MapTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: mixed, 3: mixed, 4: array<array-key, mixed>}`, but found `list{TH\Maybe\Option\Some<int(42)>, string('fish'), string('fishes'), string('fish'), list{int(42)}}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/OfTest.php"
+code = "invalid-operand"
+message = "Invalid type for right operand."
+count = 5
+
+[[issues]]
+file = "tests/Unit/Option/SerializationTest.php"
+code = "less-specific-nested-argument-type"
+message = 'Argument type mismatch for argument #1 of `TH\Maybe\Tests\Unit\Option\SerializationTest::testSerializableOption`: expected `TH\Maybe\Option<mixed>`, but provided type `TH\Maybe\Option<never>` is less specific.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ZipTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Option<array{0: mixed, 1: mixed}>, 1: TH\Maybe\Option<mixed>, 2: TH\Maybe\Option<mixed>}`, but found `list{TH\Maybe\Option\Some<list{int(42), string('fishes')}>, TH\Maybe\Option\Some<int(42)>, TH\Maybe\Option\Some<string('fishes')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ZipTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: TH\Maybe\Option<mixed>, 2: TH\Maybe\Option<array{0: mixed, 1: mixed}>}`, but found `list{TH\Maybe\Option\Some<int(42)>, TH\Maybe\Option\Some<string('fishes')>, TH\Maybe\Option\Some<list{int(42), string('fishes')}>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ZipTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: TH\Maybe\Option<mixed>, 2: TH\Maybe\Option<array{0: mixed, 1: mixed}>}`, but found `list{TH\Maybe\Option\Some<int(42)>, enum(TH\Maybe\Option\None), enum(TH\Maybe\Option\None)}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Option/ZipTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: TH\Maybe\Option<mixed>, 2: TH\Maybe\Option<array{0: mixed, 1: mixed}>}`, but found `list{enum(TH\Maybe\Option\None), TH\Maybe\Option\Some<int(42)>, enum(TH\Maybe\Option\None)}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/BooleanTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `TH\Maybe\Result\Err::orElse`: expected `(callable(mixed): TH\Maybe\Result<never, mixed>)`, but provided type `(closure(): TH\Maybe\Result<('T.th\maybe\tests\unit\result\booleantest::testorelse() extends mixed), mixed>)` is less specific.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/BooleanTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `TH\Maybe\Tests\Assert::assertResultNotUsed`: expected `TH\Maybe\Result<('T.th\maybe\tests\unit\result\booleantest::testandthen() extends mixed), mixed>`, but provided type `TH\Maybe\Result<('T.th\maybe\tests\unit\result\booleantest::testandthen() extends mixed), mixed>|TH\Maybe\Result\Err<mixed>` is less specific.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/BooleanTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `TH\Maybe\Tests\Assert::assertResultNotUsed`: expected `TH\Maybe\Result<('T.th\maybe\tests\unit\result\booleantest::testorelse() extends mixed), mixed>`, but provided type `TH\Maybe\Result<('T.th\maybe\tests\unit\result\booleantest::testorelse() extends mixed), mixed>|TH\Maybe\Result<never, mixed>` is less specific.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/BooleanTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `TH\Maybe\Tests\Assert::assertResultUsed`: expected `TH\Maybe\Result<('T.th\maybe\tests\unit\result\booleantest::testandthen() extends mixed), mixed>`, but provided type `(TH\Maybe\Result<('T.th\maybe\tests\unit\result\booleantest::testandthen() extends mixed), mixed>&TH\Maybe\Result\Ok<('T.th\maybe\tests\unit\result\booleantest::testandthen() extends mixed)>&TH\Maybe\Result\Err)|(TH\Maybe\Result<('T.th\maybe\tests\unit\result\booleantest::testandthen() extends mixed), mixed>&TH\Maybe\Result\Ok<('T.th\maybe\tests\unit\result\booleantest::testandthen() extends mixed)>)|TH\Maybe\Result\Err<mixed>` is less specific.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/BooleanTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `TH\Maybe\Tests\Assert::assertResultUsed`: expected `TH\Maybe\Result<('T.th\maybe\tests\unit\result\booleantest::testorelse() extends mixed), mixed>`, but provided type `TH\Maybe\Result<('T.th\maybe\tests\unit\result\booleantest::testorelse() extends mixed), mixed>|TH\Maybe\Result\Err<mixed>` is less specific.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<int(0)>, int(0), true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<int(0)>, int(1), false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<list{int(1)}>, list{int(1)}, true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<list{int(1)}>, list{int(2)}, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<null>, null, true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<stdClass>, stdClass, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<stdClass>, stdClass, true, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<stdClass>, stdClass, true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<null>, array{}, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<null>, int(0), false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<null>, null, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<null>, stdClass, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<null>, array{}, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<null>, int(0), false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<null>, null, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Err<null>, stdClass, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<int(0)>, int(0), true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<int(0)>, int(1), false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<list{int(1)}>, list{int(1)}, true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<list{int(1)}>, list{int(2)}, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<null>, null, true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<stdClass>, stdClass, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<stdClass>, stdClass, true, false}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ContainsTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: bool}`, but found `list{TH\Maybe\Result\Ok<stdClass>, stdClass, true}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ConvertToOptionTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: TH\Maybe\Result<mixed, mixed>, 3: int}`, but found `list{TH\Maybe\Result\Err<string('Don't panic !')>, TH\Maybe\Option\Some<string('Don't panic !')>}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ConvertToOptionTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: TH\Maybe\Result<mixed, mixed>, 3: int}`, but found `list{TH\Maybe\Result\Err<string('Don't panic !')>, enum(TH\Maybe\Option\None)}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ConvertToOptionTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: TH\Maybe\Result<mixed, mixed>, 3: int}`, but found `list{TH\Maybe\Result\Ok<int(42)>, TH\Maybe\Option\Some<int(42)>}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/ConvertToOptionTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Option<mixed>, 1: mixed, 2: TH\Maybe\Result<mixed, mixed>, 3: int}`, but found `list{TH\Maybe\Result\Ok<int(42)>, enum(TH\Maybe\Option\None)}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/FinalTest.php"
+code = "unevaluated-code"
+message = "Unreachable code detected."
+count = 6
+
+[[issues]]
+file = "tests/Unit/Result/FlattenTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: TH\Maybe\Result<TH\Maybe\Result<mixed, null>, null>}`, but found `list{TH\Maybe\Result\Err<null>, TH\Maybe\Result\Err<null>}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/FlattenTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: TH\Maybe\Result<TH\Maybe\Result<mixed, null>, null>}`, but found `list{TH\Maybe\Result\Err<null>, TH\Maybe\Result\Ok<TH\Maybe\Result\Err<null>>}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/FlattenTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: TH\Maybe\Result<TH\Maybe\Result<mixed, null>, null>}`, but found `list{TH\Maybe\Result\Ok<null>, TH\Maybe\Result\Ok<TH\Maybe\Result\Ok<null>>}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/IsTest.php"
+code = "impossible-type-comparison"
+message = 'Impossible type assertion: `$result` of type `TH\Maybe\Result\Err<mixed>` can never be `TH\Maybe\Result\Ok<never>`.'
+count = 4
+
+[[issues]]
+file = "tests/Unit/Result/IsTest.php"
+code = "impossible-type-comparison"
+message = 'Impossible type assertion: `$result` of type `TH\Maybe\Result\Ok<mixed>` can never be `TH\Maybe\Result\Err<never>`.'
+count = 4
+
+[[issues]]
+file = "tests/Unit/Result/IsTest.php"
+code = "redundant-type-comparison"
+message = 'Redundant type assertion: `$result` is already `TH\Maybe\Result\Err<mixed>`.'
+count = 4
+
+[[issues]]
+file = "tests/Unit/Result/IsTest.php"
+code = "redundant-type-comparison"
+message = 'Redundant type assertion: `$result` is already `TH\Maybe\Result\Ok<mixed>`.'
+count = 4
+
+[[issues]]
+file = "tests/Unit/Result/MapTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: TH\Maybe\Result<mixed, mixed>, 3: array<array-key, mixed>}`, but found `list{TH\Maybe\Result\Err<int(42)>, string('fish'), TH\Maybe\Result\Err<string('fish')>, list{int(42)}}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/MapTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, mixed>, 1: mixed, 2: TH\Maybe\Result<mixed, mixed>, 3: array<array-key, mixed>}`, but found `list{TH\Maybe\Result\Ok<null>, string('fish'), TH\Maybe\Result\Ok<null>, array{}}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/MapTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: TH\Maybe\Result<mixed, null>, 3: array<array-key, mixed>}`, but found `list{TH\Maybe\Result\Err<null>, string('fish'), TH\Maybe\Result\Err<null>, array{}}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/MapTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: TH\Maybe\Result<mixed, null>, 3: array<array-key, mixed>}`, but found `list{TH\Maybe\Result\Ok<int(42)>, string('fish'), TH\Maybe\Result\Ok<string('fish')>, list{int(42)}}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/MapTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: mixed, 3: mixed, 4: array<array-key, mixed>}`, but found `list{TH\Maybe\Result\Err<null>, string('fish'), string('fishes'), string('fishes'), array{}}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/MapTest.php"
+code = "invalid-yield-value-type"
+message = '''Invalid value type yielded; expected `array{0: TH\Maybe\Result<mixed, null>, 1: mixed, 2: mixed, 3: mixed, 4: array<array-key, mixed>}`, but found `list{TH\Maybe\Result\Ok<int(42)>, string('fish'), string('fishes'), string('fish'), list{int(42)}}`.'''
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/MustBeUsedTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: (callable(): TH\Maybe\Result<mixed, mixed>)}`, but found `list{(closure(): TH\Maybe\Result\Err<null>)}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/MustBeUsedTest.php"
+code = "invalid-yield-value-type"
+message = 'Invalid value type yielded; expected `array{0: (callable(): TH\Maybe\Result<mixed, mixed>)}`, but found `list{(closure(): TH\Maybe\Result\Ok<null>)}`.'
+count = 1
+
+[[issues]]
+file = "tests/Unit/Result/MustBeUsedTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "tests/Unit/Result/MustBeUsedTest.php"
+code = "mixed-method-access"
+message = "Attempting to call method `unwrapOr()` on a non-object type (`mixed`)."
+count = 2
+
+[[issues]]
+file = "tests/Unit/Result/TrapTest.php"
+code = "invalid-operand"
+message = "Invalid type for right operand."
+count = 1

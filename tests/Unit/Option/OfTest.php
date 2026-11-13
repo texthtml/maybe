@@ -63,12 +63,11 @@ final class OfTest extends TestCase
         // @phpstan-ignore-next-line
         Assert::assertEquals(Option\none(), Option\tryOf(static fn () => new \DateTimeImmutable("nope")));
 
-        try {
-            // @phpstan-ignore-next-line
-            Option\tryOf(static fn () => 1 / 0);
-            Assert::fail("An exception should have been thrown");
-        } catch (\DivisionByZeroError) {
-        }
+        $this->expectException(\DivisionByZeroError::class);
+        $this->expectExceptionMessage("Division by zero");
+
+        // @phpstan-ignore-next-line
+        Option\tryOf(static fn () => 1 / 0);
     }
 
     public function testTryOfExceptionsWithExpectedClass(): void
@@ -83,19 +82,23 @@ final class OfTest extends TestCase
             // @phpstan-ignore-next-line
             Option\tryOf(static fn () => 1 / 0, exceptionClass: [\LogicException::class, \ArithmeticError::class]),
         );
+    }
 
-        try {
-            // @phpstan-ignore-next-line
-            Option\tryOf(static fn () => 1 / 0, exceptionClass: [\LogicException::class, \RuntimeException::class]);
-            Assert::fail("An exception should have been thrown");
-        } catch (\DivisionByZeroError) {
-        }
+    public function testTryOfExceptionsOutsideExpectedClassListArePropagated(): void
+    {
+        $this->expectException(\DivisionByZeroError::class);
+        $this->expectExceptionMessage("Division by zero");
 
-        try {
-            // @phpstan-ignore-next-line
-            Option\tryOf(static fn () => 1 / 0, exceptionClass: \LogicException::class);
-            Assert::fail("An exception should have been thrown");
-        } catch (\DivisionByZeroError) {
-        }
+        // @phpstan-ignore-next-line
+        Option\tryOf(static fn () => 1 / 0, exceptionClass: [\LogicException::class, \RuntimeException::class]);
+    }
+
+    public function testTryOfExceptionsOutsideExpectedClassArePropagated(): void
+    {
+        $this->expectException(\DivisionByZeroError::class);
+        $this->expectExceptionMessage("Division by zero");
+
+        // @phpstan-ignore-next-line
+        Option\tryOf(static fn () => 1 / 0, exceptionClass: \LogicException::class);
     }
 }

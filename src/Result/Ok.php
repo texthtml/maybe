@@ -171,6 +171,9 @@ class Ok implements Result
 
         return $strict
             ? ($this->value === $value)
+            // @mago-expect analysis:mixed-operand -- `contains()` compares a template value against mixed
+            // @mago-expect analysis:possibly-null-operand
+            // @mago-expect lint:identity-comparison
             // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
             : ($this->value == $value); // @phpstan-ignore equal.notAllowed
     }
@@ -193,6 +196,8 @@ class Ok implements Result
     final public function map(callable $callback): self
     {
         $this->used();
+
+        // @mago-ignore analysis:redundant-docblock-type -- intentional: the @var docblock narrows self<T> to self<U>
 
         /** @var self<U> */
         return Result\ok($callback($this->value));
@@ -228,6 +233,8 @@ class Ok implements Result
     final public function ok(): Option\Some
     {
         $this->used();
+
+        // @mago-ignore analysis:redundant-docblock-type -- the @var docblock narrows Option<T> to Some<T>
 
         /** @var Option\Some<T> */
         return Option\some($this->value);

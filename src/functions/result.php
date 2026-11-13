@@ -91,6 +91,7 @@ function trap(callable $callback, array|string $exceptionClass = \Exception::cla
         return Result\ok($callback());
     } catch (\Throwable $th) {
         if (isOfAnyClass($th, (array) $exceptionClass)) {
+            // @mago-ignore analysis:less-specific-nested-return-statement -- mago loses `E` through Result\err()
             return Result\err($th);
         }
 
@@ -123,6 +124,8 @@ function trap(callable $callback, array|string $exceptionClass = \Exception::cla
 #[ExamplesSetup(IgnoreUnusedResults::class)]
 function flatten(Result $result): Result
 {
+    // @mago-ignore analysis:less-specific-nested-return-statement -- mago can't match nested templates
+
     /** @phpstan-ignore return.type */
     return $result->mapOrElse(
         static fn (Result $r) => $r,

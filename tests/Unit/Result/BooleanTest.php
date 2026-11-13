@@ -51,6 +51,7 @@ final class BooleanTest extends TestCase
             },
         ));
 
+        // @mago-expect lint:no-else-clause -- kept symmetric with the sibling tests below
         if (!$left instanceof Result\Err) {
             Assert::assertSame($result, $right);
         } else {
@@ -84,6 +85,7 @@ final class BooleanTest extends TestCase
             return $right;
         }));
 
+        // @mago-expect lint:no-else-clause -- kept symmetric with the sibling tests below
         if ($left instanceof Result\Err) {
             Assert::assertSame($result, $right);
         } else {

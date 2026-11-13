@@ -1,0 +1,50 @@
+#:schema vendor/carthage-software/mago/schema.json
+# Welcome to Mago!
+# For full documentation, see https://mago.carthage.software/tools/overview
+version = "1"
+php-version = "8.2.0"
+
+[source]
+workspace = "."
+paths = ["src/", "tests/"]
+includes = ["vendor"]
+excludes = []
+
+[formatter]
+print-width = 120
+tab-width = 4
+use-tabs = false
+
+[linter]
+integrations = ["phpunit"]
+
+[linter.rules]
+no-boolean-flag-parameter = { enabled = false }
+too-many-methods = {
+    exclude = [
+        "src/Option.php",
+        "src/Option/Some.php",
+        "src/Option/None.php",
+        "src/Result.php",
+        "src/Result/Ok.php",
+        "src/Result/Err.php",
+    ]
+}
+no-eval = { exclude = ["tests/Unit"] }
+halstead = { effort-threshold = 7000 }
+assertion-style = { style = "self_" }
+function-name = { camel = true, exclude = ["tests/type-hinting"] }
+
+[analyzer]
+plugins = []
+baseline = "mago-analyzer-baseline.toml"
+analyze-dead-code = true
+check-throws = true
+ignore = [
+    { code = "unhandled-thrown-type", in = ["tests/"] },
+]
+
+unchecked-exceptions = [
+    "LogicException",
+    "PHPUnit\\Framework\\AssertionFailedError"
+]

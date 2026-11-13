@@ -44,6 +44,7 @@ final class Some implements Option
     }
 
     /**
+     * @return T
      * @phpstan-throws void
      */
     public function expect(string $message): mixed
@@ -52,6 +53,7 @@ final class Some implements Option
     }
 
     /**
+     * @return T
      * @phpstan-throws void
      */
     public function unwrap(): mixed
@@ -132,6 +134,9 @@ final class Some implements Option
     {
         return $strict
             ? ($this->value === $value)
+            // @mago-expect analysis:mixed-operand -- `contains()` compares a template value against mixed
+            // @mago-expect analysis:possibly-null-operand
+            // @mago-expect lint:identity-comparison
             // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
             : ($this->value == $value); // @phpstan-ignore equal.notAllowed
     }
@@ -185,6 +190,7 @@ final class Some implements Option
      */
     public function zip(Option $option): Option
     {
+        // @mago-expect lint:loop-does-not-iterate -- looping over an `Option` yields 0 or 1 item by design
         foreach ($option as $value) {
             return Option\some([$this->value, $value]);
         }
@@ -202,6 +208,7 @@ final class Some implements Option
      */
     public function zipWith(Option $option, callable $callback): Option
     {
+        // @mago-expect lint:loop-does-not-iterate -- looping over an `Option` yields 0 or 1 item by design
         foreach ($option as $value) {
             return Option\some($callback($this->value, $value));
         }

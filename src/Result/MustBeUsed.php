@@ -12,6 +12,8 @@ trait MustBeUsed
     {
         static $reapers;
 
+        // @mago-ignore analysis:mixed-assignment -- mago loses the WeakMap type on `static` vars
+        // @mago-ignore analysis:mixed-return-statement
         return $reapers ??= new \WeakMap();
     }
 
@@ -22,6 +24,7 @@ trait MustBeUsed
     {
         $reapers = self::reapers();
 
+        // @mago-expect lint:no-isset -- `isset()` is the idiomatic (and only silent) existence test on a `WeakMap`
         if (isset($reapers[$this])) {
             throw new \LogicException('Object already register to be used');
         }

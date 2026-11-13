@@ -47,6 +47,9 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
 {
     $same = $strict
         ? ($value === $noneValue)
+        // @mago-expect analysis:mixed-operand -- `fromValue()` compares a template value against mixed
+        // @mago-expect analysis:possibly-null-operand
+        // @mago-expect lint:identity-comparison
         // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
         : ($value == $noneValue); // @phpstan-ignore equal.notAllowed
 
@@ -158,7 +161,8 @@ function flatten(Option $option): Option
 {
     return $option instanceof Option\None
         ? $option
-        /** @phpstan-ignore missingType.checkedException */
+        // @mago-ignore analysis:unhandled-thrown-type 🙈 unwrap() cannot throw: $option is not None
+        // @phpstan-ignore missingType.checkedException (unwrap() cannot throw: $option is not None)
         : $option->unwrap();
 }
 

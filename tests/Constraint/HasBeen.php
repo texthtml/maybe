@@ -45,11 +45,10 @@ final class HasBeen extends Constraint
 
         /** @throws void */
         $rp = $ro->getProperty('active');
-        /** @psalm-suppress UnusedMethodCall */
-        $rp->setAccessible(true);
 
         $result = $rp->getValue($reaper);
 
+        // @mago-expect lint:assert-description -- internal reflection check needs no failure description
         \assert(\is_bool($result));
 
         return $result;

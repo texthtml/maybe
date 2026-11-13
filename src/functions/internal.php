@@ -15,6 +15,7 @@ function isOfAnyClass(
     iterable $classes,
 ): bool {
     foreach ($classes as $class) {
+        // @mago-ignore analysis:less-specific-nested-argument-type -- mago widens class-string<T> to class-string<m>
         if (\is_a($value, $class)) {
             return true;
         }
