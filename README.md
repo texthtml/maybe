@@ -1,6 +1,7 @@
 # Maybe: Option & Result for PHP
 
 [![CI](https://github.com/texthtml/maybe/actions/workflows/test.yml/badge.svg)](https://github.com/texthtml/maybe/actions/workflows/test.yml)
+[![Codecov](https://img.shields.io/codecov/c/github/texthtml/maybe/main)](https://app.codecov.io/gh/texthtml/maybe)
 [![Latest Version](https://img.shields.io/packagist/v/texthtml/maybe.svg)](https://packagist.org/packages/texthtml/maybe)
 [![PHP](https://img.shields.io/packagist/dependency-v/texthtml/maybe/php)](https://packagist.org/packages/texthtml/maybe)
 [![License](https://img.shields.io/packagist/l/texthtml/maybe.svg)](LICENSE)
@@ -77,3 +78,11 @@ if ($version->isOk()) {
 }
 // @prints working with version: 1
 ```
+
+# Contributing
+
+Run the full quality suite (unit tests, doctests, linters, static
+analysis) with `composer install && composer test`. CI additionally
+enforces 100% line coverage (reported on
+[Codecov](https://app.codecov.io/gh/texthtml/maybe)) and a
+mutation-testing score (infection) gate on PHP 8.5.
