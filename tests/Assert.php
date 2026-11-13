@@ -19,7 +19,7 @@ final class Assert extends PHPUnitAssert
         try {
             self::assertThat($result, new Constraint\HasBeen(used: true));
         } finally {
-            $result->mapOr(static fn () => "use the Ok result", "use the Err result");
+            $result->mapOr(static fn () => 'use the Ok result', 'use the Err result');
         }
     }
 
@@ -33,6 +33,6 @@ final class Assert extends PHPUnitAssert
     {
         self::assertThat($result, new Constraint\HasBeen(used: false));
 
-        $result->mapOr(static fn () => "use the Ok result", "use the Err result");
+        $result->mapOr(static fn () => 'use the Ok result', 'use the Err result');
     }
 }

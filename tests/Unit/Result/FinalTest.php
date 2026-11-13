@@ -8,16 +8,17 @@ final class FinalTest extends TestCase
 {
     public function testCannotInstanciateThirdPartyResultOk(): void
     {
-        self::markTestSkipped("Probably have to fork to test that this is a fatal error");
+        self::markTestSkipped('Probably have to fork to test that this is a fatal error');
 
         // @phpstan-ignore-next-line Unreachable statement - code above always terminates.
         $this->expectExceptionMessage("Class MyOk cannot extend final class TH\Maybe\Result\Ok");
 
-        eval("class MyOk extends \TH\Maybe\Result\Ok {}");    }
+        eval("class MyOk extends \TH\Maybe\Result\Ok {}");
+    }
 
     public function testCannotInstanciateThirdPartyResultErr(): void
     {
-        self::markTestSkipped("Probably have to fork to test that this is a fatal error");
+        self::markTestSkipped('Probably have to fork to test that this is a fatal error');
 
         // @phpstan-ignore-next-line Unreachable statement - code above always terminates.
         $this->expectExceptionMessage("Class MyErr cannot extend final class TH\Maybe\Result\Err");

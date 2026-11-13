@@ -23,7 +23,7 @@ final class IgnoreUnusedResults
     {
         foreach ([Ok::class, Err::class] as $className) {
             /** @phpstan-throws void */
-            $rm = (new \ReflectionClass($className))->getMethod("reapers");
+            $rm = (new \ReflectionClass($className))->getMethod('reapers');
 
             /**
              * @var iterable<Reaper> $reapers

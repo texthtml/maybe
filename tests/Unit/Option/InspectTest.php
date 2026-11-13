@@ -17,7 +17,7 @@ final class InspectTest extends TestCase
     {
         $option = Option\some($value);
 
-        ["result" => $result, "calls" => $calls] = $this->inspect($option);
+        ['result' => $result, 'calls' => $calls] = $this->inspect($option);
 
         Assert::assertSame($option, $result);
         Assert::assertSame([$value], $calls);
@@ -28,7 +28,7 @@ final class InspectTest extends TestCase
         /** @var Option<never> $option */
         $option = Option\none();
 
-        ["result" => $result, "calls" => $calls] = $this->inspect($option);
+        ['result' => $result, 'calls' => $calls] = $this->inspect($option);
 
         Assert::assertSame($option, $result);
         Assert::assertSame([], $calls);
@@ -47,6 +47,6 @@ final class InspectTest extends TestCase
             $calls[] = $value;
         });
 
-        return ["result" => $option, "calls" => $calls];
+        return ['result' => $option, 'calls' => $calls];
     }
 }

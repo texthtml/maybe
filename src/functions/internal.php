@@ -10,10 +10,8 @@ namespace TH\Maybe\Internal;
  * @psalm-assert-if-false !T $value
  * @psalm-assert-if-true T $value
  */
-function isOfAnyClass(
-    object $value,
-    iterable $classes,
-): bool {
+function isOfAnyClass(object $value, iterable $classes): bool
+{
     foreach ($classes as $class) {
         // @mago-ignore analysis:less-specific-nested-argument-type -- mago widens class-string<T> to class-string<m>
         if (\is_a($value, $class)) {

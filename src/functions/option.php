@@ -41,17 +41,18 @@ function none(): Option\None
  *
  * @template U
  * @param U $value
+ * @param U $noneValue
  * @return Option<U>
  */
 function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): Option
 {
     $same = $strict
-        ? ($value === $noneValue)
+        ? $value === $noneValue
         // @mago-expect analysis:mixed-operand -- `fromValue()` compares a template value against mixed
         // @mago-expect analysis:possibly-null-operand
         // @mago-expect lint:identity-comparison
         // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-        : ($value == $noneValue); // @phpstan-ignore equal.notAllowed
+        : $value == $noneValue; // @phpstan-ignore equal.notAllowed
 
     /** @var Option<U> */
     return $same
@@ -71,7 +72,7 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
  * self::assertEq(Option\of(fn() => "fruits"), Option\some("fruits"));
  * ```
  *
- * Convertion of `null` to `Option\None`:
+ * Conversion of `null` to `Option\None`:
  *
  * ```
  * self::assertEq(Option\of(fn() => null), Option\none());
@@ -79,6 +80,7 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
  *
  * @template U
  * @param callable():U $callback
+ * @param U $noneValue
  * @return Option<U>
  */
 function of(callable $callback, mixed $noneValue = null, bool $strict = true): Option
@@ -98,7 +100,7 @@ function of(callable $callback, mixed $noneValue = null, bool $strict = true): O
  * self::assertEq(Option\tryOf(fn () => strtolower("FRUITS")), Option\some("fruits"));
  * ```
  *
- * Convertion of `null` to `Option\None`:
+ * Conversion of `null` to `Option\None`:
  *
  * ```
  * self::assertEq(Option\tryOf(fn() => null), Option\none());
@@ -120,6 +122,7 @@ function of(callable $callback, mixed $noneValue = null, bool $strict = true): O
  * @template U
  * @template E of \Throwable
  * @param callable():U $callback
+ * @param U $noneValue
  * @param list<class-string<E>>|class-string<E> $exceptionClass
  * @return Option<U>
  * @throws \Throwable
@@ -185,10 +188,10 @@ function flatten(Option $option): Option
 function unzip(Option $option): array
 {
     /** @var array{Option<U>, Option<V>} */
-    return $option->mapOrElse(
-        static fn (array $a): array => [Option\some($a[0]), Option\some($a[1])],
-        static fn (): array => [Option\none(), Option\none()],
-    );
+    return $option->mapOrElse(static fn (array $a): array => [
+        Option\some($a[0]),
+        Option\some($a[1]),
+    ], static fn (): array => [Option\none(), Option\none()]);
 }
 
 /**

@@ -17,7 +17,7 @@ final class BooleanTest extends TestCase
      * @param Option<T> $left
      * @param Option<T> $right
      * @param Option<T> $expected
-    */
+     */
     #[DataProvider('andMatrix')]
     public function testAnd(Option $left, Option $right, Option $expected): void
     {
@@ -29,7 +29,7 @@ final class BooleanTest extends TestCase
      * @param Option<T> $left
      * @param Option<T> $right
      * @param Option<T> $expected
-    */
+     */
     #[DataProvider('andMatrix')]
     public function testAndThen(Option $left, Option $right, Option $expected): void
     {
@@ -52,7 +52,7 @@ final class BooleanTest extends TestCase
      * @param Option<T> $left
      * @param Option<T> $right
      * @param Option<T> $expected
-    */
+     */
     #[DataProvider('orMatrix')]
     public function testOrElse(Option $left, Option $right, Option $expected): void
     {
@@ -75,7 +75,7 @@ final class BooleanTest extends TestCase
      * @param Option<T> $left
      * @param Option<T> $right
      * @param Option<T> $expected
-    */
+     */
     #[DataProvider('orMatrix')]
     public function testOr(Option $left, Option $right, Option $expected): void
     {
@@ -87,7 +87,7 @@ final class BooleanTest extends TestCase
      * @param Option<T> $left
      * @param Option<T> $right
      * @param Option<T> $expected
-    */
+     */
     #[DataProvider('xorMatrix')]
     public function testXor(Option $left, Option $right, Option $expected): void
     {

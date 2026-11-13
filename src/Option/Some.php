@@ -17,7 +17,9 @@ final class Some implements Option
      * @param T $value
      * @nodoc
      */
-    public function __construct(private mixed $value) {}
+    public function __construct(
+        private mixed $value,
+    ) {}
 
     /**
      * @return true
@@ -35,9 +37,9 @@ final class Some implements Option
         return false;
     }
 
-   /**
-    * @param callable(T):bool $predicate
-    */
+    /**
+     * @param callable(T):bool $predicate
+     */
     public function isSomeAnd(callable $predicate): bool
     {
         return $predicate($this->value);
@@ -87,21 +89,21 @@ final class Some implements Option
         return $this;
     }
 
-   /**
-    * @template U
-    * @param Option<U> $right
-    * @return Option<U>
-    */
+    /**
+     * @template U
+     * @param Option<U> $right
+     * @return Option<U>
+     */
     public function and(Option $right): Option
     {
         return $right;
     }
 
-   /**
-    * @template U
-    * @param callable(T):Option<U> $right
-    * @return Option<U>
-    */
+    /**
+     * @template U
+     * @param callable(T):Option<U> $right
+     * @return Option<U>
+     */
     public function andThen(callable $right): Option
     {
         return $right($this->value);
@@ -133,12 +135,12 @@ final class Some implements Option
     public function contains(mixed $value, bool $strict = true): bool
     {
         return $strict
-            ? ($this->value === $value)
+            ? $this->value === $value
             // @mago-expect analysis:mixed-operand -- `contains()` compares a template value against mixed
             // @mago-expect analysis:possibly-null-operand
             // @mago-expect lint:identity-comparison
             // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-            : ($this->value == $value); // @phpstan-ignore equal.notAllowed
+            : $this->value == $value; // @phpstan-ignore equal.notAllowed
     }
 
     public function filter(callable $predicate): Option
@@ -148,35 +150,35 @@ final class Some implements Option
             : Option\none();
     }
 
-   /**
-    * @template U
-    * @param callable(T):U $callback
-    * @return Option<U>
-    */
+    /**
+     * @template U
+     * @param callable(T):U $callback
+     * @return Option<U>
+     */
     public function map(callable $callback): Option
     {
         return Option\some($callback($this->value));
     }
 
-   /**
-    * @template U
-    * @template V
-    * @param callable(T):U $callback
-    * @param V $default
-    * @return U
-    */
+    /**
+     * @template U
+     * @template V
+     * @param callable(T):U $callback
+     * @param V $default
+     * @return U
+     */
     public function mapOr(callable $callback, mixed $default): mixed
     {
         return $callback($this->value);
     }
 
-   /**
-    * @template U
-    * @template V
-    * @param callable(T):U $callback
-    * @param callable():V $default
-    * @return U
-    */
+    /**
+     * @template U
+     * @template V
+     * @param callable(T):U $callback
+     * @param callable():V $default
+     * @return U
+     */
     public function mapOrElse(callable $callback, callable $default): mixed
     {
         return $callback($this->value);

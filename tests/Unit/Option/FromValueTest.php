@@ -14,7 +14,7 @@ final class FromValueTest extends TestCase
 
     /**
      * @param Option<mixed> $expected
-    */
+     */
     #[DataProvider('fromValueMatrix')]
     public function testFromValue(Option $expected, mixed $value, mixed $noneValue, bool $strict = true): void
     {
@@ -29,9 +29,9 @@ final class FromValueTest extends TestCase
 
     public function testFromValueDefaultToStrict(): void
     {
-        $o = (object)[];
+        $o = (object) [];
 
-        Assert::assertEquals(Option\none(), Option\fromValue($o, (object)[], strict: false));
-        Assert::assertEquals($o, Option\fromValue($o, (object)[])->unwrap());
+        Assert::assertEquals(Option\none(), Option\fromValue($o, (object) [], strict: false));
+        Assert::assertEquals($o, Option\fromValue($o, (object) [])->unwrap());
     }
 }

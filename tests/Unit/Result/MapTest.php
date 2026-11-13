@@ -16,7 +16,7 @@ final class MapTest extends TestCase
      * @param U $mapResult
      * @param Result<U, null> $expected
      * @param array<T> $expectedCalls
-    */
+     */
     #[DataProvider('mapMatrix')]
     public function testMap(Result $result, mixed $mapResult, Result $expected, array $expectedCalls): void
     {
@@ -24,7 +24,7 @@ final class MapTest extends TestCase
 
         Assert::assertEquals(
             $expected,
-            $result2 = $result->map(static function(mixed $value) use ($mapResult, &$calls): mixed {
+            $result2 = $result->map(static function (mixed $value) use ($mapResult, &$calls): mixed {
                 $calls[] = $value;
 
                 return $mapResult;
@@ -48,17 +48,17 @@ final class MapTest extends TestCase
      */
     public static function mapMatrix(): iterable
     {
-        yield "err" => [
+        yield 'err' => [
             Result\err(null),
-            "fish",
+            'fish',
             Result\err(null),
             [],
         ];
 
-        yield "ok" => [
+        yield 'ok' => [
             Result\ok(42),
-            "fish",
-            Result\ok("fish"),
+            'fish',
+            Result\ok('fish'),
             [42],
         ];
     }
@@ -70,7 +70,7 @@ final class MapTest extends TestCase
      * @param U $mapResult
      * @param Result<U, null> $expected
      * @param array<T> $expectedCalls
-    */
+     */
     #[DataProvider('mapErrMatrix')]
     public function testMapErr(Result $result, mixed $mapResult, Result $expected, array $expectedCalls): void
     {
@@ -78,7 +78,7 @@ final class MapTest extends TestCase
 
         Assert::assertEquals(
             $expected,
-            $result2 = $result->mapErr(static function(mixed $value) use ($mapResult, &$calls): mixed {
+            $result2 = $result->mapErr(static function (mixed $value) use ($mapResult, &$calls): mixed {
                 $calls[] = $value;
 
                 return $mapResult;
@@ -102,17 +102,17 @@ final class MapTest extends TestCase
      */
     public static function mapErrMatrix(): iterable
     {
-        yield "ok" => [
+        yield 'ok' => [
             Result\ok(null),
-            "fish",
+            'fish',
             Result\ok(null),
             [],
         ];
 
-        yield "err" => [
+        yield 'err' => [
             Result\err(42),
-            "fish",
-            Result\err("fish"),
+            'fish',
+            Result\err('fish'),
             [42],
         ];
     }
@@ -125,7 +125,7 @@ final class MapTest extends TestCase
      * @param U $default
      * @param U $expected
      * @param array<T> $expectedCalls
-    */
+     */
     #[DataProvider('mapOrMatrix')]
     public function testMapOr(
         Result $result,
@@ -136,14 +136,11 @@ final class MapTest extends TestCase
     ): void {
         $calls = [];
 
-        Assert::assertEquals(
-            $expected,
-            $result->mapOr(static function(mixed $value) use ($mapResult, &$calls): mixed {
-                $calls[] = $value;
+        Assert::assertEquals($expected, $result->mapOr(static function (mixed $value) use ($mapResult, &$calls): mixed {
+            $calls[] = $value;
 
-                return $mapResult;
-            }, $default),
-        );
+            return $mapResult;
+        }, $default));
 
         Assert::assertResultUsed($result);
 
@@ -161,19 +158,19 @@ final class MapTest extends TestCase
      */
     public static function mapOrMatrix(): iterable
     {
-        yield "err" => [
+        yield 'err' => [
             Result\err(null),
-            "fish",
-            "fishes",
-            "fishes",
+            'fish',
+            'fishes',
+            'fishes',
             [],
         ];
 
-        yield "ok" => [
+        yield 'ok' => [
             Result\ok(42),
-            "fish",
-            "fishes",
-            "fish",
+            'fish',
+            'fishes',
+            'fish',
             [42],
         ];
     }

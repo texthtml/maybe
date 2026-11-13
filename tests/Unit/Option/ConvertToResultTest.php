@@ -16,7 +16,7 @@ final class ConvertToResultTest extends TestCase
     /**
      * @param Option<mixed> $option
      * @param Result<mixed, mixed> $expected
-    */
+     */
     #[DataProvider('okOrMatrix')]
     public function testOkOr(Option $option, mixed $err, Result $expected): void
     {
@@ -29,17 +29,20 @@ final class ConvertToResultTest extends TestCase
     /**
      * @param Option<mixed> $option
      * @param Result<mixed, mixed> $expected
-    */
+     */
     #[DataProvider('okOrMatrix')]
     public function testOkOrElse(Option $option, mixed $err, Result $expected): void
     {
         $calls = 0;
 
-        Assert::assertEquals($expected, $result = $option->okOrElse(static function() use ($err, &$calls): mixed {
-            $calls++;
+        Assert::assertEquals(
+            $expected,
+            $result = $option->okOrElse(static function () use ($err, &$calls): mixed {
+                $calls++;
 
-            return $err;
-        }));
+                return $err;
+            }),
+        );
 
         Assert::assertResultNotUsed($expected);
         Assert::assertResultNotUsed($result);
@@ -52,13 +55,13 @@ final class ConvertToResultTest extends TestCase
      */
     public static function okOrMatrix(): iterable
     {
-        yield "none" => [
+        yield 'none' => [
             Option\none(),
             "Don't panic !",
             Result\err("Don't panic !"),
         ];
 
-        yield "some" => [
+        yield 'some' => [
             Option\some(42),
             "Don't panic !",
             Result\ok(42),
@@ -68,7 +71,7 @@ final class ConvertToResultTest extends TestCase
     /**
      * @param Option<Result<mixed, mixed>> $option
      * @param Result<mixed, mixed> $expected
-    */
+     */
     #[DataProvider('transposeMatrix')]
     public function testTranspose(Option $option, Result $expected): void
     {

@@ -12,7 +12,7 @@ final class FlattenTest extends TestCase
     /**
      * @param Result<mixed, null> $expected
      * @param Result<Result<mixed, null>, null> $result
-    */
+     */
     #[DataProvider('flattenMatrix')]
     public function testFlatten(Result $expected, Result $result): void
     {
@@ -30,10 +30,10 @@ final class FlattenTest extends TestCase
      */
     public static function flattenMatrix(): iterable
     {
-        yield "err" => [Result\err(null), Result\err(null)];
+        yield 'err' => [Result\err(null), Result\err(null)];
 
-        yield "ok(err)" => [Result\err(null), Result\ok(Result\err(null))];
+        yield 'ok(err)' => [Result\err(null), Result\ok(Result\err(null))];
 
-        yield "ok(ok(…))" => [Result\ok(null), Result\ok(Result\ok(null))];
+        yield 'ok(ok(…))' => [Result\ok(null), Result\ok(Result\ok(null))];
     }
 }

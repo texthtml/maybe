@@ -9,10 +9,10 @@ trait Values
      */
     public static function values(): iterable
     {
-        yield "null" => [null];
-        yield "int" => [42];
-        yield "string" => ["H2G2"];
-        yield "object" => [(object)[]];
-        yield "datetime" => [new \DateTimeImmutable()];
+        yield 'null' => [null];
+        yield 'int' => [42];
+        yield 'string' => ['H2G2'];
+        yield 'object' => [(object) []];
+        yield 'datetime' => [new \DateTimeImmutable()];
     }
 }

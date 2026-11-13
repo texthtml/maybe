@@ -1,5 +1,10 @@
 # Maybe: Option & Result for PHP
 
+[![CI](https://github.com/texthtml/maybe/actions/workflows/test.yml/badge.svg)](https://github.com/texthtml/maybe/actions/workflows/test.yml)
+[![Latest Version](https://img.shields.io/packagist/v/texthtml/maybe.svg)](https://packagist.org/packages/texthtml/maybe)
+[![PHP](https://img.shields.io/packagist/dependency-v/texthtml/maybe/php)](https://packagist.org/packages/texthtml/maybe)
+[![License](https://img.shields.io/packagist/l/texthtml/maybe.svg)](LICENSE)
+
 Help yourself by not returning `null`, `false`, `-1` or throwing exception
 for everything by using `Option` & `Result` instead.
 

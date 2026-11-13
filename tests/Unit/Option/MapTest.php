@@ -16,20 +16,17 @@ final class MapTest extends TestCase
      * @param U $mapResult
      * @param Option<U> $expected
      * @param array<T> $expectedCalls
-    */
+     */
     #[DataProvider('mapMatrix')]
     public function testMap(Option $option, mixed $mapResult, Option $expected, array $expectedCalls): void
     {
         $calls = [];
 
-        Assert::assertEquals(
-            $expected,
-            $option->map(static function(mixed $value) use ($mapResult, &$calls): mixed {
-                $calls[] = $value;
+        Assert::assertEquals($expected, $option->map(static function (mixed $value) use ($mapResult, &$calls): mixed {
+            $calls[] = $value;
 
-                return $mapResult;
-            }),
-        );
+            return $mapResult;
+        }));
 
         Assert::assertSame($expectedCalls, $calls);
     }
@@ -44,17 +41,17 @@ final class MapTest extends TestCase
      */
     public static function mapMatrix(): iterable
     {
-        yield "none" => [
+        yield 'none' => [
             Option\none(),
-            "fish",
+            'fish',
             Option\none(),
             [],
         ];
 
-        yield "some" => [
+        yield 'some' => [
             Option\some(42),
-            "fish",
-            Option\some("fish"),
+            'fish',
+            Option\some('fish'),
             [42],
         ];
     }
@@ -67,7 +64,7 @@ final class MapTest extends TestCase
      * @param U $default
      * @param U $expected
      * @param array<T> $expectedCalls
-    */
+     */
     #[DataProvider('mapOrMatrix')]
     public function testMapOr(
         Option $option,
@@ -78,14 +75,11 @@ final class MapTest extends TestCase
     ): void {
         $calls = [];
 
-        Assert::assertEquals(
-            $expected,
-            $option->mapOr(static function(mixed $value) use ($mapResult, &$calls): mixed {
-                $calls[] = $value;
+        Assert::assertEquals($expected, $option->mapOr(static function (mixed $value) use ($mapResult, &$calls): mixed {
+            $calls[] = $value;
 
-                return $mapResult;
-            }, $default),
-        );
+            return $mapResult;
+        }, $default));
 
         Assert::assertSame($expectedCalls, $calls);
     }
@@ -101,19 +95,19 @@ final class MapTest extends TestCase
      */
     public static function mapOrMatrix(): iterable
     {
-        yield "none" => [
+        yield 'none' => [
             Option\none(),
-            "fish",
-            "fishes",
-            "fishes",
+            'fish',
+            'fishes',
+            'fishes',
             [],
         ];
 
-        yield "some" => [
+        yield 'some' => [
             Option\some(42),
-            "fish",
-            "fishes",
-            "fish",
+            'fish',
+            'fishes',
+            'fish',
             [42],
         ];
     }

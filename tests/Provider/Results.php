@@ -15,28 +15,28 @@ trait Results
      */
     public static function andMatrix(): iterable
     {
-        yield "err-err" => [
-            "left"     => Result\err("left"),
-            "right"    => Result\err("left"),
-            "expected" => Result\err("left"),
+        yield 'err-err' => [
+            'left' => Result\err('left'),
+            'right' => Result\err('left'),
+            'expected' => Result\err('left'),
         ];
 
-        yield "err-ok" => [
-            "left"     => Result\err("left"),
-            "right"    => Result\ok("right"),
-            "expected" => Result\err("left"),
+        yield 'err-ok' => [
+            'left' => Result\err('left'),
+            'right' => Result\ok('right'),
+            'expected' => Result\err('left'),
         ];
 
-        yield "ok-ok" => [
-            "left"     => Result\ok("left"),
-            "right"    => Result\ok("right"),
-            "expected" => Result\ok("right"),
+        yield 'ok-ok' => [
+            'left' => Result\ok('left'),
+            'right' => Result\ok('right'),
+            'expected' => Result\ok('right'),
         ];
 
-        yield "ok-err" => [
-            "left"     => Result\ok("left"),
-            "right"    => Result\err("right"),
-            "expected" => Result\err("right"),
+        yield 'ok-err' => [
+            'left' => Result\ok('left'),
+            'right' => Result\err('right'),
+            'expected' => Result\err('right'),
         ];
     }
 
@@ -49,28 +49,28 @@ trait Results
      */
     public static function orMatrix(): iterable
     {
-        yield "err-err" => [
-            "left"     => Result\err("left"),
-            "right"    => Result\err("right"),
-            "expected" => Result\err("right"),
+        yield 'err-err' => [
+            'left' => Result\err('left'),
+            'right' => Result\err('right'),
+            'expected' => Result\err('right'),
         ];
 
-        yield "err-ok" => [
-            "left"     => Result\err("left"),
-            "right"    => Result\ok("right"),
-            "expected" => Result\ok("right"),
+        yield 'err-ok' => [
+            'left' => Result\err('left'),
+            'right' => Result\ok('right'),
+            'expected' => Result\ok('right'),
         ];
 
-        yield "ok-ok" => [
-            "left"     => Result\ok("left"),
-            "right"    => Result\ok("right"),
-            "expected" => Result\ok("left"),
+        yield 'ok-ok' => [
+            'left' => Result\ok('left'),
+            'right' => Result\ok('right'),
+            'expected' => Result\ok('left'),
         ];
 
-        yield "ok-err" => [
-            "left"     => Result\ok("left"),
-            "right"    => Result\err("right"),
-            "expected" => Result\ok("left"),
+        yield 'ok-err' => [
+            'left' => Result\ok('left'),
+            'right' => Result\err('right'),
+            'expected' => Result\ok('left'),
         ];
     }
 
@@ -79,8 +79,8 @@ trait Results
      */
     public static function resultClasses(): iterable
     {
-        yield "Ok" => [Result\Ok::class];
-        yield "Err" => [Result\Err::class];
+        yield 'Ok' => [Result\Ok::class];
+        yield 'Err' => [Result\Err::class];
     }
 
     /**
