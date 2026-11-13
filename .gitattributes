@@ -6,6 +6,8 @@
 /tools export-ignore
 /apigen.neon export-ignore
 /composer.lock export-ignore
+/mago-analyzer-baseline.toml export-ignore
+/mago.toml export-ignore
 /phpcs.xml.dist export-ignore
 /phpstan.neon.dist export-ignore
 /phpunit.xml.dist export-ignore

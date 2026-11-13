@@ -15,16 +15,16 @@ final class ExtendsTest extends TestCase
 
     public function testOkIsExtendable(): void
     {
-        $ok = new Helpers\ExtendedOk("Hello world!");
+        $ok = new Helpers\ExtendedOk('Hello world!');
 
-        Assert::assertSame("Hello world!", (string) $ok);
+        Assert::assertSame('Hello world!', (string) $ok);
     }
 
     public function testErrIsExtendable(): void
     {
-        $err = new Helpers\ExtendedErr("Hello world!");
+        $err = new Helpers\ExtendedErr('Hello world!');
 
-        Assert::assertSame("Hello world!", (string) $err);
+        Assert::assertSame('Hello world!', (string) $err);
     }
 
     /**
@@ -32,19 +32,19 @@ final class ExtendsTest extends TestCase
      *
      * @param class-string<Result<mixed,mixed>> $resultClass
      * @throws \ReflectionException
-    */
+     */
     #[DataProvider('resultClasses')]
     public function testConstructorsCannotBeOverriden(string $resultClass): void
     {
         $rc = new \ReflectionClass($resultClass);
-        $rm = $rc->getMethod("__construct");
+        $rm = $rc->getMethod('__construct');
 
         Assert::assertTrue($rm->isFinal());
     }
 
     /**
      * @throws \ReflectionException
-    */
+     */
     #[DataProvider('resultMethods')]
     public function testOkResultMethodsCannotBeOverriden(string $method): void
     {
@@ -57,7 +57,7 @@ final class ExtendsTest extends TestCase
 
     /**
      * @throws \ReflectionException
-    */
+     */
     #[DataProvider('resultMethods')]
     public function testErrResultMethodsCannotBeOverriden(string $method): void
     {

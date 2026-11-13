@@ -48,7 +48,6 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
  * @extends \IteratorAggregate<T>
  * @immutable
  */
-// #[ExamplesSetup(IgnoreUnusedResults::class)]
 interface Option extends \IteratorAggregate
 {
     /**
@@ -127,7 +126,7 @@ interface Option extends \IteratorAggregate
 
     /**
      * Extract the contained value in an `Option<T>` when it is the `Some` variant.
-     * Throw a `RuntimeException` with a custum provided message if the `Option` is `None`.
+     * Throw a `RuntimeException` with a custom provided message if the `Option` is `None`.
      *
      * # Examples
      *

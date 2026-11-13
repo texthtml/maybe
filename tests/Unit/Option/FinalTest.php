@@ -10,7 +10,7 @@ final class FinalTest extends TestCase
     {
         $this->expectExceptionMessage("Class MyNone cannot extend final class TH\Maybe\Option\None");
 
-        self::markTestSkipped("Probably have to fork to test that this is a fatal error");
+        self::markTestSkipped('Probably have to fork to test that this is a fatal error');
 
         eval("class MyNone extends \TH\Maybe\Option\None {}");
     }
@@ -19,7 +19,7 @@ final class FinalTest extends TestCase
     {
         $this->expectExceptionMessage("Class MySome cannot extend final class TH\Maybe\Option\Some");
 
-        self::markTestSkipped("Probably have to fork to test that this is a fatal error");
+        self::markTestSkipped('Probably have to fork to test that this is a fatal error');
 
         eval("class MySome extends \TH\Maybe\Option\Some {}");
     }

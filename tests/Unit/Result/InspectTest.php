@@ -17,7 +17,7 @@ final class InspectTest extends TestCase
     {
         $result = Result\ok($value);
 
-        ["result" => $result, "calls" => $calls] = $this->inspect($result);
+        ['result' => $result, 'calls' => $calls] = $this->inspect($result);
 
         Assert::assertSame($result, $result);
         Assert::assertSame([$value], $calls);
@@ -29,7 +29,7 @@ final class InspectTest extends TestCase
     {
         $result = Result\err(null);
 
-        ["result" => $result, "calls" => $calls] = $this->inspect($result);
+        ['result' => $result, 'calls' => $calls] = $this->inspect($result);
 
         Assert::assertSame($result, $result);
         Assert::assertSame([], $calls);
@@ -41,7 +41,7 @@ final class InspectTest extends TestCase
     {
         $result = Result\ok(null);
 
-        ["result" => $result, "calls" => $calls] = $this->inspectErr($result);
+        ['result' => $result, 'calls' => $calls] = $this->inspectErr($result);
 
         Assert::assertSame($result, $result);
         Assert::assertSame([], $calls);
@@ -54,7 +54,7 @@ final class InspectTest extends TestCase
     {
         $result = Result\err($value);
 
-        ["result" => $result, "calls" => $calls] = $this->inspectErr($result);
+        ['result' => $result, 'calls' => $calls] = $this->inspectErr($result);
 
         Assert::assertSame($result, $result);
         Assert::assertSame([$value], $calls);
@@ -76,7 +76,7 @@ final class InspectTest extends TestCase
             $calls[] = $value;
         });
 
-        return ["result" => $result, "calls" => $calls];
+        return ['result' => $result, 'calls' => $calls];
     }
 
     /**
@@ -93,6 +93,6 @@ final class InspectTest extends TestCase
             $calls[] = $value;
         });
 
-        return ["result" => $result, "calls" => $calls];
+        return ['result' => $result, 'calls' => $calls];
     }
 }

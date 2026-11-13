@@ -12,7 +12,7 @@ final class FlattenTest extends TestCase
     /**
      * @param Option<mixed> $expected
      * @param Option<Option<mixed>> $option
-    */
+     */
     #[DataProvider('flattenMatrix')]
     public function testFlatten(Option $expected, Option $option): void
     {
@@ -27,12 +27,12 @@ final class FlattenTest extends TestCase
         /** @var Option<mixed> $none */
         $none = Option\none();
 
-        yield "none" => [$none, $none];
+        yield 'none' => [$none, $none];
 
-        yield "some(none)" => [$none, Option\some($none)];
+        yield 'some(none)' => [$none, Option\some($none)];
 
         $leaf = Option\some(null);
 
-        yield "some(some(…))" => [$leaf, Option\some($leaf)];
+        yield 'some(some(…))' => [$leaf, Option\some($leaf)];
     }
 }

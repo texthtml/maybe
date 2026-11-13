@@ -8,15 +8,15 @@ use TH\ObjectReaper\Reaper;
 
 final class HasBeen extends Constraint
 {
-    public function __construct(private bool $used)
-    {
-    }
+    public function __construct(
+        private bool $used,
+    ) {}
 
     public function toString(): string
     {
         return $this->used
-            ? "has been used"
-            : "has not been used";
+            ? 'has been used'
+            : 'has not been used';
     }
 
     protected function matches(mixed $other): bool

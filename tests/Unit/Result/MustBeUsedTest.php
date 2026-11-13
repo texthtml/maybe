@@ -12,7 +12,7 @@ final class MustBeUsedTest extends TestCase
 {
     /**
      * @param callable(): Result<mixed, mixed> $factory
-    */
+     */
     #[DataProvider('resultsFactory')]
     public function testNotUsingAResultThrowAnExceptionWhenFreed(callable $factory): void
     {
@@ -25,7 +25,7 @@ final class MustBeUsedTest extends TestCase
 
     /**
      * @param callable(): Result<mixed, mixed> $factory
-    */
+     */
     #[DataProvider('resultsFactory')]
     public function testUsingAResultAvoidTheExceptionWhenFreed(callable $factory): void
     {
@@ -37,7 +37,7 @@ final class MustBeUsedTest extends TestCase
 
     /**
      * @param callable(): Result<mixed, mixed> $factory
-    */
+     */
     #[DataProvider('resultsFactory')]
     public function testAClonedResultMustBeUsed(callable $factory): void
     {
@@ -54,7 +54,7 @@ final class MustBeUsedTest extends TestCase
 
     /**
      * @param callable(): Result<mixed, mixed> $factory
-    */
+     */
     #[DataProvider('resultsFactory')]
     public function testAnUnserializedResultDontHaveToBeUsed(callable $factory): void
     {
@@ -71,7 +71,7 @@ final class MustBeUsedTest extends TestCase
      */
     public static function resultsFactory(): iterable
     {
-        yield "ok"  => [static fn (): Result => Result\ok(null)];
-        yield "err" => [static fn (): Result => Result\err(null)];
+        yield 'ok' => [static fn (): Result => Result\ok(null)];
+        yield 'err' => [static fn (): Result => Result\err(null)];
     }
 }

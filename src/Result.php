@@ -6,7 +6,7 @@ use TH\DocTest\Attributes\ExamplesSetup;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 
 /**
- * `Result<T, E>` is the type used for returning and propagating errors. It two
+ * `Result<T, E>` is the type used for returning and propagating errors. It has two
  * variants, `Ok(T)`, representing success and containing a value, and `Err(E)`,
  * representing error and containing an error value.
  *
@@ -164,7 +164,7 @@ interface Result extends \IteratorAggregate
 
     /**
      * Extract the contained value in an `Result<T, E>` when it is the `Ok` variant.
-     * Throw a `RuntimeException` with a custum provided message if the `Result` is `Err`.
+     * Throw a `RuntimeException` with a custom provided message if the `Result` is `Err`.
      *
      * # Examples
      *
@@ -268,7 +268,7 @@ interface Result extends \IteratorAggregate
      * # Examples
      *
      * ```
-     * // @return Return<int,string>
+     * // @return Result<int,string>
      * function parseInt(string $number): Result {
      *     $int = (int) $number;
      *
@@ -504,7 +504,7 @@ interface Result extends \IteratorAggregate
      * Print the numbers on each line of a string multiplied by two.
      *
      * ```
-     * // @return Return<int,string>
+     * // @return Result<int,string>
      * function parseInt(string $number): Result {
      *     $int = (int) $number;
      *
@@ -541,6 +541,13 @@ interface Result extends \IteratorAggregate
      * # Examples
      *
      * ```
+     * // @var Result<int,string> $x
+     * $x = Result\ok(2);
+     * self::assertEq($x->mapErr(strtoupper(...)), Result\ok(2));
+     *
+     * // @var Result<int,string> $x
+     * $x = Result\err("error");
+     * self::assertEq($x->mapErr(strtoupper(...)), Result\err("ERROR"));
      * ```
      *
      * @template F
@@ -566,9 +573,10 @@ interface Result extends \IteratorAggregate
      * ```
      *
      * @template U
+     * @template V
      * @param callable(T):U $callback
-     * @param U $default
-     * @return U
+     * @param V $default
+     * @return U|V
      */
     #[ExamplesSetup(IgnoreUnusedResults::class)]
     public function mapOr(callable $callback, mixed $default): mixed;
@@ -638,9 +646,10 @@ interface Result extends \IteratorAggregate
      * ```
      *
      * @template U
+     * @template V
      * @param callable(T):U $callback
-     * @param callable(E):U $default
-     * @return U
+     * @param callable(E):V $default
+     * @return U|V
      */
     public function mapOrElse(callable $callback, callable $default): mixed;
 }

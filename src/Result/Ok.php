@@ -18,7 +18,9 @@ class Ok implements Result
      * @param T $value
      * @nodoc
      */
-    final public function __construct(private readonly mixed $value) {
+    final public function __construct(
+        private readonly mixed $value,
+    ) {
         $this->mustBeUsed();
     }
 
@@ -88,7 +90,7 @@ class Ok implements Result
     {
         $this->used();
 
-        throw new \RuntimeException(\sprintf("Unwrapping err on `Ok`: %s", \serialize($this->value)));
+        throw new \RuntimeException(\sprintf('Unwrapping err on `Ok`: %s', \serialize($this->value)));
     }
 
     final public function unwrapOr(mixed $default): mixed
@@ -170,12 +172,12 @@ class Ok implements Result
         $this->used();
 
         return $strict
-            ? ($this->value === $value)
+            ? $this->value === $value
             // @mago-expect analysis:mixed-operand -- `contains()` compares a template value against mixed
             // @mago-expect analysis:possibly-null-operand
             // @mago-expect lint:identity-comparison
             // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-            : ($this->value == $value); // @phpstan-ignore equal.notAllowed
+            : $this->value == $value; // @phpstan-ignore equal.notAllowed
     }
 
     /**

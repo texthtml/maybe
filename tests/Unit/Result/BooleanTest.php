@@ -17,7 +17,7 @@ final class BooleanTest extends TestCase
      * @param Result<T, mixed> $left
      * @param Result<T, mixed> $right
      * @param Result<T, mixed> $expected
-    */
+     */
     #[DataProvider('andMatrix')]
     public function testAnd(Result $left, Result $right, Result $expected): void
     {
@@ -34,7 +34,7 @@ final class BooleanTest extends TestCase
      * @param Result<T, mixed> $left
      * @param Result<T, mixed> $right
      * @param Result<T, mixed> $expected
-    */
+     */
     #[DataProvider('andMatrix')]
     public function testAndThen(Result $left, Result $right, Result $expected): void
     {
@@ -43,13 +43,14 @@ final class BooleanTest extends TestCase
             ? []
             : [$left->unwrap()];
 
-        Assert::assertEquals($expected, $result = $left->andThen(
-            static function (mixed $value) use ($right, &$calls): mixed {
+        Assert::assertEquals(
+            $expected,
+            $result = $left->andThen(static function (mixed $value) use ($right, &$calls): mixed {
                 $calls[] = $value;
 
                 return $right;
-            },
-        ));
+            }),
+        );
 
         // @mago-expect lint:no-else-clause -- kept symmetric with the sibling tests below
         if (!$left instanceof Result\Err) {
@@ -70,7 +71,7 @@ final class BooleanTest extends TestCase
      * @param Result<T, mixed> $left
      * @param Result<T, mixed> $right
      * @param Result<T, mixed> $expected
-    */
+     */
     #[DataProvider('orMatrix')]
     public function testOrElse(Result $left, Result $right, Result $expected): void
     {
@@ -79,11 +80,14 @@ final class BooleanTest extends TestCase
             ? 1
             : 0;
 
-        Assert::assertEquals($expected, $result = $left->orElse(static function () use ($right, &$calls): mixed {
-            $calls++;
+        Assert::assertEquals(
+            $expected,
+            $result = $left->orElse(static function () use ($right, &$calls): mixed {
+                $calls++;
 
-            return $right;
-        }));
+                return $right;
+            }),
+        );
 
         // @mago-expect lint:no-else-clause -- kept symmetric with the sibling tests below
         if ($left instanceof Result\Err) {
@@ -104,7 +108,7 @@ final class BooleanTest extends TestCase
      * @param Result<T, mixed> $left
      * @param Result<T, mixed> $right
      * @param Result<T, mixed> $expected
-    */
+     */
     #[DataProvider('orMatrix')]
     public function testOr(Result $left, Result $right, Result $expected): void
     {

@@ -10,7 +10,8 @@ use TH\Maybe\Result;
 final class ExtendedErr extends Result\Err
 {
     /** @psalm-suppress MissingThrowsDocblock 🙈 */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->unwrapErr();
     }
 }

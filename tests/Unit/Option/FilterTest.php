@@ -13,20 +13,18 @@ final class FilterTest extends TestCase
      * @template T
      * @param Option<T> $option
      * @param array<T> $expectedCalls
-    */
+     */
     #[DataProvider('filterMatrix')]
     public function testFilter(Option $option, bool $filterResult, bool $expectNone, array $expectedCalls): void
     {
         $calls = [];
+        $predicate = static function (mixed $value) use ($filterResult, &$calls): bool {
+            $calls[] = $value;
 
-        Assert::assertEquals(
-            $expectNone ? Option\none() : $option,
-            $option->filter(static function(mixed $value) use ($filterResult, &$calls): bool {
-                $calls[] = $value;
+            return $filterResult;
+        };
 
-                return $filterResult;
-            }),
-        );
+        Assert::assertEquals($expectNone ? Option\none() : $option, $option->filter($predicate));
 
         Assert::assertSame($expectedCalls, $calls);
     }
@@ -41,28 +39,28 @@ final class FilterTest extends TestCase
      */
     public static function filterMatrix(): iterable
     {
-        yield "none-true" => [
+        yield 'none-true' => [
             Option\none(),
             true,
             true,
             [],
         ];
 
-        yield "none-false" => [
+        yield 'none-false' => [
             Option\none(),
             false,
             true,
             [],
         ];
 
-        yield "some-true" => [
+        yield 'some-true' => [
             Option\some(5),
             true,
             false,
             [5],
         ];
 
-        yield "some-false" => [
+        yield 'some-false' => [
             Option\some(42),
             false,
             true,

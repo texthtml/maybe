@@ -14,27 +14,27 @@ final class UnwrapTest extends TestCase
 
     public function testExpectErr(): void
     {
-        $this->expectExceptionObject(new \RuntimeException("This should fail"));
+        $this->expectExceptionObject(new \RuntimeException('This should fail'));
 
-        Result\err(null)->expect("This should fail");
+        Result\err(null)->expect('This should fail');
     }
 
     #[DataProvider('values')]
     public function testExpectOk(mixed $value): void
     {
-        Assert::assertSame($value, Result\ok($value)->expect("This should succeed"));
+        Assert::assertSame($value, Result\ok($value)->expect('This should succeed'));
     }
 
     public function testUnwrapErr(): void
     {
-        $this->expectExceptionObject(new \RuntimeException("Unwrapping `Err`: N;"));
+        $this->expectExceptionObject(new \RuntimeException('Unwrapping `Err`: N;'));
 
         Result\err(null)->unwrap();
     }
 
     public function testUnwrapErrException(): void
     {
-        $ex = new \LogicException("Something went wrong");
+        $ex = new \LogicException('Something went wrong');
 
         $this->expectExceptionObject($ex);
 

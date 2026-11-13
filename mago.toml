@@ -14,6 +14,11 @@ excludes = []
 print-width = 120
 tab-width = 4
 use-tabs = false
+combine-opening-tag-and-declare = true
+separate-use-types = false
+space-before-arrow-function-parameter-list-parenthesis = true
+preserve-breaking-conditional-expression = true
+excludes = ["tests/"]
 
 [linter]
 integrations = ["phpunit"]

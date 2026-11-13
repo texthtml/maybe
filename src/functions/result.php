@@ -127,10 +127,7 @@ function flatten(Result $result): Result
     // @mago-ignore analysis:less-specific-nested-return-statement -- mago can't match nested templates
 
     /** @phpstan-ignore return.type */
-    return $result->mapOrElse(
-        static fn (Result $r) => $r,
-        static fn (mixed $err) => Result\err($err),
-    );
+    return $result->mapOrElse(static fn (Result $r) => $r, static fn (mixed $err) => Result\err($err));
 }
 
 /**
