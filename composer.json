@@ -38,6 +38,9 @@
         "infection/infection": "^0.29 || ^0.35"
     },
     "config": {
+        "platform": {
+            "php": "8.2.27"
+        },
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true,
