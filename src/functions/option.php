@@ -213,7 +213,7 @@ function unzip(Option $option): array
  * @param Option<Result<U, E>> $option
  * @return Result<Option<U>, E>
  */
-#[ExamplesSetup(IgnoreUnusedResults::class)]
+#[ExamplesSetup(new IgnoreUnusedResults())]
 function transpose(Option $option): Result
 {
     /** @var Result<Option<U>, E> */

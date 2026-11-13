@@ -319,7 +319,7 @@ interface Result extends \IteratorAggregate
      * @param callable(E):mixed $callback
      * @return $this
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function inspectErr(callable $callback): self;
 
     /**
@@ -357,7 +357,7 @@ interface Result extends \IteratorAggregate
      * @param Result<U, E> $right
      * @return Result<U, E>
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function and(Result $right): Result;
 
     /**
@@ -385,7 +385,7 @@ interface Result extends \IteratorAggregate
      * @param callable(T):Result<U, F> $right
      * @return Result<U, E|F>
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function andThen(callable $right): Result;
 
     /**
@@ -423,7 +423,7 @@ interface Result extends \IteratorAggregate
      * @param Result<T, F> $right
      * @return Result<T, F>
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function or(Result $right): Result;
 
     /**
@@ -447,7 +447,7 @@ interface Result extends \IteratorAggregate
      * @param callable(E):Result<T, F> $right
      * @return Result<T, F>
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function orElse(callable $right): Result;
 
     /**
@@ -532,7 +532,7 @@ interface Result extends \IteratorAggregate
      * @param callable(T):U $callback
      * @return Result<U, E>
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function map(callable $callback): Result;
 
     /**
@@ -578,7 +578,7 @@ interface Result extends \IteratorAggregate
      * @param V $default
      * @return U|V
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function mapOr(callable $callback, mixed $default): mixed;
 
     /**
@@ -600,7 +600,7 @@ interface Result extends \IteratorAggregate
      *
      * @return Option<T>
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function ok(): Option;
 
     /**
@@ -622,7 +622,7 @@ interface Result extends \IteratorAggregate
      *
      * @return Option<E>
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function err(): Option;
 
     /**
