@@ -26,7 +26,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0|^11.0|^12.0|^13.0",
-        "phpspec/prophecy-phpunit": "^2.0",
         "squizlabs/php_codesniffer": "^4.0",
         "slevomat/coding-standard": "^8.0",
         "phpstan/phpstan": "^2.0",
@@ -34,8 +33,6 @@
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
         "vimeo/psalm": "^6.0 || ^7.0",
-        "symfony/finder": "^6.0|^7.0|^8.0",
-        "symfony/console": "^6.0|^7.0|^8.0",
         "texthtml/doctest": "^0.3",
         "carthage-software/mago": "^1.59"
     },

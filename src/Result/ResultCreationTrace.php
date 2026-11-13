@@ -7,6 +7,6 @@ final class ResultCreationTrace extends \LogicException
 {
     public function __construct()
     {
-        parent::__construct("Result must be used. Created");
+        parent::__construct('Result must be used. Created');
     }
 }

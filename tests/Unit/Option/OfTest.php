@@ -14,7 +14,7 @@ final class OfTest extends TestCase
 
     /**
      * @param Option<mixed> $expected
-    */
+     */
     #[DataProvider('fromValueMatrix')]
     public function testOf(Option $expected, mixed $value, mixed $noneValue, bool $strict = true): void
     {
@@ -23,7 +23,7 @@ final class OfTest extends TestCase
 
     /**
      * @param Option<mixed> $expected
-    */
+     */
     #[DataProvider('fromValueMatrix')]
     public function testTryOf(Option $expected, mixed $value, mixed $noneValue, bool $strict = true): void
     {
@@ -44,27 +44,27 @@ final class OfTest extends TestCase
 
     public function testOfDefaultToStrict(): void
     {
-        $o = (object)[];
+        $o = (object) [];
 
-        Assert::assertEquals(Option\none(), Option\of(static fn () => $o, (object)[], strict: false));
-        Assert::assertEquals($o, Option\of(static fn () => $o, (object)[])->unwrap());
+        Assert::assertEquals(Option\none(), Option\of(static fn () => $o, (object) [], strict: false));
+        Assert::assertEquals($o, Option\of(static fn () => $o, (object) [])->unwrap());
     }
 
     public function testTryOfDefaultToStrict(): void
     {
-        $o = (object)[];
+        $o = (object) [];
 
-        Assert::assertEquals(Option\none(), Option\tryOf(static fn () => $o, (object)[], strict: false));
-        Assert::assertEquals($o, Option\tryOf(static fn () => $o, (object)[])->unwrap());
+        Assert::assertEquals(Option\none(), Option\tryOf(static fn () => $o, (object) [], strict: false));
+        Assert::assertEquals($o, Option\tryOf(static fn () => $o, (object) [])->unwrap());
     }
 
     public function testTryOfExceptions(): void
     {
         // @phpstan-ignore-next-line
-        Assert::assertEquals(Option\none(), Option\tryOf(static fn () => new \DateTimeImmutable("nope")));
+        Assert::assertEquals(Option\none(), Option\tryOf(static fn () => new \DateTimeImmutable('nope')));
 
         $this->expectException(\DivisionByZeroError::class);
-        $this->expectExceptionMessage("Division by zero");
+        $this->expectExceptionMessage('Division by zero');
 
         // @phpstan-ignore-next-line
         Option\tryOf(static fn () => 1 / 0);
@@ -87,7 +87,7 @@ final class OfTest extends TestCase
     public function testTryOfExceptionsOutsideExpectedClassListArePropagated(): void
     {
         $this->expectException(\DivisionByZeroError::class);
-        $this->expectExceptionMessage("Division by zero");
+        $this->expectExceptionMessage('Division by zero');
 
         // @phpstan-ignore-next-line
         Option\tryOf(static fn () => 1 / 0, exceptionClass: [\LogicException::class, \RuntimeException::class]);
@@ -96,7 +96,7 @@ final class OfTest extends TestCase
     public function testTryOfExceptionsOutsideExpectedClassArePropagated(): void
     {
         $this->expectException(\DivisionByZeroError::class);
-        $this->expectExceptionMessage("Division by zero");
+        $this->expectExceptionMessage('Division by zero');
 
         // @phpstan-ignore-next-line
         Option\tryOf(static fn () => 1 / 0, exceptionClass: \LogicException::class);

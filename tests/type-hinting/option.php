@@ -131,5 +131,5 @@ function test_call_a_function_with_some(): void
     // @mago-expect analysis:possibly-invalid-argument 🎯
     /** @psalm-suppress InvalidArgument 🎯 */
     // @phpstan-ignore-next-line 🎯 Parameter #1 $option of function TH\Maybe\Tests\TypeHinting\option\test_is_none expects TH\Maybe\Option<int>, TH\Maybe\Option\Some<string> given.
-    here\test_is_none(Option\some("1"));
+    here\test_is_none(Option\some('1'));
 }

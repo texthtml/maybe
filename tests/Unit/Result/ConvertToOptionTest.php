@@ -16,7 +16,7 @@ final class ConvertToOptionTest extends TestCase
     /**
      * @param Result<mixed, mixed> $result
      * @param Option<mixed> $expected
-    */
+     */
     #[DataProvider('okMatrix')]
     public function testOk(Result $result, Option $expected): void
     {
@@ -28,12 +28,12 @@ final class ConvertToOptionTest extends TestCase
      */
     public static function okMatrix(): iterable
     {
-        yield "err" => [
+        yield 'err' => [
             Result\err("Don't panic !"),
             Option\none(),
         ];
 
-        yield "ok" => [
+        yield 'ok' => [
             Result\ok(42),
             Option\some(42),
         ];
@@ -42,7 +42,7 @@ final class ConvertToOptionTest extends TestCase
     /**
      * @param Result<mixed, mixed> $result
      * @param Option<mixed> $expected
-    */
+     */
     #[DataProvider('errMatrix')]
     public function testErr(Result $result, Option $expected): void
     {
@@ -54,12 +54,12 @@ final class ConvertToOptionTest extends TestCase
      */
     public static function errMatrix(): iterable
     {
-        yield "err" => [
+        yield 'err' => [
             Result\err("Don't panic !"),
             Option\some("Don't panic !"),
         ];
 
-        yield "ok" => [
+        yield 'ok' => [
             Result\ok(42),
             Option\none(),
         ];
@@ -70,7 +70,7 @@ final class ConvertToOptionTest extends TestCase
      * @template E
      * @param Result<Option<T>, E> $expected
      * @param Option<Result<T,E>> $option
-    */
+     */
     #[DataProvider('transposeMatrix')]
     public function testTranspose(Option $option, Result $expected): void
     {

@@ -15,7 +15,7 @@ final class ZipTest extends TestCase
      * @param Option<L> $left
      * @param Option<R> $right
      * @param Option<array{L, R}> $expected
-    */
+     */
     #[DataProvider('zipMatrix')]
     public function testZip(Option $left, Option $right, Option $expected): void
     {
@@ -31,28 +31,28 @@ final class ZipTest extends TestCase
      */
     public static function zipMatrix(): iterable
     {
-        yield "none-none" => [
+        yield 'none-none' => [
             Option\none(),
             Option\none(),
             Option\none(),
         ];
 
-        yield "none-some" => [
+        yield 'none-some' => [
             Option\none(),
             Option\some(42),
             Option\none(),
         ];
 
-        yield "some-none" => [
+        yield 'some-none' => [
             Option\some(42),
             Option\none(),
             Option\none(),
         ];
 
-        yield "some-some" => [
+        yield 'some-some' => [
             Option\some(42),
-            Option\some("fishes"),
-            Option\some([42, "fishes"]),
+            Option\some('fishes'),
+            Option\some([42, 'fishes']),
         ];
     }
 
@@ -62,7 +62,7 @@ final class ZipTest extends TestCase
      * @param Option<array{L, R}> $zipped
      * @param Option<L> $left
      * @param Option<R> $right
-    */
+     */
     #[DataProvider('unzipMatrix')]
     public function testUnzip(Option $zipped, Option $left, Option $right): void
     {
@@ -78,16 +78,16 @@ final class ZipTest extends TestCase
      */
     public static function unzipMatrix(): iterable
     {
-        yield "none" => [
+        yield 'none' => [
             Option\none(),
             Option\none(),
             Option\none(),
         ];
 
-        yield "some" => [
-            Option\some([42, "fishes"]),
+        yield 'some' => [
+            Option\some([42, 'fishes']),
             Option\some(42),
-            Option\some("fishes"),
+            Option\some('fishes'),
         ];
     }
 }

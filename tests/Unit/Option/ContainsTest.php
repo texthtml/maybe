@@ -14,7 +14,7 @@ final class ContainsTest extends TestCase
 
     /**
      * @param Option<mixed> $option
-    */
+     */
     #[DataProvider('containsMatrix')]
     public function testContains(Option $option, mixed $value, bool $expect, bool $strict = true): void
     {
@@ -26,30 +26,30 @@ final class ContainsTest extends TestCase
      */
     public static function containsMatrix(): iterable
     {
-        $o = (object)[];
+        $o = (object) [];
 
-        yield [Option\none(),     null, false];
+        yield [Option\none(), null, false];
         yield [Option\some(null), null, true];
 
-        yield [Option\none(),  0, false];
+        yield [Option\none(), 0, false];
         yield [Option\some(0), 0, true];
         yield [Option\some(0), 1, false];
 
-        yield [Option\none(),    [], false];
+        yield [Option\none(), [], false];
         yield [Option\some([1]), [1], true];
         yield [Option\some([1]), [2], false];
 
-        yield [Option\none(),   $o, false];
+        yield [Option\none(), $o, false];
         yield [Option\some($o), $o, true];
-        yield [Option\some($o), (object)[], false];
-        yield [Option\some($o), (object)[], true, false];
+        yield [Option\some($o), (object) [], false];
+        yield [Option\some($o), (object) [], true, false];
     }
 
     public function testContainsDefaultsToStrict(): void
     {
-        $o = (object)[];
+        $o = (object) [];
 
-        Assert::assertFalse(Option\some($o)->contains((object)[]));
-        Assert::assertTrue(Option\some($o)->contains((object)[], strict: false));
+        Assert::assertFalse(Option\some($o)->contains((object) []));
+        Assert::assertTrue(Option\some($o)->contains((object) [], strict: false));
     }
 }

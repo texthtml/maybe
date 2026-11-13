@@ -9,14 +9,14 @@ trait Serializable
      */
     public static function serializableValues(): iterable
     {
-        yield "null" => [null];
+        yield 'null' => [null];
 
-        yield "int" => [42];
+        yield 'int' => [42];
 
-        yield "string" => ["So Long, and Thanks for All the Fish"];
+        yield 'string' => ['So Long, and Thanks for All the Fish'];
 
-        yield "array" => [[null, 42, true, 3.14]];
+        yield 'array' => [[null, 42, true, 3.14]];
 
-        yield "object" => [new \DateTimeImmutable("@42")];
+        yield 'object' => [new \DateTimeImmutable('@42')];
     }
 }

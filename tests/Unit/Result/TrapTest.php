@@ -23,16 +23,16 @@ final class TrapTest extends TestCase
     public function testTrapCheckedException(): void
     {
         Assert::assertEquals(
-            new \Exception("Ooops"),
+            new \Exception('Ooops'),
             // @phpstan-ignore-next-line
-            Result\trap(static fn () => throw new \Exception("Ooops"))->unwrapErr(),
+            Result\trap(static fn () => throw new \Exception('Ooops'))->unwrapErr(),
         );
     }
 
     public function testTrapUncheckedException(): void
     {
         $this->expectException(\DivisionByZeroError::class);
-        $this->expectExceptionMessage("Division by zero");
+        $this->expectExceptionMessage('Division by zero');
 
         // @phpstan-ignore-next-line
         Result\trap(static fn () => 1 / 0);
