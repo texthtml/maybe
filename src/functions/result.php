@@ -190,17 +190,17 @@ function collect(iterable $results): Result
 
     foreach ($results as $result) {
         if ($result instanceof Result\Err) {
-            // @mago-ignore analysis:unhandled-thrown-type 🙈 using the result never throws
-            /** @psalm-suppress MissingThrowsDocblock 🙈 using the result never throws */
-            $value = $result->unwrapErr(); // use this result
+            // @mago-ignore analysis:unhandled-thrown-type -- using the result never throws
+            /** @psalm-suppress MissingThrowsDocblock -- using the result never throws */
+            $result->unwrapErr(); // use this result
 
-            // @mago-ignore analysis:invalid-return-statement 🙈 `Err<E>` is a valid `Result<list<U>, E>`
-            // @phpstan-ignore return.type (an `Err<E>` is a valid `Result<list<U>, E>`: `T` is covariant)
-            return Result\err($value);
+            // @mago-ignore analysis:invalid-return-statement -- the clone preserves the original's `E`
+            // @phpstan-ignore return.type (the clone preserves the original's `E`)
+            return clone $result;
         }
 
-        // @mago-ignore analysis:unhandled-thrown-type 🙈 unwrap() cannot throw: $result is not Err
-        /** @psalm-suppress MissingThrowsDocblock 🙈 unwrap() cannot throw: $result is not Err */
+        // @mago-ignore analysis:unhandled-thrown-type -- unwrap() cannot throw: $result is not Err
+        /** @psalm-suppress MissingThrowsDocblock -- unwrap() cannot throw: $result is not Err */
         $values[] = $result->unwrap();
     }
 
