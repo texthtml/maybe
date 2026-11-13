@@ -37,6 +37,18 @@
         "carthage-software/mago": "^1.59",
         "infection/infection": "^0.29 || ^0.35"
     },
+    "scripts": {
+        "test": [
+            "@php vendor/bin/phpunit",
+            "@php vendor/bin/doctest",
+            "@php vendor/bin/phpcs -ps",
+            "@php vendor/bin/mago fmt --check",
+            "@php vendor/bin/phpstan",
+            "@php vendor/bin/psalm --no-progress",
+            "@php vendor/bin/mago lint",
+            "@php vendor/bin/mago analyze"
+        ]
+    },
     "config": {
         "platform": {
             "php": "8.2.27"
