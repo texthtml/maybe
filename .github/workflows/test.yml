@@ -55,7 +55,7 @@ jobs:
 
       - name: Upload coverage to Codecov (PHP 8.5)
         if: matrix.php-versions == '8.5'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage.xml
