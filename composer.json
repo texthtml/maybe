@@ -34,12 +34,14 @@
         "phpstan/phpstan-phpunit": "^2.0",
         "vimeo/psalm": "^6.0 || ^7.0",
         "texthtml/doctest": "^0.3",
-        "carthage-software/mago": "^1.59"
+        "carthage-software/mago": "^1.59",
+        "infection/infection": "^0.29 || ^0.35"
     },
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "infection/extension-installer": true
         }
     }
 }

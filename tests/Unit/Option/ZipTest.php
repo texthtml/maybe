@@ -70,6 +70,53 @@ final class ZipTest extends TestCase
     }
 
     /**
+     * @template L
+     * @template R
+     * @param Option<L> $left
+     * @param Option<R> $right
+     * @param Option<mixed> $expected
+     */
+    #[DataProvider('zipWithMatrix')]
+    public function testZipWith(Option $left, Option $right, Option $expected): void
+    {
+        Assert::assertEquals($expected, $left->zipWith($right, static fn (mixed $l, mixed $r) => [$l, $r]));
+    }
+
+    /**
+     * @return iterable<array{
+     *   Option<mixed>,
+     *   Option<mixed>,
+     *   Option<mixed>,
+     * }>
+     */
+    public static function zipWithMatrix(): iterable
+    {
+        yield 'none-none' => [
+            Option\none(),
+            Option\none(),
+            Option\none(),
+        ];
+
+        yield 'none-some' => [
+            Option\none(),
+            Option\some(42),
+            Option\none(),
+        ];
+
+        yield 'some-none' => [
+            Option\some(42),
+            Option\none(),
+            Option\none(),
+        ];
+
+        yield 'some-some' => [
+            Option\some(42),
+            Option\some('fishes'),
+            Option\some([42, 'fishes']),
+        ];
+    }
+
+    /**
      * @return iterable<array{
      *   Option<array{mixed, mixed}>,
      *   Option<mixed>,

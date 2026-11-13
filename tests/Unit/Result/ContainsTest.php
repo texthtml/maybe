@@ -5,6 +5,8 @@ namespace TH\Maybe\Tests\Unit\Result;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Result;
+use TH\Maybe\Result\Err;
+use TH\Maybe\Result\Ok;
 use TH\Maybe\Tests\Assert;
 use TH\Maybe\Tests\Provider;
 
@@ -53,6 +55,28 @@ final class ContainsTest extends TestCase
 
         Assert::assertFalse(Result\ok($o)->contains((object) []));
         Assert::assertTrue(Result\ok($o)->contains((object) [], strict: false));
+        Assert::assertFalse(Result\err($o)->contains((object) [], strict: false));
+    }
+
+    /**
+     * The `strict` default of `true` is part of the public API contract of every
+     * variant, even where the implementation ignores it.
+     *
+     * @throws \ReflectionException
+     */
+    public function testContainsStrictParameterDefaultsToTrue(): void
+    {
+        Assert::assertTrue((new \ReflectionMethod(Ok::class, 'contains'))->getParameters()[1]->getDefaultValue());
+        Assert::assertTrue((new \ReflectionMethod(Err::class, 'contains'))->getParameters()[1]->getDefaultValue());
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function testContainsErrStrictParameterDefaultsToTrue(): void
+    {
+        Assert::assertTrue((new \ReflectionMethod(Ok::class, 'containsErr'))->getParameters()[1]->getDefaultValue());
+        Assert::assertTrue((new \ReflectionMethod(Err::class, 'containsErr'))->getParameters()[1]->getDefaultValue());
     }
 
     /**
@@ -94,5 +118,6 @@ final class ContainsTest extends TestCase
 
         Assert::assertFalse(Result\err($o)->containsErr((object) []));
         Assert::assertTrue(Result\err($o)->containsErr((object) [], strict: false));
+        Assert::assertFalse(Result\ok($o)->containsErr((object) [], strict: false));
     }
 }

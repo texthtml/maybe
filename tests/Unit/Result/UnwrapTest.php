@@ -12,19 +12,6 @@ final class UnwrapTest extends TestCase
 {
     use Provider\Values;
 
-    public function testExpectErr(): void
-    {
-        $this->expectExceptionObject(new \RuntimeException('This should fail'));
-
-        Result\err(null)->expect('This should fail');
-    }
-
-    #[DataProvider('values')]
-    public function testExpectOk(mixed $value): void
-    {
-        Assert::assertSame($value, Result\ok($value)->expect('This should succeed'));
-    }
-
     public function testUnwrapErr(): void
     {
         $this->expectExceptionObject(new \RuntimeException('Unwrapping `Err`: N;'));
@@ -39,6 +26,13 @@ final class UnwrapTest extends TestCase
         $this->expectExceptionObject($ex);
 
         Result\err($ex)->unwrap();
+    }
+
+    public function testUnwrapErrOnOk(): void
+    {
+        $this->expectExceptionObject(new \RuntimeException('Unwrapping err on `Ok`: i:2;'));
+
+        Result\ok(2)->unwrapErr();
     }
 
     #[DataProvider('values')]
