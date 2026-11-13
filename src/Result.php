@@ -195,7 +195,7 @@ interface Result extends \IteratorAggregate
      * ```
      * // @var Result<int,string> $x
      * $x = Result\Ok(2);
-     * $x->expectErr("Testing expectErr"); // @throws RuntimeException Testing expectErr: s:1:"2";
+     * $x->expectErr("Testing expectErr"); // @throws RuntimeException Testing expectErr: i:2;
      * ```
      *
      * @return E
