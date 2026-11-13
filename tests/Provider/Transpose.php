@@ -8,7 +8,7 @@ use TH\Maybe\Result;
 trait Transpose
 {
     /**
-     * @return iterable<array{option:Option<mixed>, result:Result<mixed, mixed>}>
+     * @return iterable<string, array{option: Option<mixed>, expected: Result<mixed, mixed>}>
      */
     public static function transposeMatrix(): iterable
     {
@@ -23,8 +23,8 @@ trait Transpose
         ];
 
         yield "some-err" => [
-            Option\some(Result\err("Don't panic !")),
-            Result\err("Don't panic !"),
+            "option" => Option\some(Result\err("Don't panic !")),
+            "expected" => Result\err("Don't panic !"),
         ];
     }
 }
