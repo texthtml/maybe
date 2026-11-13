@@ -6,6 +6,8 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TH\Maybe\Option;
+use TH\Maybe\Option\None;
+use TH\Maybe\Option\Some;
 use TH\Maybe\Tests\Provider;
 
 final class ContainsTest extends TestCase
@@ -51,5 +53,17 @@ final class ContainsTest extends TestCase
 
         Assert::assertFalse(Option\some($o)->contains((object) []));
         Assert::assertTrue(Option\some($o)->contains((object) [], strict: false));
+    }
+
+    /**
+     * The `strict` default of `true` is part of the public API contract of every
+     * variant, even where the implementation ignores it.
+     *
+     * @throws \ReflectionException
+     */
+    public function testContainsStrictParameterDefaultsToTrue(): void
+    {
+        Assert::assertTrue((new \ReflectionMethod(None::class, 'contains'))->getParameters()[1]->getDefaultValue());
+        Assert::assertTrue((new \ReflectionMethod(Some::class, 'contains'))->getParameters()[1]->getDefaultValue());
     }
 }

@@ -67,6 +67,20 @@ final class BooleanTest extends TestCase
     }
 
     /**
+     * `andThen()` must mark the left result as used on its own, even when the
+     * caller never touches `$left` before or after.
+     */
+    public function testAndThenUsesTheLeftResult(): void
+    {
+        $left = Result\ok('left');
+
+        $result = $left->andThen(static fn (mixed $value): Result => Result\ok($value));
+
+        Assert::assertResultUsed($left);
+        Assert::assertResultNotUsed($result);
+    }
+
+    /**
      * @template T
      * @param Result<T, mixed> $left
      * @param Result<T, mixed> $right

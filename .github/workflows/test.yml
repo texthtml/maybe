@@ -25,6 +25,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
+          coverage: ${{ matrix.php-versions == '8.4' && 'pcov' || 'none' }}
           ini-values:  zend.assertions=1,  assert.exception=1
 
       - name: Validate composer.json
@@ -46,6 +47,22 @@ jobs:
         run: |
           vendor/bin/phpunit --version
           vendor/bin/phpunit --testdox
+
+      - name: Run the unit tests with coverage (PHP 8.4 only)
+        if: matrix.php-versions == '8.4'
+        run: |
+          # fail the job if line coverage drops below 99%
+          pct=$(vendor/bin/phpunit --coverage-text | grep '^  Lines:' | sed 's/.*:  *\([0-9.]*\)%.*/\1/')
+          echo "line coverage: ${pct}%"
+          awk "BEGIN {exit !(${pct:-0} >= 99)}" || { echo "line coverage is below the 99% threshold"; exit 1; }
+
+      - name: Run mutation testing (PHP 8.4 only)
+        if: matrix.php-versions == '8.4'
+        env:
+          INFECTION_BADGER_ENABLED: 0
+        run: |
+          # baseline MSI gate; raise as the suite gets stronger
+          vendor/bin/infection --threads=4 --no-progress --min-msi=95
 
       - name: Run the doc tests
         run: |
