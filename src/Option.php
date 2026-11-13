@@ -546,7 +546,7 @@ interface Option extends \IteratorAggregate
      * @return (T is never ? Result\Err<E> : Result<T,E>)
      * @phpstan-return Result<T,E>
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function okOr(mixed $err): Result;
 
     /**
@@ -566,6 +566,6 @@ interface Option extends \IteratorAggregate
      * @phpstan-return Result<T,E>
      * @return (T is never ? Result\Err<E> : Result<T,E>)
      */
-    #[ExamplesSetup(IgnoreUnusedResults::class)]
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function okOrElse(callable $err): Result;
 }

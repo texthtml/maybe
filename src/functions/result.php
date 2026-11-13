@@ -83,7 +83,7 @@ function err(mixed $value): Result\Err
  * @return Result<U,E>
  * @throws \Throwable
  */
-#[ExamplesSetup(IgnoreUnusedResults::class)]
+#[ExamplesSetup(new IgnoreUnusedResults())]
 function trap(callable $callback, array|string $exceptionClass = \Exception::class): Result
 {
     try {
@@ -121,7 +121,7 @@ function trap(callable $callback, array|string $exceptionClass = \Exception::cla
  * @param Result<Result<T, E1>, E2> $result
  * @return Result<T, E>
  */
-#[ExamplesSetup(IgnoreUnusedResults::class)]
+#[ExamplesSetup(new IgnoreUnusedResults())]
 function flatten(Result $result): Result
 {
     // @mago-ignore analysis:less-specific-nested-return-statement -- mago can't match nested templates
@@ -153,7 +153,7 @@ function flatten(Result $result): Result
  * @param Result<Option<U>, F> $result
  * @return Option<Result<U, F>>
  */
-#[ExamplesSetup(IgnoreUnusedResults::class)]
+#[ExamplesSetup(new IgnoreUnusedResults())]
 function transpose(Result $result): Option
 {
     /** @var Option<Result<U, F>> */
