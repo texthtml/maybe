@@ -164,7 +164,7 @@ function flatten(Option $option): Option
 {
     return $option instanceof Option\None
         ? $option
-        // @mago-ignore analysis:unhandled-thrown-type 🙈 unwrap() cannot throw: $option is not None
+        // @mago-ignore analysis:unhandled-thrown-type -- unwrap() cannot throw: $option is not None
         // @phpstan-ignore missingType.checkedException (unwrap() cannot throw: $option is not None)
         : $option->unwrap();
 }
@@ -251,8 +251,8 @@ function collect(iterable $options): Option
             return Option\none();
         }
 
-        // @mago-ignore analysis:unhandled-thrown-type 🙈 unwrap() cannot throw: $option is not None
-        /** @psalm-suppress MissingThrowsDocblock 🙈 unwrap() cannot throw: $option is not None */
+        // @mago-ignore analysis:unhandled-thrown-type -- unwrap() cannot throw: $option is not None
+        /** @psalm-suppress MissingThrowsDocblock -- unwrap() cannot throw: $option is not None */
         // @phpstan-ignore missingType.checkedException (unwrap() cannot throw: $option is not None)
         $values[] = $option->unwrap();
     }
