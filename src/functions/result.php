@@ -162,3 +162,49 @@ function transpose(Result $result): Option
         static fn () => Option\some(clone $result),
     );
 }
+
+/**
+ * Takes each element in the iterable: if it is an `Err`, no further elements are
+ * taken and that `Err` is returned. Should no `Err` occur, an `Ok` containing the
+ * list of all the values is returned.
+ *
+ * # Examples
+ *
+ * ```
+ * self::assertEq(Result\collect([Result\ok(1), Result\ok(2)]), Result\ok([1, 2]));
+ * self::assertEq(Result\collect([Result\ok(1), Result\err("nope")]), Result\err("nope"));
+ * self::assertEq(Result\collect([Result\err("nope"), Result\ok(2)]), Result\err("nope"));
+ * self::assertEq(Result\collect([]), Result\ok([]));
+ * ```
+ *
+ * @template U
+ * @template E
+ * @param iterable<Result<U, E>> $results
+ * @return Result<list<U>, E>
+ */
+#[ExamplesSetup(new IgnoreUnusedResults())]
+function collect(iterable $results): Result
+{
+    /** @var list<U> $values */
+    $values = [];
+
+    foreach ($results as $result) {
+        if ($result instanceof Result\Err) {
+            // @mago-ignore analysis:unhandled-thrown-type 🙈 using the result never throws
+            /** @psalm-suppress MissingThrowsDocblock 🙈 using the result never throws */
+            $value = $result->unwrapErr(); // use this result
+
+            // @mago-ignore analysis:invalid-return-statement 🙈 `Err<E>` is a valid `Result<list<U>, E>`
+            // @phpstan-ignore return.type (an `Err<E>` is a valid `Result<list<U>, E>`: `T` is covariant)
+            return Result\err($value);
+        }
+
+        // @mago-ignore analysis:unhandled-thrown-type 🙈 unwrap() cannot throw: $result is not Err
+        /** @psalm-suppress MissingThrowsDocblock 🙈 unwrap() cannot throw: $result is not Err */
+        $values[] = $result->unwrap();
+    }
+
+    // @mago-ignore analysis:less-specific-nested-return-statement -- mago can't bind `E` on an all-`Ok` collection
+    // @phpstan-ignore return.type (`U` is bound by the caller's iterable)
+    return Result\ok($values);
+}

@@ -39,6 +39,14 @@ enum None implements Option
     }
 
     /**
+     * @return true
+     */
+    public function isNoneOr(callable $predicate): bool
+    {
+        return true;
+    }
+
+    /**
      * @throws \RuntimeException
      */
     public function expect(string $message): never

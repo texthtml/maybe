@@ -181,6 +181,30 @@ interface Result extends \IteratorAggregate
     public function expect(string $message): mixed;
 
     /**
+     * Extract the contained error value in an `Result<T, E>` when it is the `Err` variant.
+     * Throw a `RuntimeException` with a custom provided message if the `Result` is `Ok`.
+     *
+     * # Examples
+     *
+     * ```
+     * // @var Result<int,string> $x
+     * $x = Result\err("emergency failure");
+     * self::assertSame($x->expectErr("Testing expectErr"), "emergency failure");
+     * ```
+     *
+     * ```
+     * // @var Result<int,string> $x
+     * $x = Result\Ok(2);
+     * $x->expectErr("Testing expectErr"); // @throws RuntimeException Testing expectErr: s:1:"2";
+     * ```
+     *
+     * @return E
+     * @throws \RuntimeException
+     * @psalm-assert Result\Err<E> $this
+     */
+    public function expectErr(string $message): mixed;
+
+    /**
      * Extract the contained value in an `Result<T, E>` when it is the `Ok` variant.
      * Throw a `RuntimeException` with a generic message if the `Result` is `Err` or the contained err value
      * if it's a `\Throwable`

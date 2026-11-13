@@ -26,4 +26,16 @@ final class ExpectTest extends TestCase
     {
         Assert::assertSame('value', Result\ok('value')->expect('This should succeed'));
     }
+
+    public function testExpectErrWithAnOkValue(): void
+    {
+        $this->expectExceptionObject(new \RuntimeException('This should fail: s:5:"value";'));
+
+        Result\ok('value')->expectErr('This should fail');
+    }
+
+    public function testExpectErrExtractsTheErrValue(): void
+    {
+        Assert::assertSame('nope', Result\err('nope')->expectErr('This should succeed'));
+    }
 }

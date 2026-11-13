@@ -73,6 +73,17 @@ class Ok implements Result
     }
 
     /**
+     * @return never
+     * @throws \RuntimeException
+     */
+    final public function expectErr(string $message): mixed
+    {
+        $this->used();
+
+        throw new \RuntimeException(\sprintf('%s: %s', $message, \serialize($this->value)));
+    }
+
+    /**
      * @return T
      * @phpstan-throws void
      */

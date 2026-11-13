@@ -76,6 +76,17 @@ class Err implements Result
     }
 
     /**
+     * @return E
+     * @phpstan-throws void
+     */
+    final public function expectErr(string $message): mixed
+    {
+        $this->used();
+
+        return $this->value;
+    }
+
+    /**
      * @throws \Throwable
      */
     final public function unwrap(): never
