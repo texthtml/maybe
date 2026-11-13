@@ -21,8 +21,6 @@ final class MustBeUsedTest extends TestCase
         (static function (callable $factory): void {
             $factory();
         })($factory);
-
-        Assert::fail("The exception should have been thrown before that");
     }
 
     /**
@@ -52,8 +50,6 @@ final class MustBeUsedTest extends TestCase
 
             clone $result; // @phpstan-ignore expr.resultUnused
         })($factory);
-
-        Assert::fail("The exception should have been thrown before that");
     }
 
     /**

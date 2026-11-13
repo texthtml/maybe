@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.1', '8.2', '8.3', '8.4']
+        php-versions: ['8.2', '8.3', '8.4', '8.5']
 
     steps:
       - uses: actions/checkout@v7
@@ -66,3 +66,12 @@ jobs:
         run: |
           vendor/bin/psalm --version
           vendor/bin/psalm
+
+      - name: Run static analysis (Mago)
+        run: |
+          vendor/bin/mago --version
+          vendor/bin/mago lint
+          vendor/bin/mago analyze
+        env:
+          # the composer wrapper downloads the mago binary from github releases on first run
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

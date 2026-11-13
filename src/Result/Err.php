@@ -195,6 +195,9 @@ class Err implements Result
 
         return $strict
             ? ($this->value === $value)
+            // @mago-expect analysis:mixed-operand -- `contains()` compares a template value against mixed
+            // @mago-expect analysis:possibly-null-operand
+            // @mago-expect lint:identity-comparison
             // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
             : ($this->value == $value); // @phpstan-ignore equal.notAllowed
     }
@@ -217,6 +220,8 @@ class Err implements Result
     final public function mapErr(callable $callback): self
     {
         $this->used();
+
+        // @mago-ignore analysis:redundant-docblock-type -- intentional: the @var docblock narrows self<F> to self<F>
 
         /** @var self<F> */
         return Result\err($callback($this->value));
