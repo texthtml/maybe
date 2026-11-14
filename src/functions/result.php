@@ -7,7 +7,6 @@ use TH\Maybe\Option;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 use function TH\Maybe\Internal\isOfAnyClass;
-use function TH\Maybe\Internal\throughFirstErr;
 
 /**
  * Return a `Result\Ok` Result containing `$value`.
@@ -187,7 +186,6 @@ function transpose(Result $result): Option
  * @template E
  * @param iterable<Result<U, E>> $results
  * @param bool $drain consume the whole iterable & use every result, even after the first `Err`
- * @psalm-suppress InvalidReturnType -- psalm can't prove `E` flows through `clone $firstErr`
  * @return Result<list<U>, E>
  */
 #[ExamplesSetup(new IgnoreUnusedResults())]
@@ -199,10 +197,6 @@ function collect(iterable $results, bool $drain = false): Result
     /** @var Result\Err<E>|null $firstErr */
     $firstErr = null;
 
-    if (!$drain) {
-        $results = throughFirstErr($results);
-    }
-
     foreach ($results as $result) {
         if (!$result->isErr()) {
             // @mago-ignore analysis:unhandled-thrown-type -- unwrap() cannot throw: $result is not Err
@@ -212,17 +206,14 @@ function collect(iterable $results, bool $drain = false): Result
             continue;
         }
 
-        $firstErr ??= $result;
+        $firstErr ??= clone $result;
+
+        if (!$drain) {
+            break;
+        }
     }
 
-    if ($firstErr instanceof Result\Err) {
-        // @mago-ignore analysis:invalid-return-statement -- the clone preserves the original's `E`
-        /** @psalm-suppress InvalidReturnStatement -- the clone preserves the original's `E` */
-
-        return clone $firstErr;
-    }
-
-    // @mago-ignore analysis:less-specific-nested-return-statement -- mago can't bind `E` on an all-`Ok` collection
+    // @mago-ignore analysis:less-specific-nested-return-statement -- mago can't bind `E` on the collected values
     // @phpstan-ignore return.type (`U` is bound by the caller's iterable)
-    return Result\ok($values);
+    return $firstErr ?? Result\ok($values);
 }
