@@ -53,8 +53,7 @@
                 "issues": "https://github.com/texthtml/php-object-reaper/issues",
                 "source": "https://github.com/texthtml/php-object-reaper/tree/v1.2.0"
             },
-            "time": "2026-11-13T21:13:49+00:00",
-            "published-time": "2026-11-13T21:20:02+00:00"
+            "time": "2026-11-13T21:13:49+00:00"
         }
     ],
     "packages-dev": [
@@ -6803,16 +6802,16 @@
         },
         {
             "name": "texthtml/doctest",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/texthtml/doctest.git",
-                "reference": "962e929a84bf4912d2b4d4de0ed8188007324b2f"
+                "reference": "dab1eec002443ef3fa429f87adfc72ea4becdffc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/texthtml/doctest/zipball/962e929a84bf4912d2b4d4de0ed8188007324b2f",
-                "reference": "962e929a84bf4912d2b4d4de0ed8188007324b2f",
+                "url": "https://api.github.com/repos/texthtml/doctest/zipball/dab1eec002443ef3fa429f87adfc72ea4becdffc",
+                "reference": "dab1eec002443ef3fa429f87adfc72ea4becdffc",
                 "shasum": ""
             },
             "require": {
@@ -6826,7 +6825,7 @@
             },
             "require-dev": {
                 "carthage-software/mago": "^1.59.0",
-                "phpunit/phpunit": "^11.0|^12.0"
+                "phpunit/phpunit": "^11.0|^12.0|^13.0"
             },
             "bin": [
                 "bin/doctest"
@@ -6850,10 +6849,9 @@
             "description": "Test code examples in PHP comments",
             "support": {
                 "issues": "https://github.com/texthtml/doctest/issues",
-                "source": "https://github.com/texthtml/doctest/tree/v1.0.0"
+                "source": "https://github.com/texthtml/doctest/tree/v1.1.0"
             },
-            "time": "2026-11-13T22:00:00+00:00",
-            "published-time": "2026-11-13T22:05:40+00:00"
+            "time": "2026-11-14T00:15:22+00:00"
         },
         {
             "name": "thecodingmachine/safe",
@@ -7240,5 +7238,5 @@
     "platform-overrides": {
         "php": "8.2.27"
     },
-    "plugin-api-version": "2.11.0"
+    "plugin-api-version": "2.9.0"
 }
