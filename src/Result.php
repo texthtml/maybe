@@ -75,13 +75,13 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertTrue($x->isOk());
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err(2);
      * self::assertFalse($x->isOk());
@@ -97,13 +97,13 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertFalse($x->isErr());
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err(2);
      * self::assertTrue($x->isErr());
@@ -119,14 +119,14 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertTrue($x->isOkAnd(fn ($n) => $n < 5));
      * self::assertFalse($x->isOkAnd(fn ($n) => $n > 5));
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err(2);
      * self::assertFalse($x->isOkAnd(fn ($n) => $n < 5));
@@ -143,14 +143,14 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err(2);
      * self::assertTrue($x->isErrAnd(fn ($n) => $n < 5));
      * self::assertFalse($x->isErrAnd(fn ($n) => $n > 5));
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertFalse($x->isErrAnd(fn ($n) => $n < 5));
@@ -168,7 +168,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err("emergency failure");
      * $x->expect("Testing expect"); // @throws RuntimeException Testing expect
@@ -211,13 +211,13 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\Ok(2);
      * self::assertEq($x->unwrap(), 2);
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err("emergency failure");
      * $x->unwrap(); // @throws RuntimeException Unwrapping `Err`: s:17:"emergency failure";
@@ -235,7 +235,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\Ok(2);
      * self::assertEq($x->unwrapErr(), 2); // @throws RuntimeException Unwrapping err on `Ok`: i:2;
@@ -253,7 +253,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $default = 2;
      * // @var Result<int,string> $x
      * $x = Result\Ok(9);
@@ -275,7 +275,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * self::assertEq(Result\ok(2)->unwrapOrElse(strlen(...)), 2);
      * self::assertEq(Result\err("foo")->unwrapOrElse(strlen(...)), 3);
      * ```
@@ -291,7 +291,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @return Result<int,string>
      * function parseInt(string $number): Result {
      *     $int = (int) $number;
@@ -319,7 +319,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @return Result<string,string>
      * function readFrom(string $filepath): Result {
      *     $data = @file_get_contents($filepath);
@@ -337,7 +337,7 @@ interface Result extends \IteratorAggregate
      *         ->inspectErr(fn ($e) => printf("failed to read file: %s", $e));
      * }
      *
-     * read(); // @prints failed to read file: /not/a/file does not exist
+     * read()->unwrapErr(); // @prints failed to read file: /not/a/file does not exist
      * ```
      *
      * @param callable(E):mixed $callback
@@ -351,30 +351,30 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * // @var Result<string,string> $y
      * $y = Result\err("late error");
-     * self::assertEq($x->and($y), Result\err("late error"));
+     * self::assertSame($x->and($y)->unwrapErr(), "late error");
      *
      * // @var Result<int,string> $x
      * $x = Result\err("early error");
      * // @var Result<string,string> $y
      * $y = Result\ok("foo");
-     * self::assertEq($x->and($y), Result\err("early error"));
+     * self::assertSame($x->and($y)->unwrapErr(), "early error");
      *
      * // @var Result<int,string> $x
      * $x = Result\err("not a 2");
      * // @var Result<string,string> $y
      * $y = Result\err("late error");
-     * self::assertEq($x->and($y), Result\err("not a 2"));
+     * self::assertSame($x->and($y)->unwrapErr(), "not a 2");
      *
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * // @var Result<string,string> $y
      * $y = Result\ok("different result type");
-     * self::assertEq($x->and($y), Result\ok("different result type"));
+     * self::assertSame($x->and($y)->unwrap(), "different result type");
      * ```
      *
      * @template U
@@ -391,7 +391,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @return Result<int,string>
      * function square(int $x): Result {
      *     $x *= $x;
@@ -399,9 +399,9 @@ interface Result extends \IteratorAggregate
      *     return Result\err("overflowed");
      * }
      *
-     * self::assertEq(Result\ok(2)->andThen(square(...)), Result\ok(4));
-     * self::assertEq(Result\ok(10_000_000_000)->andThen(square(...)), Result\err("overflowed"));
-     * self::assertEq(Result\err("not a number")->andThen(square(...)), Result\err("not a number"));
+     * self::assertSame(Result\ok(2)->andThen(square(...))->unwrap(), 4);
+     * self::assertSame(Result\err("not a number")->andThen(square(...))->unwrapErr(), "not a number");
+     * self::assertSame(Result\ok(10_000_000_000)->andThen(square(...))->unwrapErr(), "overflowed");
      * ```
      *
      * @template U
@@ -417,30 +417,30 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * // @var Result<string,string> $y
      * $y = Result\err("late error");
-     * self::assertEq($x->or($y), Result\ok(2));
+     * self::assertSame($x->or($y)->unwrap(), 2);
      *
      * // @var Result<int,string> $x
      * $x = Result\err("early error");
      * // @var Result<int,string> $y
      * $y = Result\ok(2);
-     * self::assertEq($x->or($y), Result\ok(2));
+     * self::assertSame($x->or($y)->unwrap(), 2);
      *
      * // @var Result<int,string> $x
      * $x = Result\err("not a 2");
      * // @var Result<string,string> $y
      * $y = Result\err("late error");
-     * self::assertEq($x->or($y), Result\err("late error"));
+     * self::assertSame($x->or($y)->unwrapErr(), "late error");
      *
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * // @var Result<string,string> $y
      * $y = Result\ok(100);
-     * self::assertEq($x->or($y), Result\ok(2));
+     * self::assertSame($x->or($y)->unwrap(), 2);
      * ```
      *
      * @template F
@@ -455,16 +455,16 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @return Result<int,int>
      * function sq(int $x): Result { return Result\ok($x * $x); }
      * // @return Result<int,int>
      * function err(int $x): Result { return Result\err($x); }
      *
-     * self::assertEq(Result\ok(2)->orElse(sq(...))->orElse(sq(...)), Result\ok(2));
-     * self::assertEq(Result\ok(2)->orElse(err(...))->orElse(sq(...)), Result\ok(2));
-     * self::assertEq(Result\err(3)->orElse(sq(...))->orElse(err(...)), Result\ok(9));
-     * self::assertEq(Result\err(3)->orElse(err(...))->orElse(err(...)), Result\err(3));
+     * self::assertSame(Result\ok(2)->orElse(sq(...))->orElse(sq(...))->unwrap(), 2);
+     * self::assertSame(Result\ok(2)->orElse(err(...))->orElse(sq(...))->unwrap(), 2);
+     * self::assertSame(Result\err(3)->orElse(sq(...))->orElse(err(...))->unwrap(), 9);
+     * self::assertSame(Result\err(3)->orElse(err(...))->orElse(err(...))->unwrapErr(), 3);
      * ```
      *
      * @template F
@@ -479,7 +479,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertTrue($x->contains(2));
@@ -502,7 +502,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertFalse($x->containsErr("Some error message"));
@@ -527,7 +527,7 @@ interface Result extends \IteratorAggregate
      *
      * Print the numbers on each line of a string multiplied by two.
      *
-     * ```
+     * ```php
      * // @return Result<int,string>
      * function parseInt(string $number): Result {
      *     $int = (int) $number;
@@ -564,14 +564,14 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
-     * self::assertEq($x->mapErr(strtoupper(...)), Result\ok(2));
+     * self::assertSame($x->mapErr(strtoupper(...))->unwrap(), 2);
      *
      * // @var Result<int,string> $x
      * $x = Result\err("error");
-     * self::assertEq($x->mapErr(strtoupper(...)), Result\err("ERROR"));
+     * self::assertSame($x->mapErr(strtoupper(...))->unwrapErr(), "ERROR");
      * ```
      *
      * @template F
@@ -586,7 +586,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<string,string> $x
      * $x = Result\ok("foo");
      * self::assertEq($x->mapOr(strlen(...), 42), 3);
@@ -610,7 +610,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * use TH\Maybe\Option;
      *
      * // @var Result<int,string> $x
@@ -632,7 +632,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * use TH\Maybe\Option;
      *
      * // @var Result<int,string> $x
@@ -657,7 +657,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $k = 21;
      *
      * // @var Result<string,string> $x

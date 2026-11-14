@@ -11,7 +11,7 @@ use function TH\Maybe\Internal\isOfAnyClass;
 /**
  * Return a `Result\Ok` Result containing `$value`.
  *
- * ```
+ * ```php
  * $x = Result\ok(3);
  * self::assertTrue($x->isOk());
  * self::assertSame(3, $x->unwrap());
@@ -31,7 +31,7 @@ function ok(mixed $value): Result\Ok
  *
  * # Examples
  *
- * ```
+ * ```php
  * $x = Result\err("nope");
  * self::assertTrue($x->isErr());
  * self::assertSame("nope", $x->unwrapErr());
@@ -56,13 +56,13 @@ function err(mixed $value): Result\Err
  *
  * Successful execution:
  *
- * ```
- * self::assertEq(Result\ok(3), Result\trap(fn () => 3));
+ * ```php
+ * self::assertSame(Result\trap(fn () => 3)->unwrap(), 3);
  * ```
  *
  * Checked exception:
  *
- * ```
+ * ```php
  * $x = Result\trap(fn () => new \DateTimeImmutable("2020-30-30 UTC"));
  * self::assertTrue($x->isErr());
  * $x->unwrap();
@@ -71,7 +71,7 @@ function err(mixed $value): Result\Err
  *
  * Unchecked exception:
  *
- * ```
+ * ```php
  * Result\trap(fn () => 1/0);
  * // @throws DivisionByZeroError Division by zero
  * ```
@@ -104,14 +104,14 @@ function trap(callable $callback, array|string $exceptionClass = \Exception::cla
  *
  * # Examples
  *
- * ```
+ * ```php
  * $x = Result\ok(3);
- * self::assertSame(Result\flatten(Result\ok($x)), $x);
+ * self::assertSame(Result\flatten(Result\ok($x))->unwrap(), 3);
  *
- * $x = Result\err("deity");
- * self::assertSame(Result\flatten($y = Result\ok($x)), $x);
+ * $y = Result\err("deity");
+ * self::assertSame(Result\flatten(Result\ok($y))->unwrapErr(), "deity");
  *
- * self::assertEq(Result\flatten($x), Result\err("deity"));
+ * self::assertSame(Result\flatten($y)->unwrapErr(), "deity");
  * ```
  *
  * @template T
@@ -136,16 +136,17 @@ function flatten(Result $result): Result
  * `Ok(None)` will be mapped to `None`.
  * `Ok(Some(_))` and `Err(_)` will be mapped to `Some(Ok(_))` and `Some(Err(_))`.
  *
- * ```
+ * ```php
  * use TH\Maybe\Option;
  *
- * self::assertSame(Result\transpose(Result\ok(Option\none())), Option\none());
- *
  * $x = Result\ok(Option\some(4));
- * self::assertEq(Result\transpose($x), Option\some(Result\ok(4)));
+ * self::assertSame(Result\transpose($x)->unwrap()->unwrap(), 4);
  *
  * $x = Result\err("meat");
- * self::assertEq(Result\transpose($x), Option\some($x));
+ * self::assertSame(Result\transpose($x)->unwrap()->err()->unwrap(), "meat");
+ *
+ * $x = Result\ok(Option\none());
+ * self::assertTrue(Result\transpose($x)->isNone());
  * ```
  *
  * @template U
