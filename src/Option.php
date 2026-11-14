@@ -129,14 +129,14 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Option<int,string> $x
      * $x = Option\Some(2);
      * self::assertTrue($x->isNoneOr(fn ($n) => $n < 5));
      * self::assertFalse($x->isNoneOr(fn ($n) => $n > 5));
      * ```
      *
-     * ```
+     * ```php
      * // @var Option<int,string> $x
      * $x = Option\none();
      * self::assertTrue($x->isNoneOr(fn ($n) => $n < 5));

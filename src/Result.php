@@ -186,13 +186,13 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err("emergency failure");
      * self::assertSame($x->expectErr("Testing expectErr"), "emergency failure");
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\Ok(2);
      * $x->expectErr("Testing expectErr"); // @throws RuntimeException Testing expectErr: i:2;

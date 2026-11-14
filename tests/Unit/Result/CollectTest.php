@@ -107,4 +107,65 @@ final class CollectTest extends TestCase
         Assert::assertResultUsed($err);
         Assert::assertResultNotUsed($collected);
     }
+
+    public function testCollectDrainsAllResultsOnErr(): void
+    {
+        $first = Result\ok(1);
+        $second = Result\err('nope');
+        $third = Result\ok(3);
+
+        /** @var list<Result<int, string>> $results */
+        $results = [$first, $second, $third];
+
+        $collected = Result\collect($results, drain: true);
+
+        Assert::assertEquals($expected = Result\err('nope'), $collected);
+
+        Assert::assertResultUsed($first);
+        Assert::assertResultUsed($second);
+        Assert::assertResultUsed($third);
+        Assert::assertResultNotUsed($collected);
+        Assert::assertResultNotUsed($expected);
+    }
+
+    public function testCollectDrainReturnsTheFirstErr(): void
+    {
+        $first = Result\err('first');
+        $second = Result\err('second');
+
+        /** @var list<Result<int, string>> $results */
+        $results = [$first, $second];
+
+        $collected = Result\collect($results, drain: true);
+
+        Assert::assertEquals($expected = Result\err('first'), $collected);
+
+        Assert::assertResultUsed($first);
+        Assert::assertResultUsed($second);
+        Assert::assertResultNotUsed($collected);
+        Assert::assertResultNotUsed($expected);
+    }
+
+    public function testCollectDrainConsumesTheWholeIterable(): void
+    {
+        $visited = 0;
+
+        /**
+         * @var iterable<Result<int, string>> $results
+         */
+        $results = (static function () use (&$visited): \Generator {
+            yield Result\ok(1);
+            yield Result\err('nope');
+            yield Result\ok(3);
+            $visited++;
+        })();
+
+        $collected = Result\collect($results, drain: true);
+
+        Assert::assertEquals($expected = Result\err('nope'), $collected);
+        Assert::assertSame(1, $visited);
+
+        Assert::assertResultNotUsed($collected);
+        Assert::assertResultNotUsed($expected);
+    }
 }

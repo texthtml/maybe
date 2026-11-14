@@ -230,7 +230,7 @@ function transpose(Option $option): Result
  *
  * # Examples
  *
- * ```
+ * ```php
  * self::assertEq(Option\collect([Option\some(1), Option\some(2)]), Option\some([1, 2]));
  * self::assertEq(Option\collect([Option\some(1), Option\none()]), Option\none());
  * self::assertEq(Option\collect([Option\none(), Option\some(2)]), Option\none());
