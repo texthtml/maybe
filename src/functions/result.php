@@ -165,39 +165,57 @@ function transpose(Result $result): Option
 
 /**
  * Takes each element in the iterable: if it is an `Err`, no further elements are
- * taken and that `Err` is returned. Should no `Err` occur, an `Ok` containing the
- * list of all the values is returned.
+ * taken and the first `Err` is returned. Should no `Err` occur, an `Ok` containing
+ * the list of all the values is returned.
+ *
+ * With `$drain` the whole iterable is consumed even after the first `Err`, using
+ * every remaining result: handy when the results already exist (e.g. a literal
+ * array) and letting the must-be-used invariant fire on the leftovers would be
+ * noise. Values collected before the `Err` are still discarded.
  *
  * # Examples
  *
- * ```
- * self::assertEq(Result\collect([Result\ok(1), Result\ok(2)]), Result\ok([1, 2]));
- * self::assertEq(Result\collect([Result\ok(1), Result\err("nope")]), Result\err("nope"));
- * self::assertEq(Result\collect([Result\err("nope"), Result\ok(2)]), Result\err("nope"));
- * self::assertEq(Result\collect([]), Result\ok([]));
+ * ```php
+ * self::assertSame(Result\collect([Result\ok(1), Result\ok(2)])->unwrap(), [1, 2]);
+ * self::assertSame(Result\collect([Result\ok(1), Result\err("nope")])->unwrapErr(), "nope");
+ * self::assertSame(Result\collect([Result\err("nope"), Result\ok(2)], drain: true)->unwrapErr(), "nope");
+ * self::assertSame(Result\collect([])->unwrap(), []);
  * ```
  *
  * @template U
  * @template E
  * @param iterable<Result<U, E>> $results
+ * @param bool $drain consume the whole iterable & use every result, even after the first `Err`
+ * @psalm-suppress InvalidReturnType -- psalm can't prove `E` flows through `clone $firstErr`
  * @return Result<list<U>, E>
  */
 #[ExamplesSetup(new IgnoreUnusedResults())]
-function collect(iterable $results): Result
+function collect(iterable $results, bool $drain = false): Result
 {
     /** @var list<U> $values */
     $values = [];
 
-    // isErr() doubles as the must-be-used marker on the Err branch
-    foreach ($results as $result) {
-        if ($result->isErr()) {
-            // @mago-ignore analysis:invalid-return-statement -- the clone preserves the original's `E`
-            return clone $result;
-        }
+    /** @var Result\Err<E>|null $firstErr */
+    $firstErr = null;
 
+    foreach ($results as $result) {
         // @mago-ignore analysis:unhandled-thrown-type -- unwrap() cannot throw: $result is not Err
         /** @psalm-suppress MissingThrowsDocblock -- unwrap() cannot throw: $result is not Err */
-        $values[] = $result->unwrap();
+        match (true) {
+            $result->isErr() => $firstErr ??= $result,
+            default => $values[] = $result->unwrap(),
+        };
+
+        if ($firstErr instanceof Result\Err && !$drain) {
+            break;
+        }
+    }
+
+    if ($firstErr instanceof Result\Err) {
+        // @mago-ignore analysis:invalid-return-statement -- the clone preserves the original's `E`
+        /** @psalm-suppress InvalidReturnStatement -- the clone preserves the original's `E` */
+
+        return clone $firstErr;
     }
 
     // @mago-ignore analysis:less-specific-nested-return-statement -- mago can't bind `E` on an all-`Ok` collection
