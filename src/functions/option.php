@@ -200,12 +200,12 @@ function unzip(Option $option): array
  * `None` will be mapped to `Ok(None)`.
  * `Some(Ok(_))` and `Some(Err(_))` will be mapped to `Ok(Some(_))` and `Err(_)`.
  *
- * ```
+ * ```php
  * use TH\Maybe\Result;
  *
- * self::assertEq(Result\ok(Option\some(4)), Option\transpose(Option\some(Result\ok(4))));
- * self::assertEq(Result\err("meat"), Option\transpose(Option\some(Result\err("meat"))));
- * self::assertEq(Option\transpose(Option\none()), Result\ok(Option\none()));
+ * self::assertSame(Option\transpose(Option\some(Result\ok(4)))->unwrap()->unwrap(), 4);
+ * self::assertSame(Option\transpose(Option\some(Result\err("meat")))->unwrapErr(), "meat");
+ * self::assertTrue(Option\transpose(Option\none())->unwrap()->isNone());
  * ```
  *
  * @template U

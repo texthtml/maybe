@@ -558,11 +558,9 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
-     * use TH\Maybe\Result;
-     *
-     * self::assertEq(Option\some("foo")->okOr(0), Result\ok("foo"));
-     * self::assertEq(Option\none()->okOr(0), Result\err(0));
+     * ```php
+     * self::assertSame(Option\some("foo")->okOr(0)->unwrap(), "foo");
+     * self::assertSame(Option\none()->okOr(0)->unwrapErr(), 0);
      * ```
      *
      * @template E
@@ -578,11 +576,9 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
-     * use TH\Maybe\Result;
-     *
-     * self::assertEq(Option\some("foo")->okOrElse(fn () => 0), Result\ok("foo"));
-     * self::assertEq(Option\none()->okOrElse(fn () => 0), Result\err(0));
+     * ```php
+     * self::assertSame(Option\some("foo")->okOrElse(fn () => 0)->unwrap(), "foo");
+     * self::assertSame(Option\none()->okOrElse(fn () => 0)->unwrapErr(), 0);
      * ```
      *
      * @template E
