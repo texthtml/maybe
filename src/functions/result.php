@@ -7,6 +7,7 @@ use TH\Maybe\Option;
 use TH\Maybe\Result;
 use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
 use function TH\Maybe\Internal\isOfAnyClass;
+use function TH\Maybe\Internal\throughFirstErr;
 
 /**
  * Return a `Result\Ok` Result containing `$value`.
@@ -198,17 +199,20 @@ function collect(iterable $results, bool $drain = false): Result
     /** @var Result\Err<E>|null $firstErr */
     $firstErr = null;
 
-    foreach ($results as $result) {
-        // @mago-ignore analysis:unhandled-thrown-type -- unwrap() cannot throw: $result is not Err
-        /** @psalm-suppress MissingThrowsDocblock -- unwrap() cannot throw: $result is not Err */
-        match (true) {
-            $result->isErr() => $firstErr ??= $result,
-            default => $values[] = $result->unwrap(),
-        };
+    if (!$drain) {
+        $results = throughFirstErr($results);
+    }
 
-        if ($firstErr instanceof Result\Err && !$drain) {
-            break;
+    foreach ($results as $result) {
+        if (!$result->isErr()) {
+            // @mago-ignore analysis:unhandled-thrown-type -- unwrap() cannot throw: $result is not Err
+            /** @psalm-suppress MissingThrowsDocblock -- unwrap() cannot throw: $result is not Err */
+            $values[] = $result->unwrap();
+
+            continue;
         }
+
+        $firstErr ??= $result;
     }
 
     if ($firstErr instanceof Result\Err) {
