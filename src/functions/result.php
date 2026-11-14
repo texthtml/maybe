@@ -188,10 +188,9 @@ function collect(iterable $results): Result
     /** @var list<U> $values */
     $values = [];
 
+    // isErr() doubles as the must-be-used marker on the Err branch
     foreach ($results as $result) {
-        if ($result instanceof Result\Err) {
-            $result->err(); // use this result
-
+        if ($result->isErr()) {
             // @mago-ignore analysis:invalid-return-statement -- the clone preserves the original's `E`
             return clone $result;
         }
