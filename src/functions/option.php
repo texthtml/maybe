@@ -34,7 +34,7 @@ function none(): Option\None
  *
  * # Examples
  *
- * ```
+ * ```php
  * self::assertEq(Option\fromValue("fruits"), Option\some("fruits"));
  * self::assertEq(Option\fromValue(null), Option\none());
  * ```
@@ -68,13 +68,13 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
  *
  * Successful execution:
  *
- * ```
+ * ```php
  * self::assertEq(Option\of(fn() => "fruits"), Option\some("fruits"));
  * ```
  *
  * Conversion of `null` to `Option\None`:
  *
- * ```
+ * ```php
  * self::assertEq(Option\of(fn() => null), Option\none());
  * ```
  *
@@ -96,25 +96,25 @@ function of(callable $callback, mixed $noneValue = null, bool $strict = true): O
  *
  * Successful execution:
  *
- * ```
+ * ```php
  * self::assertEq(Option\tryOf(fn () => strtolower("FRUITS")), Option\some("fruits"));
  * ```
  *
  * Conversion of `null` to `Option\None`:
  *
- * ```
+ * ```php
  * self::assertEq(Option\tryOf(fn() => null), Option\none());
  * ```
  *
  * Checked Exception:
  *
- * ```
+ * ```php
  * self::assertEq(Option\tryOf(fn () => new \DateTimeImmutable("nope")), Option\none());
  * ```
  *
  * Unchecked Exception:
  *
- * ```
+ * ```php
  * self::assertEq(Option\tryOf(fn () => 1 / 0), Option\none());
  * // @throws DivisionByZeroError Division by zero
  * ```
@@ -149,7 +149,7 @@ function tryOf(
  *
  * # Examples
  *
- * ```
+ * ```php
  * $x = Option\Some("vegetables");
  * self::assertSame(Option\flatten(Option\some($x)), $x);
  * self::assertSame(Option\flatten(Option\some(Option\none())), Option\none());
@@ -174,7 +174,7 @@ function flatten(Option $option): Option
  *
  * If `self` is `Some([a, b])` this method returns `[Some(a), Some(b)]`. Otherwise, `[None, None]` is returned.
  *
- * ```
+ * ```php
  * $x = Option\Some("vegetables");
  * self::assertEq(Option\unzip(Option\some(["a", 2])), [Option\some("a"), Option\some(2)]);
  * self::assertSame(Option\unzip(Option\none()), [Option\none(), Option\none()]);
@@ -200,12 +200,12 @@ function unzip(Option $option): array
  * `None` will be mapped to `Ok(None)`.
  * `Some(Ok(_))` and `Some(Err(_))` will be mapped to `Ok(Some(_))` and `Err(_)`.
  *
- * ```
+ * ```php
  * use TH\Maybe\Result;
  *
- * self::assertEq(Result\ok(Option\some(4)), Option\transpose(Option\some(Result\ok(4))));
- * self::assertEq(Result\err("meat"), Option\transpose(Option\some(Result\err("meat"))));
- * self::assertEq(Option\transpose(Option\none()), Result\ok(Option\none()));
+ * self::assertSame(Option\transpose(Option\some(Result\ok(4)))->unwrap()->unwrap(), 4);
+ * self::assertSame(Option\transpose(Option\some(Result\err("meat")))->unwrapErr(), "meat");
+ * self::assertTrue(Option\transpose(Option\none())->unwrap()->isNone());
  * ```
  *
  * @template U

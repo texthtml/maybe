@@ -21,7 +21,7 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
  *
  * # Examples
  *
- * ```
+ * ```php
  * // @return Option<float>
  * function divide(float $numerator, float $denominator): Option {
  *   if ($denominator === 0.0) {
@@ -55,13 +55,13 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Option<int,string> $x
      * $x = Option\Some(2);
      * self::assertTrue($x->isSome());
      * ```
      *
-     * ```
+     * ```php
      * // @var Option<int,string> $x
      * $x = Option\none();
      * self::assertFalse($x->isSome());
@@ -79,13 +79,13 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Option<int,string> $x
      * $x = Option\Some(2);
      * self::assertFalse($x->isNone());
      * ```
      *
-     * ```
+     * ```php
      * // @var Option<int,string> $x
      * $x = Option\none();
      * self::assertTrue($x->isNone());
@@ -103,14 +103,14 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Option<int,string> $x
      * $x = Option\Some(2);
      * self::assertTrue($x->isSomeAnd(fn ($n) => $n < 5));
      * self::assertFalse($x->isSomeAnd(fn ($n) => $n > 5));
      * ```
      *
-     * ```
+     * ```php
      * // @var Option<int,string> $x
      * $x = Option\none();
      * self::assertFalse($x->isSomeAnd(fn ($n) => $n < 5));
@@ -154,12 +154,12 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $x = Option\some("value");
      * self::assertSame($x->expect("fruits are healthy"), "value");
      * ```
      *
-     * ```
+     * ```php
      * // @var Option<string> $x
      * $x = Option\none();
      *
@@ -179,12 +179,12 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $x = Option\some("value");
      * self::assertSame($x->unwrap(), "value");
      * ```
      *
-     * ```
+     * ```php
      * // @var Option<string> $x
      * $x = Option\none();
      *
@@ -203,7 +203,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * self::assertSame(Option\some("car")->unwrapOr("bike"), "car");
      * self::assertSame(Option\none()->unwrapOr("bike"), "bike");
      * ```
@@ -219,7 +219,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $k = 10;
      * self::assertSame(Option\some(4)->unwrapOrElse(fn () => 2 * $k), 4);
      * self::assertSame(Option\none()->unwrapOrElse(fn () => 2 * $k), 20);
@@ -237,7 +237,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $option = Option\some(4);
      * self::assertSame($option->inspect(fn (int $n) => printf("got: %d", $n)), $option); // @prints got: 4
      * // @var Option<int> $option
@@ -255,7 +255,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $x = Option\some(2);
      * // @var Option<string> $y
      * $y = Option\none();
@@ -286,7 +286,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @return Option<int>
      * function to_exact_int(float $f): Option {
      *   $i = (int) $f;
@@ -310,7 +310,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $x = Option\some(2);
      * // @var Option<int> $y
      * $y = Option\none();
@@ -343,7 +343,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @return Option<string>
      * function nobody(): Option {
      *   return Option\none();
@@ -371,7 +371,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $x = Option\some(2);
      * // @var Option<int> $y
      * $y = Option\none();
@@ -401,7 +401,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $x = Option\some(2);
      * self::assertTrue($x->contains(2));
      * $x = Option\some(3);
@@ -424,7 +424,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $isEven = fn(int $n) => $n % 2 === 0;
      *
      * self::assertSame(Option\none()->filter($isEven), Option\none());
@@ -442,7 +442,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $maybeSomeString = Option\some("Hello, World!");
      * $maybeSomeLen = $maybeSomeString->map(strlen(...));
      * self::assertEq($maybeSomeLen, Option\some(13));
@@ -461,7 +461,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $x = Option\some("foo");
      * self::assertSame($x->mapOr(strlen(...), 42), 3);
      * // @var Option<string> $x
@@ -484,7 +484,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $k = 21;
      * $x = Option\some("foo");
      * self::assertSame($x->mapOrElse(strlen(...), fn () => 2 * $k), 3);
@@ -510,7 +510,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $x = Option\some(1);
      * $y = Option\some("hi");
      * // @var Option<int> $z
@@ -534,7 +534,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $x = Option\some(new \DateTime('2025-02-08T23:15:07+00:00'));
      * $y = Option\some(new \DateInterval('P1M0D'));
      * // @var Option<int> $z
@@ -558,11 +558,9 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
-     * use TH\Maybe\Result;
-     *
-     * self::assertEq(Option\some("foo")->okOr(0), Result\ok("foo"));
-     * self::assertEq(Option\none()->okOr(0), Result\err(0));
+     * ```php
+     * self::assertSame(Option\some("foo")->okOr(0)->unwrap(), "foo");
+     * self::assertSame(Option\none()->okOr(0)->unwrapErr(), 0);
      * ```
      *
      * @template E
@@ -578,11 +576,9 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
-     * use TH\Maybe\Result;
-     *
-     * self::assertEq(Option\some("foo")->okOrElse(fn () => 0), Result\ok("foo"));
-     * self::assertEq(Option\none()->okOrElse(fn () => 0), Result\err(0));
+     * ```php
+     * self::assertSame(Option\some("foo")->okOrElse(fn () => 0)->unwrap(), "foo");
+     * self::assertSame(Option\none()->okOrElse(fn () => 0)->unwrapErr(), 0);
      * ```
      *
      * @template E
