@@ -60,13 +60,11 @@ final class OfTest extends TestCase
 
     public function testTryOfExceptions(): void
     {
-        // @phpstan-ignore-next-line
         Assert::assertEquals(Option\none(), Option\tryOf(static fn () => new \DateTimeImmutable('nope')));
 
         $this->expectException(\DivisionByZeroError::class);
         $this->expectExceptionMessage('Division by zero');
 
-        // @phpstan-ignore-next-line
         Option\tryOf(static fn () => 1 / 0);
     }
 
@@ -74,12 +72,10 @@ final class OfTest extends TestCase
     {
         Assert::assertEquals(
             Option\none(),
-            // @phpstan-ignore-next-line
             Option\tryOf(static fn () => 1 / 0, exceptionClass: \ArithmeticError::class),
         );
         Assert::assertEquals(
             Option\none(),
-            // @phpstan-ignore-next-line
             Option\tryOf(static fn () => 1 / 0, exceptionClass: [\LogicException::class, \ArithmeticError::class]),
         );
     }
@@ -89,7 +85,6 @@ final class OfTest extends TestCase
         $this->expectException(\DivisionByZeroError::class);
         $this->expectExceptionMessage('Division by zero');
 
-        // @phpstan-ignore-next-line
         Option\tryOf(static fn () => 1 / 0, exceptionClass: [\LogicException::class, \RuntimeException::class]);
     }
 
@@ -98,7 +93,6 @@ final class OfTest extends TestCase
         $this->expectException(\DivisionByZeroError::class);
         $this->expectExceptionMessage('Division by zero');
 
-        // @phpstan-ignore-next-line
         Option\tryOf(static fn () => 1 / 0, exceptionClass: \LogicException::class);
     }
 }

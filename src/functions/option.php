@@ -52,7 +52,7 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
         // @mago-expect analysis:possibly-null-operand
         // @mago-expect lint:identity-comparison
         // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-        : $value == $noneValue; // @phpstan-ignore equal.notAllowed
+        : $value == $noneValue;
 
     /** @var Option<U> */
     return $same
@@ -165,7 +165,6 @@ function flatten(Option $option): Option
     return $option instanceof Option\None
         ? $option
         // @mago-ignore analysis:unhandled-thrown-type -- unwrap() cannot throw: $option is not None
-        // @phpstan-ignore missingType.checkedException (unwrap() cannot throw: $option is not None)
         : $option->unwrap();
 }
 
@@ -252,8 +251,6 @@ function collect(iterable $options): Option
         }
 
         // @mago-ignore analysis:unhandled-thrown-type -- unwrap() cannot throw: $option is not None
-        /** @psalm-suppress MissingThrowsDocblock -- unwrap() cannot throw: $option is not None */
-        // @phpstan-ignore missingType.checkedException (unwrap() cannot throw: $option is not None)
         $values[] = $option->unwrap();
     }
 

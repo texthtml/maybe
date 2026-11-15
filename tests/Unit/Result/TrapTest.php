@@ -24,7 +24,6 @@ final class TrapTest extends TestCase
     {
         Assert::assertEquals(
             new \Exception('Ooops'),
-            // @phpstan-ignore-next-line
             Result\trap(static fn () => throw new \Exception('Ooops'))->unwrapErr(),
         );
     }
@@ -34,7 +33,6 @@ final class TrapTest extends TestCase
         $this->expectException(\DivisionByZeroError::class);
         $this->expectExceptionMessage('Division by zero');
 
-        // @phpstan-ignore-next-line
         Result\trap(static fn () => 1 / 0);
     }
 }

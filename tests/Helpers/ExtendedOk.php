@@ -9,7 +9,6 @@ use TH\Maybe\Result;
  */
 final class ExtendedOk extends Result\Ok
 {
-    /** @psalm-suppress MissingThrowsDocblock 🙈 */
     public function __toString(): string
     {
         return $this->unwrap();

@@ -188,7 +188,7 @@ class Ok implements Result
             // @mago-expect analysis:possibly-null-operand
             // @mago-expect lint:identity-comparison
             // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
-            : $this->value == $value; // @phpstan-ignore equal.notAllowed
+            : $this->value == $value;
     }
 
     /**
