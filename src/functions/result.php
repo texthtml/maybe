@@ -11,7 +11,7 @@ use function TH\Maybe\Internal\isOfAnyClass;
 /**
  * Return a `Result\Ok` Result containing `$value`.
  *
- * ```
+ * ```php
  * $x = Result\ok(3);
  * self::assertTrue($x->isOk());
  * self::assertSame(3, $x->unwrap());
@@ -31,7 +31,7 @@ function ok(mixed $value): Result\Ok
  *
  * # Examples
  *
- * ```
+ * ```php
  * $x = Result\err("nope");
  * self::assertTrue($x->isErr());
  * self::assertSame("nope", $x->unwrapErr());

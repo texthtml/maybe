@@ -75,13 +75,13 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertTrue($x->isOk());
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err(2);
      * self::assertFalse($x->isOk());
@@ -97,13 +97,13 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertFalse($x->isErr());
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err(2);
      * self::assertTrue($x->isErr());
@@ -119,14 +119,14 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertTrue($x->isOkAnd(fn ($n) => $n < 5));
      * self::assertFalse($x->isOkAnd(fn ($n) => $n > 5));
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err(2);
      * self::assertFalse($x->isOkAnd(fn ($n) => $n < 5));
@@ -143,14 +143,14 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err(2);
      * self::assertTrue($x->isErrAnd(fn ($n) => $n < 5));
      * self::assertFalse($x->isErrAnd(fn ($n) => $n > 5));
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertFalse($x->isErrAnd(fn ($n) => $n < 5));
@@ -168,7 +168,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err("emergency failure");
      * $x->expect("Testing expect"); // @throws RuntimeException Testing expect
@@ -211,13 +211,13 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\Ok(2);
      * self::assertEq($x->unwrap(), 2);
      * ```
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\err("emergency failure");
      * $x->unwrap(); // @throws RuntimeException Unwrapping `Err`: s:17:"emergency failure";
@@ -235,7 +235,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\Ok(2);
      * self::assertEq($x->unwrapErr(), 2); // @throws RuntimeException Unwrapping err on `Ok`: i:2;
@@ -253,7 +253,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $default = 2;
      * // @var Result<int,string> $x
      * $x = Result\Ok(9);
@@ -275,7 +275,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * self::assertEq(Result\ok(2)->unwrapOrElse(strlen(...)), 2);
      * self::assertEq(Result\err("foo")->unwrapOrElse(strlen(...)), 3);
      * ```
@@ -291,7 +291,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @return Result<int,string>
      * function parseInt(string $number): Result {
      *     $int = (int) $number;
@@ -479,7 +479,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertTrue($x->contains(2));
@@ -502,7 +502,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertFalse($x->containsErr("Some error message"));
@@ -527,7 +527,7 @@ interface Result extends \IteratorAggregate
      *
      * Print the numbers on each line of a string multiplied by two.
      *
-     * ```
+     * ```php
      * // @return Result<int,string>
      * function parseInt(string $number): Result {
      *     $int = (int) $number;
@@ -586,7 +586,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<string,string> $x
      * $x = Result\ok("foo");
      * self::assertEq($x->mapOr(strlen(...), 42), 3);
@@ -610,7 +610,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * use TH\Maybe\Option;
      *
      * // @var Result<int,string> $x
@@ -632,7 +632,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * use TH\Maybe\Option;
      *
      * // @var Result<int,string> $x
@@ -657,7 +657,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * $k = 21;
      *
      * // @var Result<string,string> $x
