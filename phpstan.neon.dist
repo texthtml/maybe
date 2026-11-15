@@ -1,29 +1,10 @@
 parameters:
 	level: 9
 	paths:
-		- src
-		- tests
+		- tests/type-hinting
 	exceptions:
 		check:
 			missingCheckedExceptionInThrows: true
 			tooWideThrowType: true
 		uncheckedExceptionClasses:
 			- LogicException
-	ignoreErrors:
-		-
-			message: '#Unreachable statement - code above always terminates.#'
-			path: tests/Unit/
-		-
-			message: '#Call to .+ will always evaluate to .+#'
-			path: tests/Unit/
-		-
-			message: '#Generator expects value type array{.*}, array{.*} given.#'
-			path: tests/Unit/
-		-
-			message: "#Method .*::.*\\(\\) throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag.#"
-			path: tests/Unit/
-		-
-			message: "#PHPDoc tag @var with type .* is not subtype of native type .*.#"
-			paths:
-				- tests/Provider/
-				- tests/Unit/

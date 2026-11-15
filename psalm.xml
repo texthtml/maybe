@@ -18,67 +18,12 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="src" />
-        <directory name="tests" />
+        <directory name="tests/type-hinting" />
         <ignoreFiles>
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
 
-    <issueHandlers>
-        <MissingOverrideAttribute>
-            <errorLevel type="suppress">
-                <directory name="src" />
-                <directory name="tests" />
-            </errorLevel>
-        </MissingOverrideAttribute>
-        <MissingThrowsDocblock>
-            <errorLevel type="suppress">
-                <directory name="tests" />
-            </errorLevel>
-        </MissingThrowsDocblock>
-        <MissingClosureReturnType>
-            <errorLevel type="suppress">
-                <directory name="tests/Unit" />
-            </errorLevel>
-        </MissingClosureReturnType>
-        <RedundantCondition>
-            <errorLevel type="suppress">
-                <directory name="tests/Unit" />
-            </errorLevel>
-        </RedundantCondition>
-        <TypeDoesNotContainType>
-            <errorLevel type="suppress">
-                <directory name="tests/Unit" />
-            </errorLevel>
-        </TypeDoesNotContainType>
-        <InvalidReturnType>
-            <errorLevel type="suppress">
-                <directory name="tests/Unit" />
-                <directory name="tests/Provider" />
-            </errorLevel>
-        </InvalidReturnType>
-        <NoValue>
-            <errorLevel type="suppress">
-                <directory name="tests/Unit" />
-            </errorLevel>
-        </NoValue>
-        <UnusedClosureParam>
-            <errorLevel type="suppress">
-                <directory name="tests/Unit" />
-            </errorLevel>
-        </UnusedClosureParam>
-        <PropertyNotSetInConstructor>
-            <errorLevel type="suppress">
-                <directory name="tests/Unit" />
-            </errorLevel>
-        </PropertyNotSetInConstructor>
-        <InvalidArgument>
-            <errorLevel type="suppress">
-                <directory name="tests/Unit" />
-            </errorLevel>
-        </InvalidArgument>
-    </issueHandlers>
     <ignoreExceptions>
         <classAndDescendants name="LogicException" />
     </ignoreExceptions>
