@@ -48,6 +48,7 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
  * @extends \IteratorAggregate<T>
  * @immutable
  */
+#[ExamplesSetup(new IgnoreUnusedResults())]
 interface Option extends \IteratorAggregate
 {
     /**
@@ -558,7 +559,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * use TH\Maybe\Result;
      *
      * self::assertEq(Option\some("foo")->okOr(0), Result\ok("foo"));
@@ -570,7 +571,6 @@ interface Option extends \IteratorAggregate
      * @return (T is never ? Result\Err<E> : Result<T,E>)
      * @phpstan-return Result<T,E>
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function okOr(mixed $err): Result;
 
     /**
@@ -578,7 +578,7 @@ interface Option extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * use TH\Maybe\Result;
      *
      * self::assertEq(Option\some("foo")->okOrElse(fn () => 0), Result\ok("foo"));
@@ -590,6 +590,5 @@ interface Option extends \IteratorAggregate
      * @phpstan-return Result<T,E>
      * @return (T is never ? Result\Err<E> : Result<T,E>)
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function okOrElse(callable $err): Result;
 }

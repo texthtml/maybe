@@ -2,48 +2,81 @@
 
 namespace TH\Maybe\Tests\Helpers;
 
-use TH\Maybe\Result\Err;
-use TH\Maybe\Result\Ok;
+use TH\DocTest\Setup\CustomAssertions;
+use TH\DocTest\Setup\CustomAssertions\Call;
+use TH\Maybe\Option;
+use TH\Maybe\Result;
 use TH\ObjectReaper\Reaper;
 
 /**
+ * doctest setup making examples that leave a `Result` unused pass: after each
+ * `self::assert*` call, the reapers of every `Result` reachable from the call's
+ * arguments are forgotten, so an assertion marks its operands used — inline
+ * temporaries as well as variables — and reassigning a variable holding an
+ * already-asserted Result is fine
+ *
  * @internal
  */
-final class IgnoreUnusedResults
+final class IgnoreUnusedResults implements CustomAssertions
 {
-    public function __construct()
+    public function assertion(Call $call, \Closure $next): void
     {
-        $this->clearReapers();
+        foreach ($call->arguments as $argument) {
+            $this->forgetReapers($argument);
+        }
+
+        $next();
+    }
+
+    private function forgetReapers(mixed $value): void
+    {
+        if ($value instanceof Option && $value->isSome()) {
+            // the Option itself carries no reaper, but its content may
+            // (`Option\transpose(Some(Ok(…)))`)
+            $value->map($this->forgetReapers(...));
+
+            return;
+        }
+
+        if (!$value instanceof Result) {
+            return;
+        }
+
+        $this->forgetResultReapers($value);
     }
 
     /**
-     * @return iterable<Reaper>
+     * @param Result<mixed,mixed> $result
      */
-    private function reapers(): iterable
+    private function forgetResultReapers(Result $result): void
     {
-        foreach ([Ok::class, Err::class] as $className) {
-            /** @phpstan-throws void */
-            $rm = (new \ReflectionClass($className))->getMethod('reapers');
-
-            /**
-             * @var iterable<Reaper> $reapers
-             * @throws void
-             */
-            $reapers = $rm->invoke(null);
-
-            yield from $reapers;
-        }
-    }
-
-    private function clearReapers(): void
-    {
-        foreach ($this->reapers() as $reaper) {
+        foreach ($this->reapersOf($result) as $reaper) {
             $reaper->forget();
         }
     }
 
-    public function __destruct()
+    /**
+     * @param Result<mixed,mixed> $result
+     * @return iterable<Reaper>
+     */
+    private function reapersOf(Result $result): iterable
     {
-        $this->clearReapers();
+        /** @phpstan-throws void */
+        $rm = (new \ReflectionClass($result::class))->getMethod('reapers');
+
+        /**
+         * @var \WeakMap<object, Reaper> $reapers
+         * @throws void
+         */
+        $reapers = $rm->invoke(null);
+
+        /** @throws void */
+        $reaper = $reapers[$result] ?? null;
+
+        if (!$reaper instanceof Reaper) {
+            return;
+        }
+
+        yield $reaper;
     }
 }

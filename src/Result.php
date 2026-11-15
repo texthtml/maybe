@@ -68,6 +68,7 @@ use TH\Maybe\Tests\Helpers\IgnoreUnusedResults;
  * @immutable
  * @extends \IteratorAggregate<T>
  */
+#[ExamplesSetup(new IgnoreUnusedResults())]
 interface Result extends \IteratorAggregate
 {
     /**
@@ -319,7 +320,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @return Result<string,string>
      * function readFrom(string $filepath): Result {
      *     $data = @file_get_contents($filepath);
@@ -337,13 +338,13 @@ interface Result extends \IteratorAggregate
      *         ->inspectErr(fn ($e) => printf("failed to read file: %s", $e));
      * }
      *
-     * read(); // @prints failed to read file: /not/a/file does not exist
+     * $result = read(); // @prints failed to read file: /not/a/file does not exist
+     * self::assertTrue($result->isErr());
      * ```
      *
      * @param callable(E):mixed $callback
      * @return $this
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function inspectErr(callable $callback): self;
 
     /**
@@ -351,7 +352,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * // @var Result<string,string> $y
@@ -381,7 +382,6 @@ interface Result extends \IteratorAggregate
      * @param Result<U, E> $right
      * @return Result<U, E>
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function and(Result $right): Result;
 
     /**
@@ -391,7 +391,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @return Result<int,string>
      * function square(int $x): Result {
      *     $x *= $x;
@@ -409,7 +409,6 @@ interface Result extends \IteratorAggregate
      * @param callable(T):Result<U, F> $right
      * @return Result<U, E|F>
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function andThen(callable $right): Result;
 
     /**
@@ -417,7 +416,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * // @var Result<string,string> $y
@@ -447,7 +446,6 @@ interface Result extends \IteratorAggregate
      * @param Result<T, F> $right
      * @return Result<T, F>
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function or(Result $right): Result;
 
     /**
@@ -455,7 +453,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @return Result<int,int>
      * function sq(int $x): Result { return Result\ok($x * $x); }
      * // @return Result<int,int>
@@ -471,7 +469,6 @@ interface Result extends \IteratorAggregate
      * @param callable(E):Result<T, F> $right
      * @return Result<T, F>
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function orElse(callable $right): Result;
 
     /**
@@ -556,7 +553,6 @@ interface Result extends \IteratorAggregate
      * @param callable(T):U $callback
      * @return Result<U, E>
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function map(callable $callback): Result;
 
     /**
@@ -564,7 +560,7 @@ interface Result extends \IteratorAggregate
      *
      * # Examples
      *
-     * ```
+     * ```php
      * // @var Result<int,string> $x
      * $x = Result\ok(2);
      * self::assertEq($x->mapErr(strtoupper(...)), Result\ok(2));
@@ -602,7 +598,6 @@ interface Result extends \IteratorAggregate
      * @param V $default
      * @return U|V
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function mapOr(callable $callback, mixed $default): mixed;
 
     /**
@@ -624,7 +619,6 @@ interface Result extends \IteratorAggregate
      *
      * @return Option<T>
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function ok(): Option;
 
     /**
@@ -646,7 +640,6 @@ interface Result extends \IteratorAggregate
      *
      * @return Option<E>
      */
-    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function err(): Option;
 
     /**
