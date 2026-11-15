@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "961b15f3be53740f89f0a1410c4088ec",
+    "content-hash": "91a6559b122663e598daf191d363df06",
     "packages": [
         {
             "name": "texthtml/object-reaper",
@@ -6557,20 +6557,21 @@
         },
         {
             "name": "texthtml/doctest",
-            "version": "v1.1.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/texthtml/doctest.git",
-                "reference": "dab1eec002443ef3fa429f87adfc72ea4becdffc"
+                "reference": "dd8de77224fb9c0f5d5e708cf497da72eb917d9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/texthtml/doctest/zipball/dab1eec002443ef3fa429f87adfc72ea4becdffc",
-                "reference": "dab1eec002443ef3fa429f87adfc72ea4becdffc",
+                "url": "https://api.github.com/repos/texthtml/doctest/zipball/dd8de77224fb9c0f5d5e708cf497da72eb917d9e",
+                "reference": "dd8de77224fb9c0f5d5e708cf497da72eb917d9e",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.2.2",
+                "nikic/php-parser": "^5.0",
                 "php": "^8.2",
                 "psr/log": "^1.0|^2.0|^3.0",
                 "symfony/console": "^7.0|^8.0",
@@ -6604,9 +6605,10 @@
             "description": "Test code examples in PHP comments",
             "support": {
                 "issues": "https://github.com/texthtml/doctest/issues",
-                "source": "https://github.com/texthtml/doctest/tree/v1.1.0"
+                "source": "https://github.com/texthtml/doctest/tree/v1.2.1"
             },
-            "time": "2026-11-14T00:15:22+00:00"
+            "time": "2026-11-15T02:30:37+00:00",
+            "published-time": "2026-11-15T02:31:32+00:00"
         },
         {
             "name": "thecodingmachine/safe",

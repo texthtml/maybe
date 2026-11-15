@@ -56,13 +56,13 @@ function err(mixed $value): Result\Err
  *
  * Successful execution:
  *
- * ```
+ * ```php
  * self::assertEq(Result\ok(3), Result\trap(fn () => 3));
  * ```
  *
  * Checked exception:
  *
- * ```
+ * ```php
  * $x = Result\trap(fn () => new \DateTimeImmutable("2020-30-30 UTC"));
  * self::assertTrue($x->isErr());
  * $x->unwrap();
@@ -71,7 +71,7 @@ function err(mixed $value): Result\Err
  *
  * Unchecked exception:
  *
- * ```
+ * ```php
  * Result\trap(fn () => 1/0);
  * // @throws DivisionByZeroError Division by zero
  * ```
@@ -104,12 +104,12 @@ function trap(callable $callback, array|string $exceptionClass = \Exception::cla
  *
  * # Examples
  *
- * ```
+ * ```php
  * $x = Result\ok(3);
  * self::assertSame(Result\flatten(Result\ok($x)), $x);
  *
  * $x = Result\err("deity");
- * self::assertSame(Result\flatten($y = Result\ok($x)), $x);
+ * self::assertSame(Result\flatten(Result\ok($x)), $x);
  *
  * self::assertEq(Result\flatten($x), Result\err("deity"));
  * ```
@@ -134,7 +134,7 @@ function flatten(Result $result): Result
  * `Ok(None)` will be mapped to `None`.
  * `Ok(Some(_))` and `Err(_)` will be mapped to `Some(Ok(_))` and `Some(Err(_))`.
  *
- * ```
+ * ```php
  * use TH\Maybe\Option;
  *
  * self::assertSame(Result\transpose(Result\ok(Option\none())), Option\none());
