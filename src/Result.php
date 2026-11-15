@@ -337,7 +337,7 @@ interface Result extends \IteratorAggregate
      *         ->inspectErr(fn ($e) => printf("failed to read file: %s", $e));
      * }
      *
-     * read()->unwrapErr(); // @prints failed to read file: /not/a/file does not exist
+     * $result = read(); // @prints failed to read file: /not/a/file does not exist
      * ```
      *
      * @param callable(E):mixed $callback
@@ -352,29 +352,35 @@ interface Result extends \IteratorAggregate
      * # Examples
      *
      * ```php
-     * // @var Result<int,string> $x
-     * $x = Result\ok(2);
-     * // @var Result<string,string> $y
-     * $y = Result\err("late error");
-     * self::assertSame($x->and($y)->unwrapErr(), "late error");
+     * $x = Result\ok(2); // @var Result<int,string> $x
+     * $y = Result\err("late error"); // @var Result<string,string> $y
+     * $expected = Result\err("late error");
+     * $actual = $x->and($y);
+     * self::assertEq($actual, $expected);
+     * ```
      *
-     * // @var Result<int,string> $x
-     * $x = Result\err("early error");
-     * // @var Result<string,string> $y
-     * $y = Result\ok("foo");
-     * self::assertSame($x->and($y)->unwrapErr(), "early error");
+     * ```php
+     * $x = Result\err("early error"); // @var Result<int,string> $x
+     * $y = Result\ok("foo"); // @var Result<string,string> $y
+     * $expected = Result\err("early error");
+     * $actual = $x->and($y);
+     * self::assertEq($actual, $expected);
+     * ```
      *
-     * // @var Result<int,string> $x
-     * $x = Result\err("not a 2");
-     * // @var Result<string,string> $y
-     * $y = Result\err("late error");
-     * self::assertSame($x->and($y)->unwrapErr(), "not a 2");
+     * ```php
+     * $x = Result\err("not a 2"); // @var Result<int,string> $x
+     * $y = Result\err("late error"); // @var Result<string,string> $y
+     * $expected = Result\err("not a 2");
+     * $actual = $x->and($y);
+     * self::assertEq($actual, $expected);
+     * ```
      *
-     * // @var Result<int,string> $x
-     * $x = Result\ok(2);
-     * // @var Result<string,string> $y
-     * $y = Result\ok("different result type");
-     * self::assertSame($x->and($y)->unwrap(), "different result type");
+     * ```php
+     * $x = Result\ok(2); // @var Result<int,string> $x
+     * $y = Result\ok("different result type"); // @var Result<string,string> $y
+     * $expected = Result\ok("different result type");
+     * $actual = $x->and($y);
+     * self::assertEq($actual, $expected);
      * ```
      *
      * @template U
@@ -399,9 +405,35 @@ interface Result extends \IteratorAggregate
      *     return Result\err("overflowed");
      * }
      *
-     * self::assertSame(Result\ok(2)->andThen(square(...))->unwrap(), 4);
-     * self::assertSame(Result\err("not a number")->andThen(square(...))->unwrapErr(), "not a number");
-     * self::assertSame(Result\ok(10_000_000_000)->andThen(square(...))->unwrapErr(), "overflowed");
+     * $actual = Result\ok(2)->andThen(square(...));
+     * $expected = Result\ok(4);
+     * self::assertEq($actual, $expected);
+     * ```
+     *
+     * ```php
+     * // @return Result<int,string>
+     * function square(int $x): Result {
+     *     $x *= $x;
+     *     if (is_int($x)) return Result\ok($x);
+     *     return Result\err("overflowed");
+     * }
+     *
+     * $actual = Result\ok(10_000_000_000)->andThen(square(...));
+     * $expected = Result\err("overflowed");
+     * self::assertEq($actual, $expected);
+     * ```
+     *
+     * ```php
+     * // @return Result<int,string>
+     * function square(int $x): Result {
+     *     $x *= $x;
+     *     if (is_int($x)) return Result\ok($x);
+     *     return Result\err("overflowed");
+     * }
+     *
+     * $actual = Result\err("not a number")->andThen(square(...));
+     * $expected = Result\err("not a number");
+     * self::assertEq($actual, $expected);
      * ```
      *
      * @template U
@@ -418,29 +450,35 @@ interface Result extends \IteratorAggregate
      * # Examples
      *
      * ```php
-     * // @var Result<int,string> $x
-     * $x = Result\ok(2);
-     * // @var Result<string,string> $y
-     * $y = Result\err("late error");
-     * self::assertSame($x->or($y)->unwrap(), 2);
+     * $x = Result\ok(2); // @var Result<int,string> $x
+     * $y = Result\err("late error"); // @var Result<string,string> $y
+     * $expected = Result\ok(2);
+     * $actual = $x->or($y);
+     * self::assertEq($actual, $expected);
+     * ```
      *
-     * // @var Result<int,string> $x
-     * $x = Result\err("early error");
-     * // @var Result<int,string> $y
-     * $y = Result\ok(2);
-     * self::assertSame($x->or($y)->unwrap(), 2);
+     * ```php
+     * $x = Result\err("early error"); // @var Result<int,string> $x
+     * $y = Result\ok(2); // @var Result<int,string> $y
+     * $expected = Result\ok(2);
+     * $actual = $x->or($y);
+     * self::assertEq($actual, $expected);
+     * ```
      *
-     * // @var Result<int,string> $x
-     * $x = Result\err("not a 2");
-     * // @var Result<string,string> $y
-     * $y = Result\err("late error");
-     * self::assertSame($x->or($y)->unwrapErr(), "late error");
+     * ```php
+     * $x = Result\err("not a 2"); // @var Result<int,string> $x
+     * $y = Result\err("late error"); // @var Result<string,string> $y
+     * $expected = Result\err("late error");
+     * $actual = $x->or($y);
+     * self::assertEq($actual, $expected);
+     * ```
      *
-     * // @var Result<int,string> $x
-     * $x = Result\ok(2);
-     * // @var Result<string,string> $y
-     * $y = Result\ok(100);
-     * self::assertSame($x->or($y)->unwrap(), 2);
+     * ```php
+     * $x = Result\ok(2); // @var Result<int,string> $x
+     * $y = Result\ok(100); // @var Result<string,string> $y
+     * $expected = Result\ok(2);
+     * $actual = $x->or($y);
+     * self::assertEq($actual, $expected);
      * ```
      *
      * @template F
@@ -458,13 +496,41 @@ interface Result extends \IteratorAggregate
      * ```php
      * // @return Result<int,int>
      * function sq(int $x): Result { return Result\ok($x * $x); }
+     *
+     * $actual = Result\ok(2)->orElse(sq(...))->orElse(sq(...));
+     * $expected = Result\ok(2);
+     * self::assertEq($actual, $expected);
+     * ```
+     *
+     * ```php
+     * // @return Result<int,int>
+     * function sq(int $x): Result { return Result\ok($x * $x); }
      * // @return Result<int,int>
      * function err(int $x): Result { return Result\err($x); }
      *
-     * self::assertSame(Result\ok(2)->orElse(sq(...))->orElse(sq(...))->unwrap(), 2);
-     * self::assertSame(Result\ok(2)->orElse(err(...))->orElse(sq(...))->unwrap(), 2);
-     * self::assertSame(Result\err(3)->orElse(sq(...))->orElse(err(...))->unwrap(), 9);
-     * self::assertSame(Result\err(3)->orElse(err(...))->orElse(err(...))->unwrapErr(), 3);
+     * $actual = Result\ok(2)->orElse(err(...))->orElse(sq(...));
+     * $expected = Result\ok(2);
+     * self::assertEq($actual, $expected);
+     * ```
+     *
+     * ```php
+     * // @return Result<int,int>
+     * function sq(int $x): Result { return Result\ok($x * $x); }
+     * // @return Result<int,int>
+     * function err(int $x): Result { return Result\err($x); }
+     *
+     * $actual = Result\err(3)->orElse(sq(...))->orElse(err(...));
+     * $expected = Result\ok(9);
+     * self::assertEq($actual, $expected);
+     * ```
+     *
+     * ```php
+     * // @return Result<int,int>
+     * function err(int $x): Result { return Result\err($x); }
+     *
+     * $actual = Result\err(3)->orElse(err(...))->orElse(err(...));
+     * $expected = Result\err(3);
+     * self::assertEq($actual, $expected);
      * ```
      *
      * @template F
@@ -565,19 +631,24 @@ interface Result extends \IteratorAggregate
      * # Examples
      *
      * ```php
-     * // @var Result<int,string> $x
-     * $x = Result\ok(2);
-     * self::assertSame($x->mapErr(strtoupper(...))->unwrap(), 2);
+     * $x = Result\ok(2); // @var Result<int,string> $x
+     * $expected = Result\ok(2);
+     * $actual = $x->mapErr(strtoupper(...));
+     * self::assertEq($actual, $expected);
+     * ```
      *
-     * // @var Result<int,string> $x
-     * $x = Result\err("error");
-     * self::assertSame($x->mapErr(strtoupper(...))->unwrapErr(), "ERROR");
+     * ```php
+     * $x = Result\err("error"); // @var Result<int,string> $x
+     * $expected = Result\err("ERROR");
+     * $actual = $x->mapErr(strtoupper(...));
+     * self::assertEq($actual, $expected);
      * ```
      *
      * @template F
      * @param callable(E):F $callback
      * @return Result<T, F>
      */
+    #[ExamplesSetup(new IgnoreUnusedResults())]
     public function mapErr(callable $callback): Result;
 
     /**

@@ -57,7 +57,9 @@ function err(mixed $value): Result\Err
  * Successful execution:
  *
  * ```php
- * self::assertSame(Result\trap(fn () => 3)->unwrap(), 3);
+ * $expected = Result\ok(3);
+ * $actual = Result\trap(fn () => 3);
+ * self::assertEq($expected, $actual);
  * ```
  *
  * Checked exception:
@@ -106,12 +108,17 @@ function trap(callable $callback, array|string $exceptionClass = \Exception::cla
  *
  * ```php
  * $x = Result\ok(3);
- * self::assertSame(Result\flatten(Result\ok($x))->unwrap(), 3);
+ * $flattened = Result\flatten(Result\ok($x));
+ * self::assertSame($flattened, $x);
+ * ```
  *
- * $y = Result\err("deity");
- * self::assertSame(Result\flatten(Result\ok($y))->unwrapErr(), "deity");
+ * ```php
+ * $x = Result\err("deity");
+ * $y = Result\ok($x);
+ * $flattened = Result\flatten($y);
+ * self::assertSame($flattened, $x);
  *
- * self::assertSame(Result\flatten($y)->unwrapErr(), "deity");
+ * self::assertEq($flattened, $x);
  * ```
  *
  * @template T
@@ -139,14 +146,26 @@ function flatten(Result $result): Result
  * ```php
  * use TH\Maybe\Option;
  *
+ * $x = Result\ok(Option\none());
+ * self::assertSame(Result\transpose($x), Option\none());
+ * ```
+ *
+ * ```php
+ * use TH\Maybe\Option;
+ *
  * $x = Result\ok(Option\some(4));
- * self::assertSame(Result\transpose($x)->unwrap()->unwrap(), 4);
+ * $expected = Option\some(Result\ok(4));
+ * $actual = Result\transpose($x);
+ * self::assertEq($actual, $expected);
+ * ```
+ *
+ * ```php
+ * use TH\Maybe\Option;
  *
  * $x = Result\err("meat");
- * self::assertSame(Result\transpose($x)->unwrap()->err()->unwrap(), "meat");
- *
- * $x = Result\ok(Option\none());
- * self::assertTrue(Result\transpose($x)->isNone());
+ * $expected = Option\some($x);
+ * $actual = Result\transpose($x);
+ * self::assertEq($actual, $expected);
  * ```
  *
  * @template U

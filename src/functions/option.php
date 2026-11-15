@@ -203,9 +203,25 @@ function unzip(Option $option): array
  * ```php
  * use TH\Maybe\Result;
  *
- * self::assertSame(Option\transpose(Option\some(Result\ok(4)))->unwrap()->unwrap(), 4);
- * self::assertSame(Option\transpose(Option\some(Result\err("meat")))->unwrapErr(), "meat");
- * self::assertTrue(Option\transpose(Option\none())->unwrap()->isNone());
+ * $expected = Result\ok(Option\some(4));
+ * $actual = Option\transpose(Option\some(Result\ok(4)));
+ * self::assertEq($expected, $actual);
+ * ```
+ *
+ * ```php
+ * use TH\Maybe\Result;
+ *
+ * $expected = Result\err("meat");
+ * $actual = Option\transpose(Option\some(Result\err("meat")));
+ * self::assertEq($expected, $actual);
+ * ```
+ *
+ * ```php
+ * use TH\Maybe\Result;
+ *
+ * $expected = Result\ok(Option\none());
+ * $actual = Option\transpose(Option\none());
+ * self::assertEq($expected, $actual);
  * ```
  *
  * @template U

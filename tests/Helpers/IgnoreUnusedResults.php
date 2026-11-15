@@ -2,6 +2,7 @@
 
 namespace TH\Maybe\Tests\Helpers;
 
+use TH\DocTest\Setup\EndOfTest;
 use TH\Maybe\Result\Err;
 use TH\Maybe\Result\Ok;
 use TH\ObjectReaper\Reaper;
@@ -9,9 +10,14 @@ use TH\ObjectReaper\Reaper;
 /**
  * @internal
  */
-final class IgnoreUnusedResults
+final class IgnoreUnusedResults implements EndOfTest
 {
     public function __construct()
+    {
+        $this->clearReapers();
+    }
+
+    public function endOfTest(): void
     {
         $this->clearReapers();
     }
