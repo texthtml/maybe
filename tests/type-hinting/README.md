@@ -28,7 +28,7 @@ false positives at a glance:
 
 Comment order for multiple suppressions on one code line: the 🫥 note
 lines first, then `@mago-expect`/`@mago-ignore`, then the
-`@psalm-suppress` docblock, then `@phpstan-ignore` / `@phpcs:ignore`
+`@psalm-suppress` docblock, then `@phpstan-ignore`
 directly above the code.
 
 To find out what a given tool actually reports on a line, strip the

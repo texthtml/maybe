@@ -26,8 +26,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0|^11.0|^12.0|^13.0",
-        "squizlabs/php_codesniffer": "^4.0",
-        "slevomat/coding-standard": "^8.0",
         "phpstan/phpstan": "^2.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-strict-rules": "^2.0",
@@ -41,7 +39,6 @@
         "test": [
             "@php vendor/bin/phpunit",
             "@php vendor/bin/doctest",
-            "@php vendor/bin/phpcs -ps",
             "@php vendor/bin/mago fmt --check",
             "@php vendor/bin/phpstan",
             "@php vendor/bin/psalm --no-progress",
@@ -54,7 +51,6 @@
             "php": "8.2.27"
         },
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true,
             "infection/extension-installer": true
         }

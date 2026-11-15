@@ -187,7 +187,6 @@ class Ok implements Result
             // @mago-expect analysis:mixed-operand -- `contains()` compares a template value against mixed
             // @mago-expect analysis:possibly-null-operand
             // @mago-expect lint:identity-comparison
-            // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
             : $this->value == $value;
     }
 

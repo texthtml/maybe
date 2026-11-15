@@ -51,7 +51,6 @@ function fromValue(mixed $value, mixed $noneValue = null, bool $strict = true): 
         // @mago-expect analysis:mixed-operand -- `fromValue()` compares a template value against mixed
         // @mago-expect analysis:possibly-null-operand
         // @mago-expect lint:identity-comparison
-        // @phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators
         : $value == $noneValue;
 
     /** @var Option<U> */
