@@ -1,4 +1,4 @@
-FROM php:8.5
+FROM php:8.6
 
 COPY dev.sh /tmp/library-scripts/
 
